@@ -26,6 +26,6 @@ class CreateCompetidorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competidors');
+        Schema::dropIfExists('competidores');
     }
 }
