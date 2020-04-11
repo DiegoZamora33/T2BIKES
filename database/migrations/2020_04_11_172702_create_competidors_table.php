@@ -13,8 +13,13 @@ class CreateCompetidorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('competidores', function (Blueprint $table) {
-            $table->id();
+        Schema::create('competidors', function (Blueprint $table) {
+            $table->string('numeroCompetidor',10);
+            $table->primary('numeroCompetidor');
+            $table->string('nombre',50);
+            $table->string('apellidoPaterno',50);
+            $table->string('apellidoMaterno',50)->nullable();
+            $table->date('fechaRegistro');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateCompetidorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competidores');
+        Schema::dropIfExists('competidors');
     }
 }
