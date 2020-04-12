@@ -71,15 +71,6 @@ class competidores extends Controller
             //Si el numero de competidor es 0 enviamos un mensaje
             return 'El numero de competidor no puede ser cero';
         }
-        
-        
-        
-
-        return '<->'.$request->numeroCompetidor;
-
-        
-
-        
     }
 
     /**
