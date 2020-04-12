@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $this->call([
-            crear_competidores::class
+            crear_competidores::class 
     	]);
     }
 }
