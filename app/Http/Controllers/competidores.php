@@ -14,6 +14,8 @@ class competidores extends Controller
     public function index()
     {
         //
+        $datos['competidores']=Competidores::paginate(5);
+        return view('competidores.front_mostrar_competidor',$datos);
     }
 
     /**
@@ -57,6 +59,8 @@ class competidores extends Controller
     public function edit($id)
     {
         //
+        $competidor = Competidores::findOrFail($id);
+        return view('competidores.front_editar_competidor',compact('competidor'));
     }
 
     /**
@@ -69,6 +73,11 @@ class competidores extends Controller
     public function update(Request $request, $id)
     {
         //
+        $datosCompetidor=request()->except(['_token','_method']);
+        Competidores::where('numeroCompetidor','=',$numeroCompetidor)->update($datosCompetidor);
+        
+        $competidor = Competidores::findOrFail($id);
+        return view('competidores.front_editar_competidor',compact('competidor'));
     }
 
     /**
@@ -80,5 +89,7 @@ class competidores extends Controller
     public function destroy($id)
     {
         //
+        Competidores::destroy($id);
+        return redirect('competidores');
     }
 }
