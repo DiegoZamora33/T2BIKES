@@ -26,7 +26,7 @@ class competidores extends Controller
      */
     public function create()
     {
-        
+        return view('competidores.front_agregar_competidor');
     }
 
     /**
@@ -37,7 +37,40 @@ class competidores extends Controller
      */
     public function store(Request $request)
     {
-        
+        //Quitamos los 0 a la izquierda del numero de competidor para aguardarlo en la base de datos
+        $nuevoNumeroCompetidor = '';
+        for ($i=0; $i < strlen($request->numeroCompetidor); $i++) { 
+            if ($request->numeroCompetidor[$i] != '0') {
+                $nuevoNumeroCompetidor = substr($request->numeroCompetidor , $i, strlen($request->numeroCompetidor)-$i);
+                break;
+            }
+        }
+
+        //Verificamos si el numero no es 0 si es asi lanzamos el mensaje
+        if ($nuevoNumeroCompetidor != '') {
+            //Si se valida el numero de competidor lo registramos en la base de datos
+            //Creamos el objeto del nuevo competidor 
+            $competidor = new Competidor();
+            //Evaluamos si el numero de competidor esta disponible
+            if ($competidor->where('numeroCompetidor', $nuevoNumeroCompetidor)->first() == null) {
+                //Si esta disponible aguardamos el nuevo competidor en la base de datos
+                $competidor->numeroCompetidor = $nuevoNumeroCompetidor;
+                $competidor->nombre = trim($request->nombre);
+                $competidor->apellidoPaterno = trim($request->apellidoPaterno);
+                $competidor->apellidoMaterno = trim($request->apellidoMaterno);
+                $competidor->fechaRegistro = $request->fechaRegistro;
+                $competidor->save();
+                //Mansaje de confirmacion
+                return 'Registrado';
+            }else{
+                //Si el numero de competidor esta ocupado regresamos un mensaje
+                return 'Numero de Competidor ya ocupado por otro competidor';
+            }
+            echo $nuevoNumeroCompetidor;
+        } else{
+            //Si el numero de competidor es 0 enviamos un mensaje
+            return 'El numero de competidor no puede ser cero';
+        }
     }
 
     /**
@@ -89,6 +122,9 @@ class competidores extends Controller
      */
     public function destroy($id)
     {
-        
+        //Buscamos al competidor con el id dado y lo eliminamos
+        Competidor::where('numeroCompetidor', $id)->delete();
+        //Mensaje de confirmacion
+        return 'Eliminado';
     }
 }
