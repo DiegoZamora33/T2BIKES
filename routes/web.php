@@ -17,5 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Ruta para el controlador resource de competidores
-Route::resource('competidores', 'competidores');
+//Ruta para los controladores resource
+Route::resources([
+    'competidores'=>'competidores', //Controlador de Competidores
+    'entrenadores'=>'Entrenadores'  //Controlador de Entrenadores
+]);
