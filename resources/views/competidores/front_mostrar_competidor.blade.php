@@ -5,6 +5,7 @@ Mostrar datos
 
 		<tr>
 			<th>#</th>
+			<th>Numero Competidor</th>
 			<th>Nombre </th>
 			<th>Apellido Paterno </th>
 			<th>Apellido Materno </th>
@@ -19,6 +20,7 @@ Mostrar datos
 	@foreach($competidores as $competidor)
 		<tr>
 			<td>{{$loop->iteration}}</td>
+			<td>{{$competidor->numeroCompetidor}}</td>
 			<td>{{$competidor->nombre}}</td>
 			<td>{{$competidor->apellidoPaterno}}</td>
 			<td>{{$competidor->apellidoMaterno}}</td>

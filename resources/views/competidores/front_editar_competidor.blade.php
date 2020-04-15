@@ -1,6 +1,12 @@
 <form action="{{ url('/competidores/'.$competidor->numeroCompetidor) }}" method="post" enctype="multipart/form-data">
 	{{ csrf_field() }}	
 	{{ method_field('PATCH') }}
+
+
+	<div class="Dato">
+		<label for="nombre">Numero Competidor: </label>
+		<label>{{ $competidor->numeroCompetidor }}</label>  
+	</div class="Dato"> 
 	
 	<div class="Dato">
 		<label for="nombre">Nombre: </label>
