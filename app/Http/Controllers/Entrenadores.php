@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Entrenador;
 
 class Entrenadores extends Controller
 {
@@ -13,7 +14,10 @@ class Entrenadores extends Controller
      */
     public function index()
     {
-        //
+        //Extraemos todos los datos de los entrenadores
+        $entrenadores = Entrenador::all();
+        //Enviamos la informacion de los entrenadores y llamamos a la vista
+        return view('entrenadores.front_mostrar_entrenadores', compact('entrenadores'));
     }
 
     /**
@@ -56,7 +60,10 @@ class Entrenadores extends Controller
      */
     public function edit($id)
     {
-        //
+        //Extraemos la informacion del entrenador deseado
+        $entrenador = Entrenador::where('idEntrenador', $id)->first();
+        //Enviamos la informacion del entrenador y mostramos la vista
+        return view('entrenadores.front_editar_entrenador', compact('entrenador'));
     }
 
     /**
@@ -68,7 +75,12 @@ class Entrenadores extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Quitamos los datos no deseados del request
+        $nuevosDatos=request()->except(['_token','_method']);
+        //Actualizamos los campos de la bd con los nuevos datos
+        Entrenador::where('idEntrenador', $id)->update($nuevosDatos);
+        //Nos redireccionamos al index
+        return redirect()->route('entrenadores.index');
     }
 
     /**
