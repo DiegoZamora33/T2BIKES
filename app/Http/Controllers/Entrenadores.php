@@ -28,6 +28,7 @@ class Entrenadores extends Controller
     public function create()
     {
         //
+        return view('entrenadores.front_agregar_entrenador');
     }
 
     /**
@@ -38,7 +39,13 @@ class Entrenadores extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Entrenador::create($request->all()) ;
+
+       
+           
+                return 'Registrado';
+           
+        
     }
 
     /**
