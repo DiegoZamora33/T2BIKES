@@ -62,6 +62,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="password-confirm" class="col-md-4 control-label">Tipo de Usuario</label>
+
+                            <div class="col-md-6">
+                                <input id="idtipoUsuario" type="text" class="form-control" name="idtipoUsuario" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Register
