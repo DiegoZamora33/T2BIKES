@@ -19,7 +19,7 @@ $(document).ready(function ()
       miOff();
       this.className = "active";
         $.ajax({
-          url: "../resources/views/experimento.blade.php" ,
+          url: "../resources/views/entrenadores/front_mostrar_entrenadores.blade.php" ,
 
           success: function(data){
             setTimeout(function(){
