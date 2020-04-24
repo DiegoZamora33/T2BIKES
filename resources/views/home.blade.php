@@ -1,23 +1,131 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+<div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="">
+            <div class="sidebar-header text-center">
+              <img src="{{ asset('t2bikes/img/logo.png') }}" width="100" alt="logo_principal">
+            </div>
 
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            <ul class="list-unstyled components">
+                <li class="active mt-2" id="home">
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        <span class="CTAs">Home</span>
+                    </a>
+                </li>
 
-                    You are logged in!
+                <li class="mt-1 text-center" id="competidores">
+                    <a href="#">
+                        <i class="demo-icon icon-bicycle"></i>
+                        <span class="CTAs">Competidores</span>
+                    </a>
+                </li>
+
+                <li class="mt-1" id="entrenadores">
+                    <a href="#">
+                        <i class="fas fa-stopwatch"></i>
+                        <span class="CTAs">Entrenadores</span>
+                    </a>
+
+                </li>
+
+                <li class="mt-1" id="competencias">
+                    <a href="#pageCompetencias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="demo-icon icon-calendar-check-o"></i>
+                        <span class="CTAs">Competencias</span>
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageCompetencias">
+                        <li>
+                            <a href="#">Tour Morelia 2020</a>
+                        </li>
+                        <li>
+                            <a href="#">Racing Mountain</a>
+                        </li>
+                        <li>
+                            <a href="#">Los Azufres 40k</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="mt-1" id="sistema">
+                     <a href="#">
+                        <i class="fas fa-users"></i>
+                        <span class="CTAs">Control de Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-lg-block d-md-block d-sm-none">
+              <ul class="list-unstyled CTAs ">
+                  <li>
+                    <a class="btn btn-danger pl-5" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                 document.getElementById('logout-form-1').submit();">
+                        <i class="fas fa-sign-out-alt iconoSalir"></i>
+                         Cerrar sesión
+                    </a>
+
+                    <form id="logout-form-1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </li>
+              </ul>
+            </div>
+
+
+            <ul class="d-lg-none d-md-none d-sm-block">
+                <li>
+                    <a class="btn-sm btn-danger pl-1" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt iconoSalir"></i>
+                        <label class="cerrarSesionR">Cerrar sesión</label>
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <i class="fas fa-align-left"></i>
+                        <span></span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                              <form>
+                                <div class="form-group mt-lg-auto mt-md-3 mt-sm-4 mt-4">
+                                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Buscar">
+                                </div>
+                              </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </nav>
+
+            <div class="container text-center" id="mostrador">
+
+                <h2>Bienvenido Diego Zamora</h2>
+                <h4>Estas Registrado como: Administrador</h4>
+                <p>Recuerda siempre cerrar tu sesión</p>
+
             </div>
         </div>
     </div>
-</div>
 @endsection

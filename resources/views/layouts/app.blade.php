@@ -1,80 +1,45 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
+<html lang="es" dir="ltr">
+  <head>
+
+    <title>T2Bikes</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('t2bikes/img/favicon.ico') }}">
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!--Palabras clave-->
+    <meta name="keywords" content="Web, Login, T2Bikes, Morelia, Bicicleta">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="{{ asset('t2bikes/css/bootstrap.css') }}">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('t2bikes/css/principal.css') }}">
+    <link rel="stylesheet" href="{{ asset('t2bikes/css/fontello.css') }}">
+    <link rel="stylesheet" href="{{ asset('t2bikes/css/animation.css') }}">
+    <link rel="stylesheet" href="{{ asset('t2bikes/css/table.css') }}">
+
+    <!-- Font Awesome JS -->
+    <script src="{{ asset('t2bikes/js/fontawesome-solid.js') }}"></script>
+    <script src="{{ asset('t2bikes/js/fontawesome-5.js') }}"></script>
+
+    <script src="{{ asset('t2bikes/js/poper.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('t2bikes/js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('t2bikes/js/bootstrap.js') }}" charset="utf-8"></script>
+
+    <script src="{{ asset('t2bikes/js/bootstrap.min.js') }}"></script>
+
+    <script src="{{ asset('t2bikes/js/chart.js') }}"></script>
+
+    <script src="{{ asset('dinamico.js') }}"></script>
+
+  </head>
+   
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        Volver
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <!--li><a href="{{ route('register') }}">Register</a></li-->
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
         @yield('content')
     </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
