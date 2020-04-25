@@ -48,7 +48,7 @@
 </style>
 <body>
     <h1>Agregar un Entrenador</h1>
-    <form action="/entrenadores" method="post">
+    <form action="/home/entrenadores" method="post">
         {{ csrf_field() }}
         <div class="Dato">
             <label for="nombre">Nombre: </label>

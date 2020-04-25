@@ -1,4 +1,4 @@
-<form action="{{ url('/competidores/'.$competidor->numeroCompetidor) }}" method="post" enctype="multipart/form-data">
+<form action="{{ url('/home/competidores/'.$competidor->numeroCompetidor) }}" method="post" enctype="multipart/form-data">
 	{{ csrf_field() }}	
 	{{ method_field('PATCH') }}
 

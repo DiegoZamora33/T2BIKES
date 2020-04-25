@@ -39,7 +39,7 @@
 </style>
 <body>
     <h1>Agregar un Competidor</h1>
-    <form action="/competidores" method="post">
+    <form action="/home/competidores" method="post">
         {{ csrf_field() }}
         <div class="Dato">
             <label for="numeroCompetidor">Numero de Competidor: </label>

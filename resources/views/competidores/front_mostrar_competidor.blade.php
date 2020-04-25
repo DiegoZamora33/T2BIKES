@@ -32,11 +32,11 @@ Mostrar datos
 			<td>{{$competidor->fechaRegistro}}</td>
 			<td>
 
-				<a href="{{'/competidores/'.$competidor->numeroCompetidor.'/edit'}}"> Editar</a>
+				<a href="{{'/home/competidores/'.$competidor->numeroCompetidor.'/edit'}}"> Editar</a>
 
 
 			 | 
-			 	<form method="post" action="{{ url('/competidores/'.$competidor->numeroCompetidor) }}">
+			 	<form method="post" action="{{ url('/home/competidores/'.$competidor->numeroCompetidor) }}">
 
 				{{csrf_field() }}
 				{{ method_field('DELETE')}}
@@ -55,4 +55,5 @@ Mostrar datos
 
 </table>
 
+	<a href="/home/competidores/create">Crear Competidor</a>
   @endsection

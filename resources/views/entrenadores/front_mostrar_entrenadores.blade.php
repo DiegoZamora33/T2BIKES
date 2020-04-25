@@ -83,9 +83,9 @@
                 <td>{{$entrenador->nombre.' '.$entrenador->apellidoPaterno.' '.$entrenador->apellidoMaterno}}</td>
                 <td>{{$entrenador->patrocinio}}</td>
                 <td>{{substr($entrenador->fechaRegistro,8,2)."/".substr($entrenador->fechaRegistro,5,2)."/".substr($entrenador->fechaRegistro,0,4)}}</td>
-                <td><a href="/entrenadores/{{$entrenador->idEntrenador}}/edit">Editar</a></td>
+                <td><a href="/home/entrenadores/{{$entrenador->idEntrenador}}/edit">Editar</a></td>
                 <td>
-                <form action="/entrenadores/{{$entrenador->idEntrenador}}" method="post">
+                <form action="/home/entrenadores/{{$entrenador->idEntrenador}}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <input type="submit" value="Eliminar">
@@ -97,6 +97,6 @@
     </table>
 
         <div class="btnCrearEntrenador">
-        <a href="/entrenadores/create">Crear Entrenador</a>
+        <a href="/home/entrenadores/create">Crear Entrenador</a>
     </div>
     @endsection
