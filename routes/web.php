@@ -26,7 +26,7 @@ Route::resources([
     '/home/entrenadores'=>'Entrenadores',  //Controlador de Entrenadores
     'competencias'=>'Competencias', //Controlador Competencias
     'carreras'=>'Carreras', //Controlador Carreras
-    'tiposcarrera'=>'TiposCarreras'  //Controlador Tipo de Carreras
+    '/home/tiposcarrera'=>'TiposCarreras'  //Controlador Tipo de Carreras
 ]);
 
 
