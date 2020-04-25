@@ -1,8 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
-
-
 Mostrar datos 
 <table class="table table-light">
 
@@ -53,7 +48,11 @@ Mostrar datos
 	@endforeach	
 	</tbody>
 
+
 </table>
+
+
 
 	<a href="/home/competidores/create">Crear Competidor</a>
   @endsection
+
