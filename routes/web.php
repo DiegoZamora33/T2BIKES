@@ -18,9 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+///Route::get('/home/competidores', 'Competidores@index')->name('competidores');
 
 //Ruta para los controladores resource
 Route::resources([
-    'competidores'=>'Competidores', //Controlador de Competidores
-    'entrenadores'=>'Entrenadores'  //Controlador de Entrenadores
+    '/home/competidores'=>'Competidores', //Controlador de Competidores
+    '/home/entrenadores'=>'Entrenadores'  //Controlador de Entrenadores
 ]);
+
+

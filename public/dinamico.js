@@ -19,7 +19,7 @@ $(document).ready(function ()
       miOff();
       this.className = "active";
         $.ajax({
-          url: "../resources/views/entrenadores/front_mostrar_entrenadores.blade.php" ,
+          url: "../resources/views/experimento.blade.php" ,
 
           success: function(data){
             setTimeout(function(){
@@ -36,7 +36,7 @@ $(document).ready(function ()
       miOff();
       this.className = "active";
         $.ajax({
-          url: "tables/lista-competidores.html" ,
+          url: "../resources/views/auth/login.blade.php" ,
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
