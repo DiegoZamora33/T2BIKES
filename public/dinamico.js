@@ -36,7 +36,7 @@ $(document).ready(function ()
       miOff();
       this.className = "active";
         $.ajax({
-          url: "../resources/views/auth/login.blade.php" ,
+          url: "../resources/views/competidores/front_mostrar_competidor.blade.php" ,
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
@@ -540,4 +540,13 @@ function grafCarrera()
     document.getElementById('btn-cambiarGrafica-carrera').innerText = "Cambiar a Grafica de Pastel";
   }
   $('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
+}
+
+
+
+
+// Funcion intento AJAX
+function miAjax(datos)
+{
+  alert(datos);
 }

@@ -1,8 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
-
-
 Mostrar datos 
 <table class="table table-light">
 
@@ -54,5 +49,3 @@ Mostrar datos
 	</tbody>
 
 </table>
-
-  @endsection

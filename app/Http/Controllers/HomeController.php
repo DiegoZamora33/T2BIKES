@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $datos['competidores']=Competidor::paginate(5);
-        return view('home',$datos);
+        return view('home', $datos);
         //return view('home');
     }
 
