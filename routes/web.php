@@ -23,7 +23,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Ruta para los controladores resource
 Route::resources([
     '/home/competidores'=>'Competidores', //Controlador de Competidores
-    '/home/entrenadores'=>'Entrenadores'  //Controlador de Entrenadores
+    '/home/entrenadores'=>'Entrenadores',  //Controlador de Entrenadores
+    'competencias'=>'Competencias', //Controlador Competencias
+    'carreras'=>'Carreras', //Controlador Carreras
+    'tiposcarrera'=>'TiposCarreras'  //Controlador Tipo de Carreras
 ]);
 
 

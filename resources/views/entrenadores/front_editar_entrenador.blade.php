@@ -47,7 +47,7 @@
 </style>
 <body>
     <h1>Editar Entrenador</h1>
-    <form action="/entrenadores/{{$entrenador->idEntrenador}}" method="post">
+    <form action="/home/entrenadores/{{$entrenador->idEntrenador}}" method="post">
         {{ csrf_field() }}
         {{ method_field('PUT') }}
         <div class="Dato">
