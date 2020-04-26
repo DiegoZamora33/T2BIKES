@@ -16,7 +16,7 @@
                     </a>
                 </li>
 
-                <li class="mt-1 text-center" id="competidoresXD" onclick="miAjax( '{{ $competidores }}') ">
+                <li class="mt-1 text-center" id="competidores">
                     <a href="#">
                         <i class="demo-icon icon-bicycle"></i>
                         <span class="CTAs">Competidores</span>
