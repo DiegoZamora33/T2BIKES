@@ -26,8 +26,14 @@ Route::resources([
     '/home/entrenadores'=>'Entrenadores',  //Controlador de Entrenadores
     '/home/competencias'=>'Competencias', //Controlador Competencias
     '/home/carreras'=>'Carreras', //Controlador Carreras
-    '/home/tiposcarrera'=>'TiposCarreras'  //Controlador Tipo de Carreras
+    '/home/tiposcarrera'=>'TiposCarreras',  //Controlador Tipo de Carreras
 ]);
+
+//Prueba AJAX
+Route::get('/ajax/competidores', 'pruebaAJAX@competidores');
+Route::get('/ajax', function () {
+    return view('pruebaAJAX');
+});
 
 
 

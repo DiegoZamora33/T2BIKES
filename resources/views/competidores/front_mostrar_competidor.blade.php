@@ -29,8 +29,6 @@ Mostrar datos
 
 				<a href="{{'/home/competidores/'.$competidor->numeroCompetidor.'/edit'}}"> Editar</a>
 
-
-			 | 
 			 	<form method="post" action="{{ url('/home/competidores/'.$competidor->numeroCompetidor) }}">
 
 				{{csrf_field() }}
@@ -50,9 +48,5 @@ Mostrar datos
 
 
 </table>
-
-
-
 	<a href="/home/competidores/create">Crear Competidor</a>
-  @endsection
 
