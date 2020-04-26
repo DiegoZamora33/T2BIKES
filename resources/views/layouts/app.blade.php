@@ -42,7 +42,7 @@
 
         <!-- Para poder Registrar un nuevo Usuario usando el NAV de LARAVEL Descometar el nav siguiente -->
       
-        <!--nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -92,7 +92,7 @@
                     </ul>
                 </div>
             </div>
-        </nav-->
+        </nav>
 
 
         @yield('content')
