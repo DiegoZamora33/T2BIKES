@@ -8,10 +8,10 @@
     $('#btnAjax').click(function (e) { 
         e.preventDefault();
         
-        console.log(url+"/ajax/competidores");
+        console.log(url+"/home/competidores");
         $.ajax({
             type: "get",
-            url: url+"/ajax/competidores",
+            url: url+"/home/competidores",
             data: {},
             dataType: "html",
             success: function (response) {
