@@ -33,18 +33,35 @@ $(document).ready(function ()
     // Cuando damos click en competidores y se ponga blanco el fondo
     $("#competidores").click(function()
     {
+      console.log('Que onda');
       miOff();
       this.className = "active";
-        $.ajax({
-          url: "../resources/views/competidores/front_mostrar_competidor.blade.php" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-            }
-          );
+      $.ajax({
+        type: "get",
+        url: "http://localhost:8000/home/competidores",
+        data: {},
+        dataType: "html",
+        success: function (response) {
+          setTimeout(function(){
+            $("#mostrador").html(response);
+          });
         }
-        });
       });
+    });
+      /*  */
+      /* 
+      
+        $.ajax({
+          type: "get",
+          url: "http://localhost:8000/home/competidores" ,
+          data: {},
+          dataType: "html",
+          success: function(data){
+            console.log(data);
+            
+            
+        }
+        });*/
 
 
     // Cuando damos click en Entrenadores y se ponga blanco el fondo

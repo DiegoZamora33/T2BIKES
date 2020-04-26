@@ -5,6 +5,7 @@
 </div>
 <script>
     const url = 'http://localhost:8000'; 
+    
     $('#btnAjax').click(function (e) { 
         e.preventDefault();
         
