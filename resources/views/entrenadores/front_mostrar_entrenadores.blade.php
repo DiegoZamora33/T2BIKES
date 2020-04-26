@@ -85,7 +85,7 @@
                 <td>{{substr($entrenador->fechaRegistro,8,2)."/".substr($entrenador->fechaRegistro,5,2)."/".substr($entrenador->fechaRegistro,0,4)}}</td>
                 <td><a href="/home/entrenadores/{{$entrenador->idEntrenador}}/edit">Editar</a></td>
                 <td>
-                <form action="/home/entrenadores/{{$entrenador->idEntrenador}}" method="post">
+                    <form action="/home/entrenadores/{{$entrenador->idEntrenador}}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <input type="submit" value="Eliminar">

@@ -16,7 +16,7 @@ class TiposCarreras extends Controller
     {
         //Extraemos todos los tipos de carrera
         $tiposCarrera = TipoCarrera::all();
-        //Enviamos la informacion de los entrenadores y llamamos a la vista
+        //Enviamos la informacion a la vista
         return view('tiposCarrera.front_mostrarTiposCarreras', compact('tiposCarrera'));
     }
 
