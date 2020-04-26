@@ -28,8 +28,8 @@ class Carreras extends Controller
             $carrera['idCarrera'] = $datosCarrera->idCarrera;
             $carrera['nombre'] = $datosCarrera->nombreCarrera;
             $carrera['descripcion'] = $datosCarrera->descripcion;
-            $carrera['competencia'] = $datosCarrera->tipoCarrera()->first()->tipoCarrera;
-            $carrera['tipo'] = $datosCarrera->competencia()->first()->nombreCompetencia;
+            $carrera['tipo'] = $datosCarrera->tipoCarrera()->first()->tipoCarrera;
+            $carrera['competencia'] = $datosCarrera->competencia()->first()->nombreCompetencia;
 
             $carreras[] = $carrera; //Ponemos el arreglo de una carrera en el arreglo de todas las carreras
         }
@@ -74,7 +74,18 @@ class Carreras extends Controller
      */
     public function show($id)
     {
-        //
+        //Extraemos la informacion de la base de datos de la carrera deseada
+        $carrera = Carrera::where('idCarrera', $id)->first();
+        
+        //Creamos un arreglo para los datos a mostrar y agregamos los datos
+        $datos = array();
+        $datos['nombre'] = $carrera->nombreCarrera;
+        $datos['descripcion'] = $carrera->descripcion;
+        $datos['tipo'] = $carrera->tipoCarrera()->first()->tipoCarrera;
+        $datos['competencia'] = $carrera->competencia()->first()->nombreCompetencia;
+        
+        //Mostramos la vista y mandamos la informacion
+        return view('carreras.front_mostrar_Carrera', compact('datos'));
     }
 
     /**
@@ -85,7 +96,15 @@ class Carreras extends Controller
      */
     public function edit($id)
     {
-        //
+        //Extraemos los datos de las competencias y tipos de carrera
+        $competencias = Competencia::all('idCompetencia', 'nombreCompetencia');
+        $tiposCarrera = TipoCarrera::all('idtipoCarrera', 'tipoCarrera');
+        
+        //Extraemos la informacion de la base de datos de la carrera deseada
+        $carrera = Carrera::where('idCarrera', $id)->first();
+
+        //Mostramos la vista y mandamos la informacion
+        return view('carreras.front_editar_carrera', compact('competencias', 'tiposCarrera', 'carrera'));
     }
 
     /**
@@ -97,7 +116,14 @@ class Carreras extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Quitamos los datos no deseados del request
+        $nuevosDatos=request()->except(['_token','_method']);
+
+        //Actualizamos los campos de la bd con los nuevos datos
+        Carrera::where('idCarrera', $id)->update($nuevosDatos);
+
+        //Nos redireccionamos al index
+        return redirect()->route('carreras.index');
     }
 
     /**
@@ -108,6 +134,9 @@ class Carreras extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Buscamos y eliminamos el registro de la bd con el id
+        Carrera::where('idCarrera', $id)->delete();
+        //Regresamos al indice
+        return redirect()->route('carreras.index');
     }
 }

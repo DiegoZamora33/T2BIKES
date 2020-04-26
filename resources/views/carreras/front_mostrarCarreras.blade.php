@@ -12,6 +12,7 @@
             <th>Tipo</th>
             <th></th>
             <th></th>
+            <th></th>
         </thead>
         <tbody>
             @foreach ($carreras as $carrera)
@@ -29,6 +30,7 @@
                         <input type="submit" value="Eliminar">
                     </form>
                 </td>
+                <td><a href="/home/carreras/{{$carrera['idCarrera']}}">Mostrar</a></td>
             </tr>
             @endforeach
         </tbody>
