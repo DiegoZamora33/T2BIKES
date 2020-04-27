@@ -31,39 +31,22 @@ $(document).ready(function ()
         });
       });
 
-    // Cuando damos click en competidores y se ponga blanco el fondo
-    $("#competidores").click(function()
-    {
-      console.log('Que onda');
-      miOff();
-      this.className = "active";
-      $.ajax({
-        type: "get",
-        url: "http://localhost:8000/home/competidores",
-        data: {},
-        dataType: "html",
-        success: function (response) {
-          setTimeout(function(){
-            $("#mostrador").html(response);
-          });
-        }
+    // Funcion para Mostar Lista de Competidores
+    $('#competidores').click(function (e) { 
+          e.preventDefault();
+          
+          console.log(url+"/home/competidores");
+          $.ajax({
+              type: "get",
+              url: url+"/home/competidores",
+              data: {},
+              dataType: "html",
+              success: function (response) {
+                  console.log(response);
+                  $('#mostrador').html(response);
+              }
+        });
       });
-    });
-      /*  */
-      /* 
-      
-        $.ajax({
-          type: "get",
-          url: "http://localhost:8000/home/competidores" ,
-          data: {},
-          dataType: "html",
-          success: function(data){
-            console.log(data);
-            
-            
-        }
-        });*/
-
 
     // Cuando damos click en Entrenadores y se ponga blanco el fondo
     $("#entrenadores").click(function()
@@ -199,30 +182,14 @@ $(document).ready(function ()
         });
       });
 
-     /*
-      $("#sistema").click(function()
-      {
-        miOff();
-        this.className = "active";
-        $.ajax({
-          url: "tables/lista-usuarios.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-            }
-          );
-        }
-        });
-      });
-      */
 
       $('#sistema').click(function (e) { 
         e.preventDefault();
         
-        console.log(url+"/home/competidores");
+        console.log(url+"/home/usuarios");
         $.ajax({
             type: "get",
-            url: url+"/home/competidores",
+            url: url+"/home/usuarios",
             data: {},
             dataType: "html",
             success: function (response) {

@@ -44,7 +44,7 @@
                             <a href="#">Racing Mountain</a>
                         </li>
                         <li>
-                            <a href="#">{{$competidores}}</a>
+                            <a href="#">Los Azufres 40k</a>
                         </li>
                     </ul>
                 </li>

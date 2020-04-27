@@ -14,7 +14,7 @@ class Competidores extends Controller
      */
     public function index()
     {
-        $datos['competidores']=Competidor::paginate(5);
+        $datos['competidores']=Competidor::all();
         return view('competidores.front_mostrar_competidor',$datos);
     }
 
