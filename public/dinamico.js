@@ -14,25 +14,11 @@ $(document).ready(function ()
         $('#sidebar').toggleClass('active');
     });
 
-    // Funcion Para mostrar Home
-    $("#home").click(function()
-    {
-      miOff();
-      this.className = "active";
-        $.ajax({
-          url: "../resources/views/experimento.blade.php" ,
-
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-            }
-          );
-        }
-        });
-      });
-
     // Funcion para Mostar Lista de Competidores
     $('#competidores').click(function (e) { 
+
+      miOff();
+      this.className = "active";
           e.preventDefault();
           
           console.log(url+"/home/competidores");
@@ -184,6 +170,10 @@ $(document).ready(function ()
 
 
       $('#sistema').click(function (e) { 
+
+        miOff();
+        this.className = "active";
+
         e.preventDefault();
         
         console.log(url+"/home/usuarios");
@@ -285,14 +275,18 @@ function competencias(){
 }
 
 function usuarios(){
+        this.className = "active";
+                
+        console.log(url+"/home/usuarios");
         $.ajax({
-          url: "tables/lista-usuarios.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
+            type: "get",
+            url: url+"/home/usuarios",
+            data: {},
+            dataType: "html",
+            success: function (response) {
+                console.log(response);
+                $('#mostrador').html(response);
             }
-          );
-        }
         });
 }
 
@@ -409,18 +403,25 @@ function newTrain(){
   });
 }
 
-function newUser(){
-  this.className = 'active';
-  $.ajax({
-    url: 'forms/registrar-usuario.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
-      }
-    );
-  }
-  });
+
+// Funcion para mostrar FORM de Nuevo Usuario.
+function newUser()
+{
+    this.className = "active";
+    
+    $.ajax({
+        type: "get",
+        url: url+"/home/usuarios/create",
+        data: {},
+        dataType: "html",
+        success: function (response) {
+            console.log(response);
+            $('#mostrador').html(response);
+        }
+    });
 }
+
+
 
 function newCompet(){
   this.className = 'active';

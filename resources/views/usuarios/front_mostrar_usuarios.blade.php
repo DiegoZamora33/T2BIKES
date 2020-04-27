@@ -1,33 +1,33 @@
-<h2>hola</h2>
+<h3>Usuarios Registrados</h3>
+<p>Seleccione uno para poder editarlo</p>
+<br>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Usuario</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Fecha de Registro</th>
+    </tr>
+  </thead>
+  <tbody>
 
-Mostrar datos 
-<table class="table table-light">
+  	@foreach($usuarios as $usuario)
+    <tr onclick="getUser();">
+      <td data-label="Nombre">{{ $usuario->name }}</td>
+      <td data-label="Email">{{ $usuario->email }}</td>
+      <td data-label="Tipo">{{ $usuario->idtipoUsuario }}</td>
+      <td data-label="FechaRegistro">{{ $usuario->created_at }}</td>
+    </tr>
+    @endforeach
 
-	<thead class="thead-light">
-
-		<tr>
-			<th>Nombre</th>
-			<th>Email</th>
-			<th>Tipo de Usuario</th>
-			<th>Fecha de registro </th>
-
-		</tr>
-		
-
-	</thead>
-
-	<tbody>
-	@foreach($usuarios as $usuario)
-		<tr>
-			<td>{{$usuario->name}}</td>
-			<td>{{$usuario->email}}</td>
-			<td>{{$usuario->idtipoUsuario}}</td>
-			<td>{{$usuario->created_at}}</td>
-			
-		</tr>
-	@endforeach	
-	</tbody>
-
-
+  </tbody>
 </table>
+
+<ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
+  <li id="registrar-usuario" class="p-2">
+    <a type="button" onclick="newUser();" class="btn btn-primary">Registrar nuevo</a>
+  </li>
+</ul>
+
 

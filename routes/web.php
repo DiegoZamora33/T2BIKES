@@ -27,7 +27,7 @@ Route::resources([
     '/home/competencias'=>'Competencias', //Controlador Competencias
     '/home/carreras'=>'Carreras', //Controlador Carreras
     '/home/tiposcarrera'=>'TiposCarreras',  //Controlador Tipo de Carreras
-    '/home/usuarios'=>'Usuarios',  //Controlador Tipo de Carreras
+    '/home/usuarios'=>'Usuarios',  //Controlador Usuarios
 ]);
 
 //Prueba AJAX

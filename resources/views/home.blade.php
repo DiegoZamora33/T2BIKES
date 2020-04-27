@@ -10,7 +10,7 @@
 
             <ul class="list-unstyled components">
                 <li class="active mt-2" id="home">
-                    <a href="#">
+                    <a href="home">
                         <i class="fas fa-home"></i>
                         <span class="CTAs">Home</span>
                     </a>

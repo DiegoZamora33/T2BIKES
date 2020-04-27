@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class Usuarios extends Controller
 {
@@ -18,4 +19,21 @@ class Usuarios extends Controller
         return view('usuarios.front_mostrar_usuarios', $datos);
     }
 
+    public function create()
+    {
+        return view('usuarios.front_agregar_usuario');
+    }
+
+
+    public function store(Request $data)
+    {
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'idtipoUsuario' => $data['idtipoUsuario'],
+        ]);
+
+        return view('home');
+    }
 }
