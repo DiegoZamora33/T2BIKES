@@ -3,6 +3,7 @@
 var graficaCompetidor = "bar";
 var graficaCompetencia = "bar";
 var graficaCarrera = "bar";
+const url = 'http://localhost/T2BIKES/public';
 
 
 
@@ -198,6 +199,7 @@ $(document).ready(function ()
         });
       });
 
+     /*
       $("#sistema").click(function()
       {
         miOff();
@@ -212,6 +214,23 @@ $(document).ready(function ()
         }
         });
       });
+      */
+
+      $('#sistema').click(function (e) { 
+        e.preventDefault();
+        
+        console.log(url+"/home/competidores");
+        $.ajax({
+            type: "get",
+            url: url+"/home/competidores",
+            data: {},
+            dataType: "html",
+            success: function (response) {
+                console.log(response);
+                $('#mostrador').html(response);
+            }
+        });
+    });
 
     // Funcion para mostrar  Form de Nuevo Entrenador
     $("#registrar-entrenador").click(function()

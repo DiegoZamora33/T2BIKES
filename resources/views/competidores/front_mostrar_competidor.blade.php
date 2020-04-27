@@ -27,7 +27,7 @@ Mostrar datos
 			<td>{{$competidor->fechaRegistro}}</td>
 			<td>
 
-				<a href="{{'/home/competidores/'.$competidor->numeroCompetidor.'/edit'}}"> Editar</a>
+				<a href="{{'home/competidores/'.$competidor->numeroCompetidor.'/edit'}}"> Editar</a>
 
 			 	<form method="post" action="{{ url('/home/competidores/'.$competidor->numeroCompetidor) }}">
 

@@ -30,7 +30,6 @@ Route::resources([
 ]);
 
 //Prueba AJAX
-Route::get('/ajax/competidores', 'pruebaAJAX@competidores');
 Route::get('/ajax', function () {
     return view('pruebaAJAX');
 });

@@ -1,10 +1,10 @@
-<script src="\t2bikes\js\jquery-3.4.1.min.js"></script>
+<script src=" {{ asset('t2bikes\js\jquery-3.4.1.min.js') }}"></script>
 <button type="submit" id="btnAjax">Competidores</button>
 <div class="Contenido">
 
 </div>
 <script>
-    const url = 'http://localhost:8000'; 
+    const url = 'http://localhost/T2BIKES/public'; 
     
     $('#btnAjax').click(function (e) { 
         e.preventDefault();
