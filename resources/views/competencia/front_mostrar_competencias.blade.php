@@ -21,7 +21,7 @@ Mostrar datos
 			<td>{{$loop->iteration}}</td>
 			<td>{{$competencia->nombreCompetencia}}</td>
 			<td>{{$competencia->periodo}}</td>
-			<td>{{$competencia->status}}</td>
+			<td>{{$competencia->estatus}}</td>
 			<td>
 
 				<a href="{{'/home/competencias/'.$competencia->idCompetencia.'/edit'}}"> Editar</a>
