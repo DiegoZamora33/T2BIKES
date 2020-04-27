@@ -64,7 +64,7 @@
         <div class="Dato">
             <label for="estado">Estado de la competencia: </label>
             <input type="text" name="estado"  id="estado" value="{{ $estatus->estatus }}" readonly="readonly">
-            <input type="text" name="idEstatus" id="idEstatus" value="1" readonly="readonly" hidden="true">  
+            <input type="text" name="idEstatus" id="idEstatus" value="{{ $competencia->idEstatus }}" readonly="readonly" hidden="true">  
            
         </div>
         
