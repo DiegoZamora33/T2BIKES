@@ -15,9 +15,11 @@ class Competencias extends Controller
     public function index()
     {
         
-        //Extraemos todos los datos de las competencaias
-        $competencias = Competencia::all();
-      
+       //inner join 
+
+        $competencias = Competencia::join("estatuses","estatuses.idEstatus","=","competencias.idEstatus")
+        -> select("idCompetencia","nombreCompetencia","periodo","estatus")
+        ->get();
         return view('competencia.front_mostrar_competencias', compact('competencias'));
     }
 
