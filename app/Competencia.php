@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Competencia extends Model
 {
     //
+    protected $fillable = ['nombreCompetencia', 'periodo', 'idEstatus'];
 }

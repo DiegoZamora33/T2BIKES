@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Competencia;
+use App\Estatus;
 class Competencias extends Controller
 {
     /**
@@ -13,7 +14,11 @@ class Competencias extends Controller
      */
     public function index()
     {
-        //
+        
+        //Extraemos todos los datos de las competencaias
+        $competencias = Competencia::all();
+      
+        return view('competencia.front_mostrar_competencias', compact('competencias'));
     }
 
     /**
@@ -24,6 +29,7 @@ class Competencias extends Controller
     public function create()
     {
         //
+        return view('competencia.front_agregar_competencia');
     }
 
     /**
@@ -35,6 +41,10 @@ class Competencias extends Controller
     public function store(Request $request)
     {
         //
+        //Creamos un nuevo registro en la base de datos
+        Competencia::create($request->all());
+        //Nos redireccionamos al index
+        return redirect()->route('competencias.index');
     }
 
     /**
@@ -56,7 +66,13 @@ class Competencias extends Controller
      */
     public function edit($id)
     {
-        //
+       
+        //Extraemos la informacion de la competencia deseada
+        $competencia= Competencia::where('idCompetencia', $id)->first();
+
+        $estatus = Estatus::where('idEstatus',$competencia->idEstatus)->first();
+        //Enviamos la informacion 
+        return view('competencia.front_editar_competencia', compact('competencia','estatus'));
     }
 
     /**
@@ -68,7 +84,11 @@ class Competencias extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+          $nuevosDatos=request()->except(['_token','_method','estado']);
+        //Actualizamos los campos de la bd con los nuevos datos
+        Competencia::where('idCompetencia', $id)->update($nuevosDatos);
+        //Nos redireccionamos al index
+        return redirect()->route('competencias.index');
     }
 
     /**
@@ -79,6 +99,8 @@ class Competencias extends Controller
      */
     public function destroy($id)
     {
-        //
+        //buscammos coincidencia de una competencia con el id y se elimina
+        Competencia::where('idCompetencia', $id)->delete();
+        return redirect()->route('competencias.index');
     }
 }
