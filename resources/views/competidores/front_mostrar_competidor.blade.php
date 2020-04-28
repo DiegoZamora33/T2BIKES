@@ -29,15 +29,11 @@ Mostrar datos
 
 				<a href="{{'home/competidores/'.$competidor->numeroCompetidor.'/edit'}}"> Editar</a>
 
-			 	<form method="post" action="{{ url('/home/competidores/'.$competidor->numeroCompetidor) }}">
-
-				{{csrf_field() }}
-				{{ method_field('DELETE')}}
-
-				<button type="submit" onclick="return confirm('¿Borrar?');"> Borrar
-					
-				</button>
-				
+			 	<form method="post" action="{{ url('/home/competidores/'.$competidor->numeroCompetidor) }}" class="eliminarCompetidor">
+					{{csrf_field() }}
+					{{method_field('DELETE')}}
+					<input type="hidden" id='numeroCompetidor' value="{{$competidor->numeroCompetidor}}">
+					<button type="submit" onclick="return confirm('¿Borrar?');">Borrar</button>
 				</form>
 		
 
