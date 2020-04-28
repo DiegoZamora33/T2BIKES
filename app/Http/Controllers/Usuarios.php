@@ -15,8 +15,23 @@ class Usuarios extends Controller
      */
     public function index()
     {
-        $datos['usuarios'] = DB::select('SELECT name, email, idtipoUsuario, created_at FROM users');
+        $datos['usuarios'] = DB::select('SELECT name, email, tipo_usuarios.tipo AS idtipoUsuario, users.created_at FROM users INNER JOIN tipo_usuarios WHERE users.idtipoUsuario = tipo_usuarios.idTipoUsuario');
         return view('usuarios.front_mostrar_usuarios', $datos);
+    }
+
+    public function perfilUsuario()
+    {
+        //$datos['usuario'] = DB::select('SELECT name, email, tipo_usuarios.tipo AS idtipoUsuario, users.created_at FROM users INNER JOIN tipo_usuarios WHERE users.idtipoUsuario = tipo_usuarios.idTipoUsuario AND users.email = "'+$data['emal']+'"');
+        //return view('usuarios.front_mostrar_usuarios', $datos);
+
+        //return 'SELECT name, email, tipo_usuarios.tipo AS idtipoUsuario, users.created_at FROM users INNER JOIN tipo_usuarios WHERE users.idtipoUsuario = tipo_usuarios.idTipoUsuario AND users.email = "hola"';
+
+        return 'holis';
+    }
+
+    public function show($id)
+    {
+        //
     }
 
     public function create()

@@ -28,14 +28,13 @@ Route::resources([
     '/home/carreras'=>'Carreras', //Controlador Carreras
     '/home/tiposcarrera'=>'TiposCarreras',  //Controlador Tipo de Carreras
     '/home/usuarios'=>'Usuarios',  //Controlador Usuarios
+    '/home/usuarios/perfilUsuario', 'Usuarios@perfilUsuario',
 ]);
 
 //Prueba AJAX
 Route::get('/ajax', function () {
     return view('pruebaAJAX');
 });
-
-
 
 
 

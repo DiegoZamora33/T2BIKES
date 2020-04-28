@@ -13,7 +13,8 @@
   <tbody>
 
   	@foreach($usuarios as $usuario)
-    <tr onclick="getUser();">
+    <tr id="{{ $usuario->email }}" onclick="getUser(this);">
+      <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_{{ $usuario->email }}">
       <td data-label="Nombre">{{ $usuario->name }}</td>
       <td data-label="Email">{{ $usuario->email }}</td>
       <td data-label="Tipo">{{ $usuario->idtipoUsuario }}</td>

@@ -319,18 +319,30 @@ function getTour(){
   }
   });
 }
-function getUser(){
-  this.className = 'active';
+
+// <------------------ Mostrar Perfil de un Usuario ------------------->
+function getUser(miUser)
+{
+  var user = miUser.id;
+  var token = miUser.children[0].value;
+
   $.ajax({
-    url: 'perfil-usuario.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
+      url: url+'/home/usuarios/perfilUsuario',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{email : user},
+
+      success:function(response)
+      {
+
       }
-    );
-  }
-  });
+
+    });
+
 }
+// <-------------------------------------------------------------------->
+
 function getCarrera(){
   this.className = 'active';
   $.ajax({
@@ -550,7 +562,7 @@ function miAjax(datos)
 
 
 
-// Funciones para Enviar Formularios
+// <------------------------------------- Funcion para Enviar Formulario USUARIO ------------------------------------>
 function enviarUsuario()
 {
 
@@ -607,7 +619,7 @@ function enviarUsuario()
     }
   });
 }
-
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
 
 // <-------------------     Funciones para Validacion de Campos --------------------------> 
 
