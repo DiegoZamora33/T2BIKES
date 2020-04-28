@@ -10,7 +10,11 @@
 <h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Registrar Usuario</h3>
 
 </div>
-
+<br>
+  
+  <div id="miMensaje" class="alert alert-success alert-dismissible" role="alert" style="display: none;">
+    <strong>Usuario Creado Correctamente.</strong>
+  </div>
 
 <br>
 
@@ -21,17 +25,17 @@
 
     <div class="form-group col-md-4">
       <label for="name">Nombre Completo</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="Ej. Juan Pérez">
+      <input title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" type="text" class="form-control" id="name" name="name" placeholder="Ej. Juan Pérez" required autofocus>
     </div>
 
     <div class="form-group col-md-4">
       <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" name="email" placeholder="Ej. Juanit01@gmail.com">
+      <input title="Por favor introduzca una cuenta de correo valida" type="email" class="form-control" id="email" name="email" placeholder="Ej. Juanit01@gmail.com" required>
     </div>
 
     <div class="form-group col-md-4">
       <label for="tipoUsuario">Tipo</label>
-      <select class="form-control" id="tipoUsuario" name="tipoUsuario">
+      <select class="form-control" id="tipoUsuario" name="tipoUsuario" required>
           <option value="0">Sin Asignar</option>
           <option value="1">Administrador</option>
           <option value="2">Consulta</option>
@@ -44,14 +48,14 @@
   <div class="form-row">
       <div class="form-group col-md-4 mx-auto">
         <label for="password">Contraseña</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Use numeros y letras">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Use numeros y letras" required>
       </div>
   </div>
 
   <div class="form-row">
       <div class="form-group col-md-4 mx-auto">
         <label for="password-confirm">Confirmar Contraseña</label>
-        <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Repita la Contraseña">
+        <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Repita la Contraseña" required>
       </div>
   </div>
 <br>

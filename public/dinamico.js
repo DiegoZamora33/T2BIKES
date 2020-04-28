@@ -21,14 +21,12 @@ $(document).ready(function ()
       this.className = "active";
           e.preventDefault();
           
-          console.log(url+"/home/competidores");
           $.ajax({
               type: "get",
               url: url+"/home/competidores",
               data: {},
               dataType: "html",
               success: function (response) {
-                  console.log(response);
                   $('#mostrador').html(response);
               }
         });
@@ -176,14 +174,12 @@ $(document).ready(function ()
 
         e.preventDefault();
         
-        console.log(url+"/home/usuarios");
         $.ajax({
             type: "get",
             url: url+"/home/usuarios",
             data: {},
             dataType: "html",
             success: function (response) {
-                console.log(response);
                 $('#mostrador').html(response);
             }
         });
@@ -276,15 +272,12 @@ function competencias(){
 
 function usuarios(){
         this.className = "active";
-
-        console.log(url+"/home/usuarios");
         $.ajax({
             type: "get",
             url: url+"/home/usuarios",
             data: {},
             dataType: "html",
             success: function (response) {
-                console.log(response);
                 $('#mostrador').html(response);
             }
         });
@@ -415,7 +408,6 @@ function newUser()
         data: {},
         dataType: "html",
         success: function (response) {
-            console.log(response);
             $('#mostrador').html(response);
         }
     });
@@ -565,12 +557,65 @@ function enviarUsuario()
   var name = $('#name').val();
   var email = $('#email').val();
   var password = $('#password').val();
-  var password-confirm = $('#password-confirm').val();
+  var password_confirm = $('#password-confirm').val();
   var tipoUsuario = $('#tipoUsuario').val();
 
   var token = $('#token').val();
 
-  alert(name+email+password+tipoUsuario);
+  $.ajax({
+    url: url+'/home/usuarios',
+    headers: {'X-CSRF-TOKEN':token},
+    type: 'POST',
+    dataType: 'json',
+    data:{name: name, email: email, password: password, idtipoUsuario: tipoUsuario},
+
+    success:function(response)
+    {
+      switch(response['mensaje'])
+      {
+        case "creado":
+          document.getElementById('miMensaje').innerHTML ="<strong> El Usuario fue creado correctamente!!! </strong>";
+          $('#miMensaje').fadeIn();
+          setTimeout(
+          function() {
+            $("#miMensaje").fadeOut(1500);
+             setTimeout(
+                function() {
+                  newUser();
+                },1000);
+
+          },3000);
+        break;
+
+        case "duplicado":
+          document.getElementById('miMensaje').innerHTML ="<strong> ERROR, El Email: '"+response['email']+"'' ya esta Registrado </strong>";
+          $('#miMensaje').fadeIn();
+          document.getElementById('email').focus();
+        break;
+
+        case "noUsuario":
+          document.getElementById('miMensaje').innerHTML ="<strong> Dedes elegir un tipo de Usuario </strong>";
+          $('#miMensaje').fadeIn();
+          document.getElementById('tipoUsuario').focus();
+        break;
+
+        default:
+          document.getElementById('miMensaje').innerHTML ="<strong> ERROR al crear el Nuevo Usuario :( </strong>";
+          $('#miMensaje').fadeIn();
+        break;
+      }
+    }
+  });
+}
 
 
+// <-------------------     Funciones para Validacion de Campos --------------------------> 
+
+function soloLetras(cad, camp){
+  var exp = /^[a-zA-Zñáéíóú\s]+$/;
+  if (!exp.exec(cad)){
+    alert("El campo "+camp+" solo puede contener letras y espacios");
+    return false;
+  }
+  return true;
 }

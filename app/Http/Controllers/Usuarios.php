@@ -27,13 +27,32 @@ class Usuarios extends Controller
 
     public function store(Request $data)
     {
-        User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'idtipoUsuario' => $data['idtipoUsuario'],
-        ]);
+        if($data->ajax())
+        {
+            if($data['idtipoUsuario'] != "0")
+            {
+                if(User::where('email','=',$data['email'])->first() == null)
+                {
+                    User::create([
+                        'name' => $data['name'],
+                        'email' => $data['email'],
+                        'password' => bcrypt($data['password']),
+                        'idtipoUsuario' => $data['idtipoUsuario'],
+                    ]);
 
-        return view('home');
+                    return response()->json(["mensaje" => "creado", "name" => $data['name'], "email" => $data['email']]);
+                }
+                else
+                {
+                    return response()->json(["mensaje" => "duplicado", "name" => $data['name'], "email" => $data['email']]);
+                }
+            }
+            else
+            {
+                return response()->json(["mensaje" => "noUsuario", "name" => $data['name'], "email" => $data['email']]);
+            }
+        }
+
+        //return view('home');
     }
 }
