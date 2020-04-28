@@ -13,103 +13,49 @@
 
 
 <br>
-<!--form>
+
+<form class="form-horizontal"  name="formulario" action="" onSubmit="enviarUsuario(); return false">
   <div class="form-row">
+    
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
     <div class="form-group col-md-4">
-      <label for="inputEmail4">Nombre Completo</label>
-      <input type="text" class="form-control" id="inputEmail4" placeholder="Ej. Juan Pérez">
+      <label for="name">Nombre Completo</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Ej. Juan Pérez">
     </div>
+
     <div class="form-group col-md-4">
-      <label for="inputPassword4">Nombre de Usuario</label>
-      <input type="text" class="form-control" id="inputPassword4" placeholder="Ej. Juanit01">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email" placeholder="Ej. Juanit01@gmail.com">
     </div>
+
     <div class="form-group col-md-4">
-      <label for="inputAddress">Tipo</label>
-      <select class="form-control">
-          <option>Sin Asignar</option>
-          <option>Administrador</option>
-          <option>Básico</option>
+      <label for="tipoUsuario">Tipo</label>
+      <select class="form-control" id="tipoUsuario" name="tipoUsuario">
+          <option value="0">Sin Asignar</option>
+          <option value="1">Administrador</option>
+          <option value="2">Consulta</option>
+          <option value="3">Registro</option>
       </select>
+
     </div>
   </div>
+
   <div class="form-row">
       <div class="form-group col-md-4 mx-auto">
-        <label for="inputCity">Contraseña</label>
-        <input type="password" class="form-control" id="inputCity" placeholder="Use numeros y letras">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Use numeros y letras">
+      </div>
+  </div>
+
+  <div class="form-row">
+      <div class="form-group col-md-4 mx-auto">
+        <label for="password-confirm">Confirmar Contraseña</label>
+        <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Repita la Contraseña">
       </div>
   </div>
 <br>
 
 
   <button type="submit" class="btn btn-primary">Registrar</button>
-</form-->
-
-                    <form class="form-horizontal" method="POST" action="home/usuarios">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Tipo de Usuario</label>
-
-                            <div class="col-md-6">
-                                <input id="idtipoUsuario" type="text" class="form-control" name="idtipoUsuario" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+</form>

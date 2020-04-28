@@ -276,7 +276,7 @@ function competencias(){
 
 function usuarios(){
         this.className = "active";
-                
+
         console.log(url+"/home/usuarios");
         $.ajax({
             type: "get",
@@ -553,4 +553,24 @@ function grafCarrera()
 function miAjax(datos)
 {
   alert(datos);
+}
+
+
+
+
+// Funciones para Enviar Formularios
+function enviarUsuario()
+{
+
+  var name = $('#name').val();
+  var email = $('#email').val();
+  var password = $('#password').val();
+  var password-confirm = $('#password-confirm').val();
+  var tipoUsuario = $('#tipoUsuario').val();
+
+  var token = $('#token').val();
+
+  alert(name+email+password+tipoUsuario);
+
+
 }
