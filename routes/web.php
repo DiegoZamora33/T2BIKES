@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-///Route::get('/home/competidores', 'Competidores@index')->name('competidores');
+Route::match(['get', 'post'], '/home/usuarios/perfilUsuario', 'Usuarios@perfilUsuario')->name('perfilUsuario');
 
 //Ruta para los controladores resource
 Route::resources([
@@ -28,7 +28,6 @@ Route::resources([
     '/home/carreras'=>'Carreras', //Controlador Carreras
     '/home/tiposcarrera'=>'TiposCarreras',  //Controlador Tipo de Carreras
     '/home/usuarios'=>'Usuarios',  //Controlador Usuarios
-    '/home/usuarios/perfilUsuario', 'Usuarios@perfilUsuario',
 ]);
 
 //Prueba AJAX

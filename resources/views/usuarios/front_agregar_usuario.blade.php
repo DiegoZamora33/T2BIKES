@@ -38,8 +38,8 @@
       <select class="form-control" id="tipoUsuario" name="tipoUsuario" required>
           <option value="0">Sin Asignar</option>
           <option value="1">Administrador</option>
-          <option value="2">Consulta</option>
-          <option value="3">Registro</option>
+          <option value="2">Registro</option>
+          <option value="3">Consulta</option>
       </select>
 
     </div>

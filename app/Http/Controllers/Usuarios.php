@@ -19,14 +19,16 @@ class Usuarios extends Controller
         return view('usuarios.front_mostrar_usuarios', $datos);
     }
 
-    public function perfilUsuario()
+    public function perfilUsuario(Request $data)
     {
-        //$datos['usuario'] = DB::select('SELECT name, email, tipo_usuarios.tipo AS idtipoUsuario, users.created_at FROM users INNER JOIN tipo_usuarios WHERE users.idtipoUsuario = tipo_usuarios.idTipoUsuario AND users.email = "'+$data['emal']+'"');
-        //return view('usuarios.front_mostrar_usuarios', $datos);
+        if($data->ajax())
+        {
+             $datos['usuario'] = DB::select('SELECT name, email, tipo_usuarios.tipo AS idtipoUsuario, 
+                users.created_at, users.idtipoUsuario as id FROM users INNER JOIN tipo_usuarios WHERE users.idtipoUsuario = tipo_usuarios.idTipoUsuario AND users.email = "'.$data['user'].'"');
 
-        //return 'SELECT name, email, tipo_usuarios.tipo AS idtipoUsuario, users.created_at FROM users INNER JOIN tipo_usuarios WHERE users.idtipoUsuario = tipo_usuarios.idTipoUsuario AND users.email = "hola"';
+             return view('usuarios.front_perfil_usuario', $datos);
+        }
 
-        return 'holis';
     }
 
     public function show($id)

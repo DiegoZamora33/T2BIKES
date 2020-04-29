@@ -330,12 +330,12 @@ function getUser(miUser)
       url: url+'/home/usuarios/perfilUsuario',
       headers: {'X-CSRF-TOKEN':token},
       type: 'POST',
-      dataType: 'json',
-      data:{email : user},
+      dataType: 'html',
+      data:{user: user},
 
       success:function(response)
       {
-
+        $('#mostrador').html(response);
       }
 
     });

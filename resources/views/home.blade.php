@@ -122,7 +122,16 @@
             <div class="container text-center" id="mostrador">
 
                 <h2>Bienvenido {{ Auth::user()->name }}</h2>
-                <h4>Estas Registrado como: {{ Auth::user()->idtipoUsuario }}</h4>
+
+                @if(Auth::user()->idtipoUsuario == 1)
+                     <h4>Estas Registrado como: Administrador</h4>
+                @elseif (Auth::user()->idtipoUsuario == 2)
+                     <h4>Estas Registrado como: Registro</h4>
+                 @elseif (Auth::user()->idtipoUsuario == 3)
+                     <h4>Estas Registrado como: Consulta</h4>
+                @endif
+
+
                 <p>Recuerda siempre cerrar tu sesión</p>
 
             </div>
