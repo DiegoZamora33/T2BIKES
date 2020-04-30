@@ -42,20 +42,20 @@
     <div class="form-group col-md-4">
       <label for="competencia">Competencia</label>
       <select id="competencia" name="competencia" class="form-control">
-          <option>Sin Asignar</option>
-          <option>Tour Morelia 2020</option>
-          <option>Racing Mountain</option>
-          <option>Los Azufres 40k</option>
+          <option value="0">Sin Asignar</option>
+          <option value="1">Tour Morelia 2020</option>
+          <option value="2">Racing Mountain</option>
+          <option value="3">Los Azufres 40k</option>
       </select>
     </div>
 
     <div class="form-group col-md-4">
       <label for="entrenador">Entrenador</label>
       <select id="entrenador" name="entrenador" class="form-control">
-          <option>Sin Asignar</option>
-          <option>Raul Barajas Fierros</option>
-          <option>Rafael Silva Campos</option>
-          <option>Julieta Venegas</option>
+          <option value="0">Sin Asignar</option>
+          <option value="1">Raul Barajas Fierros</option>
+          <option value="2">Rafael Silva Campos</option>
+          <option value="3">Julieta Venegas</option>
       </select>
     </div>
 

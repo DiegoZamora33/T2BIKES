@@ -10,11 +10,6 @@
 <h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Registrar Usuario</h3>
 
 </div>
-<br>
-  
-  <div id="miMensaje" class="alert alert-success alert-dismissible" role="alert" style="display: none;">
-    <strong>Usuario Creado Correctamente.</strong>
-  </div>
 
 <br>
 

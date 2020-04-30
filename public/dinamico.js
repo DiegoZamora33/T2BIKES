@@ -242,6 +242,67 @@ function effectFadeIn()
 }
 // <--------------------------------------------------------------------->
 
+// <--------------------------- Funciones ALERT --------------------------->
+function getSuccess(miMensaje)
+{
+  $.notify({
+      // options
+      message: miMensaje
+  },{
+      // settings
+      type: 'success',
+    placement: {
+          from: "bottom",
+          align: "right"
+      }
+  });
+}
+
+function getWarning(miMensaje)
+{
+  $.notify({
+      // options
+      message: miMensaje
+  },{
+      // settings
+      type: 'warning',
+    placement: {
+          from: "bottom",
+          align: "right"
+      }
+  });
+}
+
+function getDanger(miMensaje)
+{
+  $.notify({
+      // options
+      message: miMensaje
+  },{
+      // settings
+      type: 'danger',
+    placement: {
+          from: "bottom",
+          align: "right"
+      }
+  });
+}
+
+function getInfo(miMensaje)
+{
+  $.notify({
+      // options
+      message: miMensaje
+  },{
+      // settings
+      type: 'info',
+    placement: {
+          from: "bottom",
+          align: "right"
+      }
+  });
+}
+// <--------------------------------------------------------------------->
 
 
 function getStat(){
@@ -353,6 +414,8 @@ function getTour(){
 // <------------------ Mostrar Perfil de un Usuario ------------------->
 function getUser(miUser)
 {
+  effectFadeOut();
+
   var user = miUser.id;
   var token = miUser.children[0].value;
 
@@ -369,6 +432,8 @@ function getUser(miUser)
       }
 
     });
+
+  effectFadeIn();
 
 }
 // <-------------------------------------------------------------------->
@@ -615,34 +680,22 @@ function enviarUsuario()
       switch(response['mensaje'])
       {
         case "creado":
-          document.getElementById('miMensaje').innerHTML ="<strong> El Usuario fue creado correctamente!!! </strong>";
-          $('#miMensaje').fadeIn();
-          setTimeout(
-          function() {
-            $("#miMensaje").fadeOut(1500);
-             setTimeout(
-                function() {
-                  newUser();
-                },1000);
-
-          },3000);
+          getSuccess("El Usuario fue creado correctamente!!!");
+          newUser();
         break;
 
         case "duplicado":
-          document.getElementById('miMensaje').innerHTML ="<strong> ERROR, El Email: '"+response['email']+"'' ya esta Registrado </strong>";
-          $('#miMensaje').fadeIn();
+          getDanger("ERROR, El Email: '"+response['email']+"'' ya esta Registrado");
           document.getElementById('email').focus();
         break;
 
         case "noUsuario":
-          document.getElementById('miMensaje').innerHTML ="<strong> Dedes elegir un tipo de Usuario </strong>";
-          $('#miMensaje').fadeIn();
+          getDanger("Dedes elegir un tipo de Usuario!!!");
           document.getElementById('tipoUsuario').focus();
         break;
 
         default:
-          document.getElementById('miMensaje').innerHTML ="<strong> ERROR al crear el Nuevo Usuario :( </strong>";
-          $('#miMensaje').fadeIn();
+          getDanger("ERROR al crear el Nuevo Usuario :(");
         break;
       }
     }
@@ -670,7 +723,8 @@ function enviarCompetidor()
     headers: {'X-CSRF-TOKEN':token},
     type: 'POST',
     dataType: 'json',
-    data:{name: name, email: email, password: password, idtipoUsuario: tipoUsuario},
+    data:{nombre: nombre, apellidoPaterno: apellidoPaterno, apellidoMaterno: apellidoMaterno, 
+          numeroCompetidor: numeroCompetidor, competencia: competencia, entrenador:entrenador, tiempoEntrenamiento, tiempoEntrenamiento},
 
     success:function(response)
     {

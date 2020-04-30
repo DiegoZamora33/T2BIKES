@@ -18,7 +18,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Para Acceder aun Perfil de un Usuario
 Route::match(['get', 'post'], '/home/usuarios/perfilUsuario', 'Usuarios@perfilUsuario')->name('perfilUsuario');
+
+// Para Acceder aun Perfil de un Competidor
+Route::match(['get', 'post'], '/home/competidores/perfilUsuario', 'Competidores@perfilCompetidor')->name('perfilCompetidor');
+
+
+
 
 //Ruta para los controladores resource
 Route::resources([

@@ -35,6 +35,9 @@
 
     <script src="{{ asset('dinamico.js') }}"></script>
 
+    <script src="{{ asset('t2bikes/js/alert.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('t2bikes/css/animate.css') }}">
+
   </head>
    
 <body>
