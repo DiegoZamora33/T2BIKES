@@ -229,8 +229,8 @@ function miOff()
 // <-------------------- Funcion para Efecto FadeIn --------------------->
 function effectFade()
 {
-    document.getElementById('mostrador').style = 'display: none'; 
-    $('#mostrador').fadeIn(600);
+    $('#mostrador').fadeOut(250);
+    $('#mostrador').fadeIn(250);
 }
 // <--------------------------------------------------------------------->
 
