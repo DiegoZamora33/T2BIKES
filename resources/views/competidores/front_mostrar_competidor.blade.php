@@ -13,7 +13,8 @@
   <tbody>
 
   	@foreach($competidores as $competidor)
-    <tr onclick="getComp();">
+    <tr id="{{ $competidor->numeroCompetidor }}" onclick="getComp(this);">
+      <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_{{ $competidor->numeroCompetidor }}">
       <td data-label="Número de competidor">{{ $competidor->numeroCompetidor }}</td>
       <td data-label="Nombre">{{ $competidor->nombre }}</td>
       <td data-label="Paterno">{{ $competidor->apellidoPaterno }}</td>
@@ -27,6 +28,6 @@
 
 <ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
   <li id="registrar-entrenador" class="p-2">
-    <a type="button" onclick="newComp();" class="btn btn-primary">Reistrar nuevo</a>
+    <a type="button" onclick="newComp();" class="btn btn-primary">Registrar Nuevo</a>
   </li>
 </ul>

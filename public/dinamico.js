@@ -374,18 +374,32 @@ function usuarios(){
         effectFadeIn();
 }
 
-function getComp(){
-  this.className = 'active';
+// <-------------------------- Funcion Para Mostrar PERFIL COMPETIDOR ------------------------------>
+function getComp(miCompetidor)
+{
+  effectFadeOut();
+
+  var numeroCompetidor = miCompetidor.id;
+  var token = miCompetidor.children[0].value;
+
   $.ajax({
-    url: 'perfil-competidor.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
+      url: url+'/home/competidores/perfilCompetidor',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{numeroCompetidor: numeroCompetidor},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
       }
-    );
-  }
+
   });
+
+  effectFadeIn();
 }
+// <------------------------------------------------------------------------------------------------>
+
 function getEntre(){
   this.className = 'active';
   $.ajax({
@@ -731,34 +745,21 @@ function enviarCompetidor()
       switch(response['mensaje'])
       {
         case "creado":
-          document.getElementById('miMensaje').innerHTML ="<strong> El Usuario fue creado correctamente!!! </strong>";
-          $('#miMensaje').fadeIn();
-          setTimeout(
-          function() {
-            $("#miMensaje").fadeOut(1500);
-             setTimeout(
-                function() {
-                  newUser();
-                },1000);
-
-          },3000);
+            getSuccess("El Competidor '"+response['numeroCompetidor']+"' fue creado con Exito...");
+            newComp();
         break;
 
-        case "duplicado":
-          document.getElementById('miMensaje').innerHTML ="<strong> ERROR, El Email: '"+response['email']+"'' ya esta Registrado </strong>";
-          $('#miMensaje').fadeIn();
-          document.getElementById('email').focus();
+        case "duplicado":;
+            getDanger("ERROR: El Numero de Competidor '"+response['numeroCompetidor']+"' ya esta asociado a otro Competidor...")
         break;
 
-        case "noUsuario":
-          document.getElementById('miMensaje').innerHTML ="<strong> Dedes elegir un tipo de Usuario </strong>";
-          $('#miMensaje').fadeIn();
-          document.getElementById('tipoUsuario').focus();
+        case "numCero":
+            getDanger("ERROR: El Numero de Competidor no puede ser Cero...");
         break;
 
         default:
-          document.getElementById('miMensaje').innerHTML ="<strong> ERROR al crear el Nuevo Usuario :( </strong>";
-          $('#miMensaje').fadeIn();
+            getDanger("ERROR: No pudimos crear el Nuevo Competidor...");
+            newComp();
         break;
       }
     }

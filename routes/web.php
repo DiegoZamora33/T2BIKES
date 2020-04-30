@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::match(['get', 'post'], '/home/usuarios/perfilUsuario', 'Usuarios@perfilUsuario')->name('perfilUsuario');
 
 // Para Acceder aun Perfil de un Competidor
-Route::match(['get', 'post'], '/home/competidores/perfilUsuario', 'Competidores@perfilCompetidor')->name('perfilCompetidor');
+Route::match(['get', 'post'], '/home/competidores/perfilCompetidor', 'Competidores@perfilCompetidor')->name('perfilCompetidor');
 
 
 

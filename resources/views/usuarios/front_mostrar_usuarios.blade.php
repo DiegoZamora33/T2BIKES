@@ -27,7 +27,7 @@
 
 <ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
   <li id="registrar-usuario" class="p-2">
-    <a type="button" onclick="newUser();" class="btn btn-primary">Registrar nuevo</a>
+    <a type="button" onclick="newUser();" class="btn btn-primary">Registrar Nuevo</a>
   </li>
 </ul>
 

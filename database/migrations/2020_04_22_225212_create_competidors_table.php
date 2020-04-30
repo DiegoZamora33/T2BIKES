@@ -19,7 +19,7 @@ class CreateCompetidorsTable extends Migration
             $table->string('nombre',50);
             $table->string('apellidoPaterno',50);
             $table->string('apellidoMaterno',50)->nullable();
-            $table->date('fechaRegistro');
+            $table->date('fechaRegistro')->nullable();
             $table->timestamps();
         });
     }
