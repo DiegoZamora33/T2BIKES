@@ -18,7 +18,6 @@ class CreateEntrenadorsTable extends Migration
             $table->string('nombre',50);
             $table->string('apellidoPaterno',50);
             $table->string('apellidoMaterno',50)->nullable();
-            $table->date('fechaRegistro');
             $table->longText('patrocinio')->nullable();
             $table->timestamps();
         });
