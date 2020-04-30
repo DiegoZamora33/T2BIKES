@@ -234,14 +234,14 @@ function getStat(){
 }
 
 function competidores(){
-        $.ajax({
-          url: "tables/lista-competidores.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-            }
-          );
-        }
+          $.ajax({
+              type: "get",
+              url: url+"/home/competidores",
+              data: {},
+              dataType: "html",
+              success: function (response) {
+                  $('#mostrador').html(response);
+              }
         });
 }
 
@@ -356,18 +356,27 @@ function getCarrera(){
   });
 }
 
+
+// <------------------ Funcion para mostrar FORM de Nuevo Competidor ------------------->
 function newComp(){
   this.className = 'active';
-  $.ajax({
-    url: 'forms/registrar-competidor.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
-      }
-    );
-  }
-  });
+  
+
+ $.ajax({
+        type: "get",
+        url: url+"/home/competidores/create",
+        data: {},
+        dataType: "html",
+        success: function (response) {
+            $('#mostrador').html(response);
+        }
+    });
+
+
 }
+// <----------------------------------------------------------------------------------->
+
+
 
 function editComp(){
   this.className = 'active';

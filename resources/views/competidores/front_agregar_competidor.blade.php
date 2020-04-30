@@ -1,74 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registrar Competidor</title>
-</head>
-<style>
-    *{
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-    h1{
-        padding: 1em;
-    }
-    .Dato{
-        width: 70%;
-        margin: auto;
-        padding: 1em;
-    }
-    .Dato > label{
-        float: left;
-        font-size: 1.3em;
-    }
-    .Dato > input{
-        float: right;
-        font-size: 1.3em;
-        width: 70%;
-        text-align: left;
-    }
-    .Boton{
-        padding: 2em;
-    }
-    .Boton > input{
-        font-size: 1.2em;
-    }
-</style>
-<body>
-    <h1>Agregar un Competidor</h1>
-    <form action="/home/competidores" method="post">
-        {{ csrf_field() }}
-        <div class="Dato">
-            <label for="numeroCompetidor">Numero de Competidor: </label>
-            <input type="text" name="numeroCompetidor" id="numeroCompetidor" pattern="^[0-9A-Z]{0,10}$" title="El numero de competidor solo pose numeros y letras mayusculas (Maximo 10 caracteres)" required>    
-        </div class="Dato">
-        
-        <div class="Dato">
-            <label for="nombre">Nombre: </label>
-            <input type="text" name="nombre" id="nombre" pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" title="El nombre solo pose letras, acentos, puntos y espacios (Maximo 50 caracteres)" required>    
-        </div class="Dato"> 
-        
-        <div class="Dato">
-            <label for="apellidoPaterno">Apellido Paterno: </label>
-            <input type="text" name="apellidoPaterno" id="apellidoPaterno" pattern="^[a-zA-ZñÑáéíóú]{0,50}$" title="El apellido paterno solo pose letras y acentos (Maximo 50 caracteres)" required>    
-        </div class="Dato"> 
-        
-        <div class="Dato">
-            <label for="apellidoMaterno">Apellido Materno: </label>
-            <input type="text" name="apellidoMaterno" id="apellidoMaterno" pattern="^[a-zA-ZñÑáéíóú]{0,50}$" title="El apellido materno solo pose letras y acentos (Maximo 50 caracteres)">    
-        </div class="Dato"> 
-        
-        <div class="Dato">
-            <label for="fechaRegistro">Fecha de Registro:  </label>
-            <input type="date" name="fechaRegistro" id="fechaRegistro" value="{{date('Y-m-d')}}" required>
-        </div>
+<div class="row">
 
-        <div class="Boton">
-            <input type="submit" value="Enviar">
-        </div>
-    </form>
-</body>
-</html>
+<div class="text-left col-md-2">
+  <a onclick="competidores()" type="button" href="#" class="bg-primary border border-primary rounded p-1 superBoton text-left text-success">
+  <i class="align-middle fas fa-arrow-left text-white" style="font-size: 24px;"></i>
+    <label class="mt-2 text-white d-md-inline" style="cursor: pointer; font-size: 15px;">Atras</label>
+  </a>
+</div>
+
+<h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Registrar Competidor</h3>
+
+</div>
+
+
+<br>
+<form>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputEmail4">Nombre</label>
+      <input type="text" class="form-control" id="inputEmail4" placeholder="">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">Apellido Paterno</label>
+      <input type="text" class="form-control" id="inputPassword4" placeholder="">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputAddress">Apellido Materno</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="">
+    </div>
+  </div>
+  <div class="form-row">
+      <div class="form-group col-md-4 mx-auto">
+        <label for="inputCity">Numero de Competidor</label>
+        <input type="text" class="form-control" id="inputCity" placeholder="">
+      </div>
+
+    <div class="form-group col-md-4">
+      <label for="inputCity">Competencia</label>
+      <select class="form-control">
+          <option>Sin Asignar</option>
+          <option>Tour Morelia 2020</option>
+          <option>Racing Mountain</option>
+          <option>Los Azufres 40k</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="inputCity">Entrenador</label>
+      <select class="form-control">
+          <option>Sin Asignar</option>
+          <option>Raul Barajas Fierros</option>
+          <option>Rafael Silva Campos</option>
+          <option>Julieta Venegas</option>
+      </select>
+    </div>
+
+
+  </div>
+
+  <div class="container d-flex justify-content-center">
+    <div class="col-md-4">
+      <label for="inputCity">Tiempo de Entrenamiento</label>
+      <div class="d-flex w-50 mx-auto">
+        <input type="number" class="form-control" id="inputCity" min="0" max="18" placeholder="0">
+        <label class="mt-auto ml-3">Meses</label>
+      </div>
+    </div>
+  </div>
+<br>
+
+
+  <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
