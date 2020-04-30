@@ -232,12 +232,13 @@ function miOff()
 // <-------------------- Funcion para Efecto FadeIn --------------------->
 function effectFadeOut()
 {
-    $('#mostrador').fadeOut(200);
+    //$('#mostrador').fadeOut(300);
+    document.getElementById('mostrador').style = "display: none;";
 }
 
 function effectFadeIn()
 {
-    $('#mostrador').fadeIn(350);
+    $('#mostrador').fadeIn(700);
 }
 // <--------------------------------------------------------------------->
 
