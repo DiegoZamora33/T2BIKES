@@ -9,17 +9,20 @@ const url = 'http://localhost/T2BIKES/public';
 
 $(document).ready(function ()
 {
+
+  effectFadeOut();
+
     // Funcion para el menu
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
 
     // Funcion para Mostar Lista de Competidores
-    $('#competidores').click(function (e) { 
+    $('#competidores').click(function () { 
 
       miOff();
       this.className = "active";
-          e.preventDefault();
+        effectFadeOut();
           
           $.ajax({
               type: "get",
@@ -30,7 +33,7 @@ $(document).ready(function ()
                   $('#mostrador').html(response);
               }
         });
-        effectFade();
+        effectFadeIn();
       });
 
     // Cuando damos click en Entrenadores y se ponga blanco el fondo
@@ -47,7 +50,6 @@ $(document).ready(function ()
           );
         }
         });
-      effectFade();
    });
 
 
@@ -169,12 +171,12 @@ $(document).ready(function ()
       });
 
 
-      $('#sistema').click(function (e) { 
+      $('#sistema').click(function () { 
 
         miOff();
         this.className = "active";
 
-        e.preventDefault();
+        effectFadeOut();
         
         $.ajax({
             type: "get",
@@ -186,7 +188,7 @@ $(document).ready(function ()
             }
         });
 
-        effectFade();
+        effectFadeIn();
     });
 
     // Funcion para mostrar  Form de Nuevo Entrenador
@@ -205,7 +207,8 @@ $(document).ready(function ()
         });
     });
 
-    effectFade();
+
+    effectFadeIn();
 });
 
 function miOff()
@@ -227,10 +230,14 @@ function miOff()
 /*------------Funciones genericas------------*/
 
 // <-------------------- Funcion para Efecto FadeIn --------------------->
-function effectFade()
+function effectFadeOut()
 {
-    $('#mostrador').fadeOut(250);
-    $('#mostrador').fadeIn(250);
+    $('#mostrador').fadeOut(200);
+}
+
+function effectFadeIn()
+{
+    $('#mostrador').fadeIn(350);
 }
 // <--------------------------------------------------------------------->
 
@@ -250,6 +257,8 @@ function getStat(){
 }
 
 function competidores(){
+
+        effectFadeOut();
           $.ajax({
               type: "get",
               url: url+"/home/competidores",
@@ -259,7 +268,7 @@ function competidores(){
                   $('#mostrador').html(response);
               }
         });
-        effectFade();
+        effectFadeIn();
 }
 
 
@@ -288,6 +297,8 @@ function competencias(){
 }
 
 function usuarios(){
+
+        effectFadeOut();
         this.className = "active";
         $.ajax({
             type: "get",
@@ -298,7 +309,7 @@ function usuarios(){
                 $('#mostrador').html(response);
             }
         });
-        effectFade();
+        effectFadeIn();
 }
 
 function getComp(){
@@ -379,7 +390,7 @@ function getCarrera(){
 function newComp(){
   this.className = 'active';
   
-
+ effectFadeOut();
  $.ajax({
         type: "get",
         url: url+"/home/competidores/create",
@@ -389,7 +400,7 @@ function newComp(){
             $('#mostrador').html(response);
         }
     });
-    effectFade();
+    effectFadeIn();
 }
 // <----------------------------------------------------------------------------------->
 
@@ -440,6 +451,7 @@ function newUser()
 {
     this.className = "active";
     
+    effectFadeOut();
     $.ajax({
         type: "get",
         url: url+"/home/usuarios/create",
@@ -449,7 +461,7 @@ function newUser()
             $('#mostrador').html(response);
         }
     });
-   effectFade();
+   effectFadeIn();
 }
 
 
@@ -576,17 +588,6 @@ function grafCarrera()
   }
   $('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
 }
-
-
-
-
-// Funcion intento AJAX
-function miAjax(datos)
-{
-  alert(datos);
-}
-
-
 
 
 // <------------------------------------- Funcion para Enviar Formulario USUARIO ------------------------------------>
