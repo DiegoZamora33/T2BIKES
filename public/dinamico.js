@@ -30,6 +30,7 @@ $(document).ready(function ()
                   $('#mostrador').html(response);
               }
         });
+        effectFade();
       });
 
     // Cuando damos click en Entrenadores y se ponga blanco el fondo
@@ -46,6 +47,7 @@ $(document).ready(function ()
           );
         }
         });
+      effectFade();
    });
 
 
@@ -183,6 +185,8 @@ $(document).ready(function ()
                 $('#mostrador').html(response);
             }
         });
+
+        effectFade();
     });
 
     // Funcion para mostrar  Form de Nuevo Entrenador
@@ -199,8 +203,9 @@ $(document).ready(function ()
           );
         }
         });
-      });
+    });
 
+    effectFade();
 });
 
 function miOff()
@@ -220,6 +225,17 @@ function miOff()
 
 
 /*------------Funciones genericas------------*/
+
+// <-------------------- Funcion para Efecto FadeIn --------------------->
+function effectFade()
+{
+    document.getElementById('mostrador').style = 'display: none'; 
+    $('#mostrador').fadeIn(600);
+}
+// <--------------------------------------------------------------------->
+
+
+
 function getStat(){
   this.className = 'active';
   $.ajax({
@@ -243,6 +259,7 @@ function competidores(){
                   $('#mostrador').html(response);
               }
         });
+        effectFade();
 }
 
 
@@ -281,6 +298,7 @@ function usuarios(){
                 $('#mostrador').html(response);
             }
         });
+        effectFade();
 }
 
 function getComp(){
@@ -371,8 +389,7 @@ function newComp(){
             $('#mostrador').html(response);
         }
     });
-
-
+    effectFade();
 }
 // <----------------------------------------------------------------------------------->
 
@@ -432,6 +449,7 @@ function newUser()
             $('#mostrador').html(response);
         }
     });
+   effectFade();
 }
 
 
@@ -630,13 +648,64 @@ function enviarUsuario()
 }
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
 
-// <-------------------     Funciones para Validacion de Campos --------------------------> 
 
-function soloLetras(cad, camp){
-  var exp = /^[a-zA-Zñáéíóú\s]+$/;
-  if (!exp.exec(cad)){
-    alert("El campo "+camp+" solo puede contener letras y espacios");
-    return false;
-  }
-  return true;
+// <------------------------------------- Funcion para Enviar Formulario COMPETIDOR ------------------------------------>
+function enviarCompetidor()
+{
+
+  var nombre = $('#nombre').val();
+  var apellidoPaterno = $('#apellidoPaterno').val();
+  var apellidoMaterno = $('#apellidoMaterno').val();
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var competencia = $('#competencia').val();
+  var entrenador = $('#entrenador').val();
+  var tiempoEntrenamiento = $('#tiempoEntrenamiento').val();
+
+  var token = $('#token').val();
+
+  $.ajax({
+    url: url+'/home/competidores',
+    headers: {'X-CSRF-TOKEN':token},
+    type: 'POST',
+    dataType: 'json',
+    data:{name: name, email: email, password: password, idtipoUsuario: tipoUsuario},
+
+    success:function(response)
+    {
+      switch(response['mensaje'])
+      {
+        case "creado":
+          document.getElementById('miMensaje').innerHTML ="<strong> El Usuario fue creado correctamente!!! </strong>";
+          $('#miMensaje').fadeIn();
+          setTimeout(
+          function() {
+            $("#miMensaje").fadeOut(1500);
+             setTimeout(
+                function() {
+                  newUser();
+                },1000);
+
+          },3000);
+        break;
+
+        case "duplicado":
+          document.getElementById('miMensaje').innerHTML ="<strong> ERROR, El Email: '"+response['email']+"'' ya esta Registrado </strong>";
+          $('#miMensaje').fadeIn();
+          document.getElementById('email').focus();
+        break;
+
+        case "noUsuario":
+          document.getElementById('miMensaje').innerHTML ="<strong> Dedes elegir un tipo de Usuario </strong>";
+          $('#miMensaje').fadeIn();
+          document.getElementById('tipoUsuario').focus();
+        break;
+
+        default:
+          document.getElementById('miMensaje').innerHTML ="<strong> ERROR al crear el Nuevo Usuario :( </strong>";
+          $('#miMensaje').fadeIn();
+        break;
+      }
+    }
+  });
 }
+// <----------------------------------------------------------------------------------------------------------------------------------------------->

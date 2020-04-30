@@ -18,7 +18,7 @@
       <td data-label="Nombre">{{ $usuario->name }}</td>
       <td data-label="Email">{{ $usuario->email }}</td>
       <td data-label="Tipo">{{ $usuario->idtipoUsuario }}</td>
-      <td data-label="FechaRegistro">{{ $usuario->created_at }}</td>
+      <td data-label="Registro">{{str_limit($usuario->created_at, $limit = 10, $end = " ")}}</td>
     </tr>
     @endforeach
 

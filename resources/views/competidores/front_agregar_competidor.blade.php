@@ -13,30 +13,35 @@
 
 
 <br>
-<form>
+
+
+<form class="form-horizontal"  name="formulario" action="" onSubmit="enviarCompetidor(); return false">
+
+ <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="inputEmail4">Nombre</label>
-      <input type="text" class="form-control" id="inputEmail4" placeholder="">
+      <label for="nombre">Nombre</label>
+      <input title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" type="text" class="form-control" id="nombre" name="nombre" placeholder="" required autofocus>
     </div>
     <div class="form-group col-md-4">
-      <label for="inputPassword4">Apellido Paterno</label>
-      <input type="text" class="form-control" id="inputPassword4" placeholder="">
+      <label for="apellidoPaterno">Apellido Paterno</label>
+      <input title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" placeholder="" required>
     </div>
     <div class="form-group col-md-4">
-      <label for="inputAddress">Apellido Materno</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="">
+      <label  for="apellidoMaterno">Apellido Materno</label>
+      <input title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" placeholder="">
     </div>
   </div>
   <div class="form-row">
       <div class="form-group col-md-4 mx-auto">
-        <label for="inputCity">Numero de Competidor</label>
-        <input type="text" class="form-control" id="inputCity" placeholder="">
+        <label for="numeroCompetidor">Numero de Competidor</label>
+        <input title="Solo se admiten numeros en un rango de 50 digitos" pattern="([0-9]+){0,50}" type="text" class="form-control" id="numeroCompetidor" name="numeroCompetidor" placeholder="" required>
       </div>
 
     <div class="form-group col-md-4">
-      <label for="inputCity">Competencia</label>
-      <select class="form-control">
+      <label for="competencia">Competencia</label>
+      <select id="competencia" name="competencia" class="form-control">
           <option>Sin Asignar</option>
           <option>Tour Morelia 2020</option>
           <option>Racing Mountain</option>
@@ -45,8 +50,8 @@
     </div>
 
     <div class="form-group col-md-4">
-      <label for="inputCity">Entrenador</label>
-      <select class="form-control">
+      <label for="entrenador">Entrenador</label>
+      <select id="entrenador" name="entrenador" class="form-control">
           <option>Sin Asignar</option>
           <option>Raul Barajas Fierros</option>
           <option>Rafael Silva Campos</option>
@@ -59,9 +64,9 @@
 
   <div class="container d-flex justify-content-center">
     <div class="col-md-4">
-      <label for="inputCity">Tiempo de Entrenamiento</label>
+      <label for="tiempoEntrenamiento">Tiempo de Entrenamiento</label>
       <div class="d-flex w-50 mx-auto">
-        <input type="number" class="form-control" id="inputCity" min="0" max="18" placeholder="0">
+        <input type="number" class="form-control" id="tiempoEntrenamiento" name="tiempoEntrenamiento" min="0" max="18" placeholder="0">
         <label class="mt-auto ml-3">Meses</label>
       </div>
     </div>

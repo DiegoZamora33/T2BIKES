@@ -18,7 +18,7 @@
       <td data-label="Nombre">{{ $competidor->nombre }}</td>
       <td data-label="Paterno">{{ $competidor->apellidoPaterno }}</td>
       <td data-label="Materno">{{ $competidor->apellidoMaterno }}</td>
-      <td data-label="Materno">{{ $competidor->fechaRegistro }}</td>
+      <td data-label="Registro">{{ str_limit($competidor->created_at, $limit = 10, $end = " ") }}</td>
     </tr>
     @endforeach
 
