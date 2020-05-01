@@ -14,7 +14,9 @@
 </div>
 
 <h3>"{{ $competidor->numeroCompetidor }}"</h3>
-<h5>Nombre: {{ $competidor->nombre }}</h5>
+<input type="hidden" name="_numeroCompetidor" value="{{ $competidor->numeroCompetidor }}" id="_numeroCompetidor">
+<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+<h5>Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
 <h5>Fecha de Registro: {{ str_limit($competidor->created_at, $limit = 10, $end = " ") }}</h5>
 
 
@@ -25,18 +27,20 @@
 
 <h3 class="font-weight-bold">Competencias</h3>
 
+@foreach( $competencias as $miCompetencia )
 <div class="card text-center text-white mt-4">
   <div class="card-header bg-dark">
-   {{ $competencia }}
+   {{ $miCompetencia->nombreCompetencia }}
   </div>
   <div class="card-body text-black">
-    <h5 class="card-text text-muted">Puntaje global: 30 puntos</h5>
-    <h6 class="card-text mt-3 text-muted">Entrenador: Raul Barajas Fierros</h6>
-    <h6 class="card-text mt-1 text-muted">Tiempo de Entrenamiento: 4 meses</h6>
-    <h6 class="card-text mt-1 text-muted">"En Curso"</h6>
-    <a  style="color:white;" onclick="getStat();" class="btn btn-primary mt-4">Ver estadísticas</a>
+    <h5 class="card-text text-muted">Puntaje global: {{ $miCompetencia->puntajeGlobal }} puntos</h5>
+    <h6 class="card-text mt-1 text-muted">"Periodo: {{ $miCompetencia->periodo }}"</h6>
+    <h6 class="card-text mt-1 text-muted">"{{ $miCompetencia->estatus }}"</h6>
+    <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="getStat(this);" class="btn btn-primary mt-4">Ver estadísticas</a>
   </div>
 </div>
+@endforeach
+
 
 <div class="text-center mt-5">
   <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#exampleModal2">

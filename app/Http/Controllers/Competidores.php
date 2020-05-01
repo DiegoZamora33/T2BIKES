@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Competidor;
 
 class Competidores extends Controller
@@ -19,12 +20,64 @@ class Competidores extends Controller
     }
 
 
+    public function estadistica(Request $data)
+    {
+        if($data->ajax())
+        {
+            $datos['competidor']=Competidor::where('numeroCompetidor', $data['numeroCompetidor'])->first();
+
+            $datos['entrenador'] = DB::select(" SELECT entrenadors.nombre, entrenadors.apellidoPaterno, entrenadors.apellidoMaterno, mesesEntrenamiento, fechaInicio, fechaFin
+                FROM entrenador__competidor__competencias INNER JOIN entrenadors 
+                ON entrenador__competidor__competencias.idEntrenador = entrenadors.idEntrenador
+                WHERE entrenador__competidor__competencias.numeroCompetidor = '".$data['numeroCompetidor']."' 
+                     AND entrenador__competidor__competencias.idCompetencia = '".$data['idCompetencia']."' ");
+
+            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
+                    FROM competidors 
+                        INNER JOIN puntaje__competidor__competencias INNER JOIN competencias INNER JOIN estatuses
+                    ON competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor 
+                        AND competencias.idCompetencia = puntaje__competidor__competencias.idCompetencia
+                        AND competencias.idEstatus = estatuses.idEstatus
+                        
+                    WHERE 
+                        puntaje__competidor__competencias.numeroCompetidor = '".$data['numeroCompetidor']."'
+                        AND puntaje__competidor__competencias.idCompetencia = '".$data['idCompetencia']."' ");
+
+            $datos['carreras'] = DB::select(" SELECT puntaje__competidor__carreras.idCarrera, puntaje__competidor__carreras.numeroCompetidor, competencias.idCompetencia,
+                        carreras.nombreCarrera, carreras.descripcion, tipo_carreras.tipoCarrera, puntaje__competidor__carreras.puntaje, 
+                        puntaje__competidor__carreras.lugarLlegada, estatuses.estatus
+                    FROM puntaje__competidor__carreras 
+                        INNER JOIN carreras INNER JOIN tipo_carreras INNER JOIN competencias INNER JOIN estatuses
+                    ON puntaje__competidor__carreras.idCarrera = carreras.idCarrera 
+                        AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera 
+                        AND carreras.idCompetencia = competencias.idCompetencia
+                        AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
+                    WHERE puntaje__competidor__carreras.numeroCompetidor = '".$data['numeroCompetidor']."'
+                        AND competencias.idCompetencia = '".$data['idCompetencia']."' ");
+
+           
+
+            return view('competidores.front_estadistica_competidor',$datos);
+        }
+    }
+
+
     public function perfilCompetidor(Request $data)
     {
         if($data->ajax())
         {
             $misDatos['competidor']=Competidor::where('numeroCompetidor', $data['numeroCompetidor'])->first();
-            $misDatos['competencias'] = " XD ";
+
+            $misDatos['competencias'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
+                        FROM competidors 
+                            INNER JOIN puntaje__competidor__competencias INNER JOIN competencias INNER JOIN estatuses
+                        ON competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor 
+                            AND competencias.idCompetencia = puntaje__competidor__competencias.idCompetencia
+                            AND competencias.idEstatus = estatuses.idEstatus
+                            
+                        WHERE puntaje__competidor__competencias.numeroCompetidor = '".$data['numeroCompetidor']."' ");
+
+
             return view('competidores.front_perfil_competidor', $misDatos);
         }
     }

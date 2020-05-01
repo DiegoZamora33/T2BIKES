@@ -9,9 +9,6 @@ const url = 'http://localhost/T2BIKES/public';
 
 $(document).ready(function ()
 {
-
-  effectFadeOut();
-
     // Funcion para el menu
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
@@ -22,8 +19,6 @@ $(document).ready(function ()
 
       miOff();
       this.className = "active";
-        effectFadeOut();
-          
           $.ajax({
               type: "get",
               url: url+"/home/competidores",
@@ -31,9 +26,10 @@ $(document).ready(function ()
               dataType: "html",
               success: function (response) {
                   $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
               }
         });
-        effectFadeIn();
       });
 
     // Cuando damos click en Entrenadores y se ponga blanco el fondo
@@ -46,6 +42,8 @@ $(document).ready(function ()
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
@@ -63,6 +61,8 @@ $(document).ready(function ()
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             });
           }
         });
@@ -79,6 +79,8 @@ $(document).ready(function ()
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
@@ -95,6 +97,8 @@ $(document).ready(function ()
         success: function(data){
           setTimeout(function(){
             $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
           }
         );
       }
@@ -110,6 +114,8 @@ $(document).ready(function ()
         success: function(data){
           setTimeout(function(){
             $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
           }
         );
       }
@@ -128,6 +134,8 @@ $(document).ready(function ()
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
@@ -146,6 +154,8 @@ $(document).ready(function ()
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
@@ -164,6 +174,8 @@ $(document).ready(function ()
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
@@ -176,19 +188,19 @@ $(document).ready(function ()
         miOff();
         this.className = "active";
 
-        effectFadeOut();
         
         $.ajax({
             type: "get",
             url: url+"/home/usuarios",
             data: {},
             dataType: "html",
-            success: function (response) {
+            success: function (response) 
+            {
                 $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
             }
         });
-
-        effectFadeIn();
     });
 
     // Funcion para mostrar  Form de Nuevo Entrenador
@@ -201,14 +213,13 @@ $(document).ready(function ()
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
         });
     });
-
-
-    effectFadeIn();
 });
 
 function miOff()
@@ -238,7 +249,7 @@ function effectFadeOut()
 
 function effectFadeIn()
 {
-    $('#mostrador').fadeIn(700);
+    $('#mostrador').fadeIn(300);
 }
 // <--------------------------------------------------------------------->
 
@@ -305,32 +316,42 @@ function getInfo(miMensaje)
 // <--------------------------------------------------------------------->
 
 
-function getStat(){
-  this.className = 'active';
+function getStat(miStat)
+{
+  var idCompetencia = miStat.id;
+  var numeroCompetidor = $('#_numeroCompetidor').val();
+  var token = $('#token').val();
+
   $.ajax({
-    url: 'estadisticas.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
+      url: url+'/home/competidores/estadistica',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
       }
-    );
-  }
+
   });
 }
 
 function competidores(){
 
-        effectFadeOut();
-          $.ajax({
-              type: "get",
-              url: url+"/home/competidores",
-              data: {},
-              dataType: "html",
-              success: function (response) {
-                  $('#mostrador').html(response);
-              }
-        });
-        effectFadeIn();
+    $.ajax({
+        type: "get",
+        url: url+"/home/competidores",
+        data: {},
+        dataType: "html",
+        success: function (response) {
+            $('#mostrador').html(response);
+          effectFadeOut();
+          effectFadeIn();
+        }
+  });
 }
 
 
@@ -340,6 +361,8 @@ function entrenadores(){
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
@@ -352,6 +375,8 @@ function competencias(){
           success: function(data){
             setTimeout(function(){
               $("#mostrador").html(data);
+                effectFadeOut();
+                effectFadeIn();
             }
           );
         }
@@ -360,7 +385,6 @@ function competencias(){
 
 function usuarios(){
 
-        effectFadeOut();
         this.className = "active";
         $.ajax({
             type: "get",
@@ -369,15 +393,15 @@ function usuarios(){
             dataType: "html",
             success: function (response) {
                 $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
             }
         });
-        effectFadeIn();
 }
 
 // <-------------------------- Funcion Para Mostrar PERFIL COMPETIDOR ------------------------------>
 function getComp(miCompetidor)
 {
-  effectFadeOut();
 
   var numeroCompetidor = miCompetidor.id;
   var token = miCompetidor.children[0].value;
@@ -392,11 +416,12 @@ function getComp(miCompetidor)
       success:function(response)
       {
         $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
       }
 
   });
 
-  effectFadeIn();
 }
 // <------------------------------------------------------------------------------------------------>
 
@@ -407,11 +432,15 @@ function getEntre(){
     success: function(data){
       setTimeout(function(){
         $('#mostrador').html(data);
+                effectFadeOut();
+                effectFadeIn();
       }
     );
   }
   });
 }
+
+
 function getTour(){
   this.className = 'active';
   $.ajax({
@@ -419,6 +448,8 @@ function getTour(){
     success: function(data){
       setTimeout(function(){
         $('#mostrador').html(data);
+                effectFadeOut();
+                effectFadeIn();
       }
     );
   }
@@ -428,7 +459,6 @@ function getTour(){
 // <------------------ Mostrar Perfil de un Usuario ------------------->
 function getUser(miUser)
 {
-  effectFadeOut();
 
   var user = miUser.id;
   var token = miUser.children[0].value;
@@ -443,11 +473,11 @@ function getUser(miUser)
       success:function(response)
       {
         $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
       }
 
     });
-
-  effectFadeIn();
 
 }
 // <-------------------------------------------------------------------->
@@ -459,6 +489,8 @@ function getCarrera(){
     success: function(data){
       setTimeout(function(){
         $('#mostrador').html(data);
+                effectFadeOut();
+                effectFadeIn();
       }
     );
   }
@@ -470,7 +502,6 @@ function getCarrera(){
 function newComp(){
   this.className = 'active';
   
- effectFadeOut();
  $.ajax({
         type: "get",
         url: url+"/home/competidores/create",
@@ -478,9 +509,10 @@ function newComp(){
         dataType: "html",
         success: function (response) {
             $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
         }
     });
-    effectFadeIn();
 }
 // <----------------------------------------------------------------------------------->
 
@@ -493,6 +525,8 @@ function editComp(){
     success: function(data){
       setTimeout(function(){
         $('#mostrador').html(data);
+                effectFadeOut();
+                effectFadeIn();
       }
     );
   }
@@ -506,6 +540,8 @@ function editEntre(){
     success: function(data){
       setTimeout(function(){
         $('#mostrador').html(data);
+                effectFadeOut();
+                effectFadeIn();
       }
     );
   }
@@ -519,6 +555,8 @@ function newTrain(){
     success: function(data){
       setTimeout(function(){
         $('#mostrador').html(data);
+                effectFadeOut();
+                effectFadeIn();
       }
     );
   }
@@ -531,7 +569,6 @@ function newUser()
 {
     this.className = "active";
     
-    effectFadeOut();
     $.ajax({
         type: "get",
         url: url+"/home/usuarios/create",
@@ -539,9 +576,10 @@ function newUser()
         dataType: "html",
         success: function (response) {
             $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
         }
     });
-   effectFadeIn();
 }
 
 
@@ -565,11 +603,21 @@ function newCompet(){
 // Funcion Para convertir Grafica (Competidor Competencia)
 function grafCompetidor()
 {
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var token = $('#token').val();
+  var idCompetencia = $('#idCompetencia').val();
+
   if(graficaCompetidor == "bar")
   {
     graficaCompetidor = "pie";
+
     $.ajax({
-      url: 'graficas/competidor-competencia-pai.html' ,
+      url: url+'/home/graficas/competidor_competencia_pai' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia},
+
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-competidor').html(data);
@@ -577,13 +625,20 @@ function grafCompetidor()
       );
     }
     });
+
     document.getElementById('btn-cambiarGrafica-competidor').innerText = "Cambiar a Grafica de Barras";
   }
   else
   {
     graficaCompetidor = "bar";
+
     $.ajax({
-      url: 'graficas/competidor-competencia-bar.html' ,
+      url: url+'/home/graficas/competidor_competencia_bar' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia},
+
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-competidor').html(data);
@@ -591,6 +646,7 @@ function grafCompetidor()
       );
     }
     });
+
     document.getElementById('btn-cambiarGrafica-competidor').innerText = "Cambiar a Grafica de Pastel";
   }
   $('html,body').animate({scrollTop: document.body.scrollHeight},"fast");

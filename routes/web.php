@@ -22,9 +22,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Para Acceder aun Perfil de un Usuario
 Route::match(['get', 'post'], '/home/usuarios/perfilUsuario', 'Usuarios@perfilUsuario')->name('perfilUsuario');
 
-// Para Acceder aun Perfil de un Competidor
+// Para Acceder a un Perfil de un Competidor
 Route::match(['get', 'post'], '/home/competidores/perfilCompetidor', 'Competidores@perfilCompetidor')->name('perfilCompetidor');
 
+// Para Acceder a una Estadistica
+Route::match(['get', 'post'], '/home/competidores/estadistica', 'Competidores@estadistica')->name('estadistica');
+
+
+// Para Acceder a la Grafica competidor_competencia_pai
+Route::match(['get', 'post'], '/home/graficas/competidor_competencia_pai', 'Graficas@competidor_competencia_pai')->name('competidor_competencia_pai');
+
+// Para Acceder a la Grafica competidor_competencia_bar
+Route::match(['get', 'post'], '/home/graficas/competidor_competencia_bar', 'Graficas@competidor_competencia_bar')->name('competidor_competencia_bar');
 
 
 
@@ -36,6 +45,7 @@ Route::resources([
     '/home/carreras'=>'Carreras', //Controlador Carreras
     '/home/tiposcarrera'=>'TiposCarreras',  //Controlador Tipo de Carreras
     '/home/usuarios'=>'Usuarios',  //Controlador Usuarios
+    '/home/graficas'=>'Graficas',  //Controlador Graficas
 ]);
 
 //Prueba AJAX
