@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Graficas extends Controller
 {
@@ -45,6 +46,14 @@ class Graficas extends Controller
                         AND competencias.idCompetencia = '".$data['idCompetencia']."' ");
 
         return view('graficas.competidor_competencia_bar', $datos);
+    }
+
+    public function time()
+    {
+        $fecha = date('Y-m-j');
+        $nuevafecha = strtotime ( '+10 month' , strtotime ( $fecha ) ) ;
+        $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+        return $fecha." : ".$nuevafecha;
     }
 
 

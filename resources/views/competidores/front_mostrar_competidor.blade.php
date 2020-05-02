@@ -13,7 +13,7 @@
   <tbody>
 
   	@foreach($competidores as $competidor)
-    <tr id="{{ $competidor->numeroCompetidor }}" onclick="getComp(this);">
+    <tr id="{{ $competidor->numeroCompetidor }}" onclick="getComp(this);" style="cursor: pointer;">
       <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_{{ $competidor->numeroCompetidor }}">
       <td data-label="Número de competidor">{{ $competidor->numeroCompetidor }}</td>
       <td data-label="Nombre">{{ $competidor->nombre }}</td>

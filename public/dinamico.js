@@ -798,23 +798,37 @@ function enviarCompetidor()
 
     success:function(response)
     {
-      switch(response['mensaje'])
+      switch(response['codigo'])
       {
         case "creado":
-            getSuccess("El Competidor '"+response['numeroCompetidor']+"' fue creado con Exito...");
+            getSuccess(response['mensaje']);
+            newComp();
+        break;
+
+        case "creadoSinEntrenador":
+            getWarning(response['mensaje']);
+            newComp();
+        break;
+
+        case "creadoSolo":
+            getWarning(response['mensaje']);
             newComp();
         break;
 
         case "duplicado":;
-            getDanger("ERROR: El Numero de Competidor '"+response['numeroCompetidor']+"' ya esta asociado a otro Competidor...")
+            getDanger(response['mensaje']);
         break;
 
         case "numCero":
-            getDanger("ERROR: El Numero de Competidor no puede ser Cero...");
+            getDanger(response['mensaje']);
+        break;
+
+        case "soloEntrenador":
+          getDanger(response['mensaje']);
         break;
 
         default:
-            getDanger("ERROR: No pudimos crear el Nuevo Competidor...");
+            getDanger(response['mensaje']);
             newComp();
         break;
       }

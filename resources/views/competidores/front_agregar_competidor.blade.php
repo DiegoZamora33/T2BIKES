@@ -43,9 +43,11 @@
       <label for="competencia">Competencia</label>
       <select id="competencia" name="competencia" class="form-control">
           <option value="0">Sin Asignar</option>
-          <option value="1">Tour Morelia 2020</option>
-          <option value="2">Racing Mountain</option>
-          <option value="3">Los Azufres 40k</option>
+
+          @foreach($competencias as $miCompetencia)
+             <option value="{{ $miCompetencia->idCompetencia }}">{{ $miCompetencia->nombreCompetencia }}</option>
+          @endforeach
+
       </select>
     </div>
 
@@ -53,9 +55,11 @@
       <label for="entrenador">Entrenador</label>
       <select id="entrenador" name="entrenador" class="form-control">
           <option value="0">Sin Asignar</option>
-          <option value="1">Raul Barajas Fierros</option>
-          <option value="2">Rafael Silva Campos</option>
-          <option value="3">Julieta Venegas</option>
+
+          @foreach($entrenadores as $miEntrenador)
+            <option value="{{ $miEntrenador->idEntrenador }}">{{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</option>
+          @endforeach
+
       </select>
     </div>
 

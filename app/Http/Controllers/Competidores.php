@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Competidor;
+use App\Competencia;
+use App\Entrenador;
+use App\Entrenador_Competidor_Competencia;
+use App\Puntaje_Competidor_Competencia;
+use App\Puntaje_Competidor_Carrera;
+use Carbon\Carbon;
 
 class Competidores extends Controller
 {
@@ -90,7 +96,9 @@ class Competidores extends Controller
      */
     public function create()
     {
-        return view('competidores.front_agregar_competidor');
+        $datos['competencias'] = Competencia::all();
+        $datos['entrenadores'] = Entrenador::all();
+        return view('competidores.front_agregar_competidor', $datos);
     }
 
     /**
@@ -114,25 +122,168 @@ class Competidores extends Controller
             }
 
             //Verificamos si el numero no es 0 si es asi lanzamos el mensaje
-            if ($nuevoNumeroCompetidor != '') {
-                //Si se valida el numero de competidor lo registramos en la base de datos
-                //Creamos el objeto del nuevo competidor 
-                $competidor = new Competidor();
-                //Evaluamos si el numero de competidor esta disponible
-                if ($competidor->where('numeroCompetidor', $nuevoNumeroCompetidor)->first() == null) {
-                    //Si esta disponible aguardamos el nuevo competidor en la base de datos
-                    $competidor->numeroCompetidor = $nuevoNumeroCompetidor;
-                    $competidor->nombre = trim($request->nombre);
-                    $competidor->apellidoPaterno = trim($request->apellidoPaterno);
-                    $competidor->apellidoMaterno = trim($request->apellidoMaterno);
-                    $competidor->save();
-                    //Mansaje de confirmacion
-                    return response()->json(['mensaje' => 'creado', 'numeroCompetidor' => $nuevoNumeroCompetidor]);
-                }else{
-                    //Si el numero de competidor esta ocupado regresamos un mensaje
-                    return response()->json(['mensaje' => 'duplicado', 'numeroCompetidor' => $nuevoNumeroCompetidor]);
+            if ($nuevoNumeroCompetidor != '') 
+            {
+                // Vemos si SI se va a Asignar a una Competencia junto con un Entrenador
+                if($request['competencia'] != '0' && $request['entrenador'] != '0')
+                {
+                    //Si se valida el numero de competidor lo registramos en la base de datos
+                    //Creamos el objeto del nuevo competidor 
+                    $competidor = new Competidor();
+                    //Evaluamos si el numero de competidor esta disponible
+                    if ($competidor->where('numeroCompetidor', $nuevoNumeroCompetidor)->first() == null) 
+                    {
+                        //Si esta disponible aguardamos el nuevo competidor en la base de datos
+                        $competidor->numeroCompetidor = $nuevoNumeroCompetidor;
+                        $competidor->nombre = trim($request->nombre);
+                        $competidor->apellidoPaterno = trim($request->apellidoPaterno);
+                        $competidor->apellidoMaterno = trim($request->apellidoMaterno);
+                        $competidor->save();
+
+                        // Primero en la tabla entrenador_competidor_competencia
+                        $nuevoEntrenamiento = new Entrenador_Competidor_Competencia();
+                        $nuevoEntrenamiento->idEntrenador = $request['entrenador'];
+                        $nuevoEntrenamiento->numeroCompetidor = $nuevoNumeroCompetidor;
+                        $nuevoEntrenamiento->idCompetencia = $request['competencia'];
+
+                        /// Proceso Para Calculo de Fechas
+                        $fecha = date('Y-m-j');
+                        $nuevafecha = strtotime ( '+'.$request['mesesEntrenamiento'].' month' , strtotime ( $fecha ) ) ;
+                        $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+                        
+                        $nuevoEntrenamiento->fechaInicio = $fecha;
+                        $nuevoEntrenamiento->fechaFin = $nuevafecha;
+                        $nuevoEntrenamiento->mesesEntrenamiento = $request['tiempoEntrenamiento'];
+                        $nuevoEntrenamiento->save();
+
+
+                        // Asignacion en la tabla de Puntaje_Competidor_Competencia
+                        $nuevaPuntajeCompetencia = new Puntaje_Competidor_Competencia();
+                        $nuevaPuntajeCompetencia->numeroCompetidor = $nuevoNumeroCompetidor;
+                        $nuevaPuntajeCompetencia->idCompetencia = $request['competencia'];
+                        $nuevaPuntajeCompetencia->puntajeGlobal = 0;
+                        $nuevaPuntajeCompetencia->save();
+
+                        // Vamos a crear los Registros de las Carreras Correspondientes
+                        $misCarreras = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
+                            ON carreras.idCompetencia = competencias.idCompetencia
+                                AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
+                            WHERE competencias.idCompetencia = '".$request['competencia']."'");
+
+                        foreach ($misCarreras as &$carrera) 
+                        {
+                            $nuevaPuntajeCarrera = new Puntaje_Competidor_Carrera();
+                            $nuevaPuntajeCarrera->numeroCompetidor = $nuevoNumeroCompetidor;
+                            $nuevaPuntajeCarrera->idCarrera = $carrera->idCarrera;
+                            $nuevaPuntajeCarrera->lugarLlegada = 0;
+                            $nuevaPuntajeCarrera->puntaje = 0;
+                            $nuevaPuntajeCarrera->idEstatus = 5;
+                            $nuevaPuntajeCarrera->save();
+                        }
+
+
+
+                        //Mansaje de confirmacion
+                        return response()->json(['codigo' => 'creado', 'mensaje' => 'Competidor Creado Con Exito...']);
+                    }
+                    else
+                    {
+                        //Si el numero de competidor esta ocupado regresamos un mensaje
+                        return response()->json(['codigo' => 'duplicado', 'mensaje' => 'El numero '.$nuevoNumeroCompetidor.' no esta diponible...']);
+                    }
+                    
                 }
-            } else{
+                else
+                {
+                    // Vemos si NO se va a Asignar a una Competencia junto Con un Entrenador
+                    if ($request['competencia'] != '0' && $request['entrenador'] == '0') 
+                    {
+                        //Si se valida el numero de competidor lo registramos en la base de datos
+                        //Creamos el objeto del nuevo competidor 
+                        $competidor = new Competidor();
+                        //Evaluamos si el numero de competidor esta disponible
+                        if ($competidor->where('numeroCompetidor', $nuevoNumeroCompetidor)->first() == null) 
+                        {
+                            //Si esta disponible aguardamos el nuevo competidor en la base de datos
+                            $competidor->numeroCompetidor = $nuevoNumeroCompetidor;
+                            $competidor->nombre = trim($request->nombre);
+                            $competidor->apellidoPaterno = trim($request->apellidoPaterno);
+                            $competidor->apellidoMaterno = trim($request->apellidoMaterno);
+                            $competidor->save();
+
+                            // Asignacion en la tabla de Puntaje_Competidor_Competencia
+                            $nuevaPuntajeCompetencia = new Puntaje_Competidor_Competencia();
+                            $nuevaPuntajeCompetencia->numeroCompetidor = $nuevoNumeroCompetidor;
+                            $nuevaPuntajeCompetencia->idCompetencia = $request['competencia'];
+                            $nuevaPuntajeCompetencia->puntajeGlobal = 0;
+                            $nuevaPuntajeCompetencia->save();
+
+                            // Vamos a crear los Registros de las Carreras Correspondientes
+                            $misCarreras = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
+                                ON carreras.idCompetencia = competencias.idCompetencia
+                                    AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
+                                WHERE competencias.idCompetencia = '".$request['competencia']."'");
+
+                            foreach ($misCarreras as &$carrera) 
+                            {
+                                $nuevaPuntajeCarrera = new Puntaje_Competidor_Carrera();
+                                $nuevaPuntajeCarrera->numeroCompetidor = $nuevoNumeroCompetidor;
+                                $nuevaPuntajeCarrera->idCarrera = $carrera->idCarrera;
+                                $nuevaPuntajeCarrera->lugarLlegada = 0;
+                                $nuevaPuntajeCarrera->puntaje = 0;
+                                $nuevaPuntajeCarrera->idEstatus = 5;
+                                $nuevaPuntajeCarrera->save();
+                            }
+
+
+                            //Mansaje de confirmacion
+                            return response()->json(['codigo' => 'creadoSinEntrenador', 'mensaje' => 'Competidor Creado Con Exito pero no tiene un Entrenador...']);
+                        }
+                        else
+                        {
+                            //Si el numero de competidor esta ocupado regresamos un mensaje
+                            return response()->json(['codigo' => 'duplicado', 'mensaje' => 'El numero '.$nuevoNumeroCompetidor.' no esta diponible...']);
+                        }
+                    }
+                    else
+                    {
+                        // Vemos que solo se va a crear el competidor pero no se le va asignar ninguna Competencia.
+                        if ($request['competencia'] == '0' && $request['entrenador'] == '0') 
+                        {
+                            //Si se valida el numero de competidor lo registramos en la base de datos
+                            //Creamos el objeto del nuevo competidor 
+                            $competidor = new Competidor();
+                            //Evaluamos si el numero de competidor esta disponible
+                            if ($competidor->where('numeroCompetidor', $nuevoNumeroCompetidor)->first() == null) 
+                            {
+                                //Si esta disponible aguardamos el nuevo competidor en la base de datos
+                                $competidor->numeroCompetidor = $nuevoNumeroCompetidor;
+                                $competidor->nombre = trim($request->nombre);
+                                $competidor->apellidoPaterno = trim($request->apellidoPaterno);
+                                $competidor->apellidoMaterno = trim($request->apellidoMaterno);
+                                $competidor->save();
+
+                                //Mansaje de confirmacion
+                                 return response()->json(['codigo' => 'creadoSolo', 'mensaje' => 'Competidor Creado Con Exito pero aun NO esta dentro de alguna Competencia...']);
+                            }
+                            else
+                            {
+                                 //Si el numero de competidor esta ocupado regresamos un mensaje
+                                return response()->json(['codigo' => 'duplicado', 'mensaje' => 'El numero '.$nuevoNumeroCompetidor.' no esta diponible...']);
+                            }
+                        }
+                        else
+                        {
+                            // Quiere decir que solo tiene seleccionado un Entrenador pero no una Competencia.
+                            // Regresamos un mensaje diciendo que si no puede hacer eso
+                            return response()->json(['codigo' => 'soloEntrenador', 'mensaje' => 'Para asignar un entrenador, primero debe selecciona una Competencia']);
+                        }
+                    }
+                }
+               
+            } 
+            else
+            {
                 //Si el numero de competidor es 0 enviamos un mensaje
                 return response()->json(['mensaje' => 'numCero']);
             }
