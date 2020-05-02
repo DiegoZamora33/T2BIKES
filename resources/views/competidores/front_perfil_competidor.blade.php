@@ -16,6 +16,7 @@
 <h3>"{{ $competidor->numeroCompetidor }}"</h3>
 <input type="hidden" name="_numeroCompetidor" value="{{ $competidor->numeroCompetidor }}" id="_numeroCompetidor">
 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+<input type="hidden" id="{{ $competidor->numeroCompetidor }}">
 <h5>Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
 <h5>Fecha de Registro: {{ str_limit($competidor->created_at, $limit = 10, $end = " ") }}</h5>
 
@@ -86,44 +87,58 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="inputCity">Competencia</label>
-          <select class="form-control">
-              <option>Sin Asignar</option>
-              <option>Tour Morelia 2020</option>
-              <option>Racing Mountain</option>
-              <option>Los Azufres 40k</option>
-          </select>
-        </div>
-        <div class="form-group">
 
-          <div class="m-0 p-0">
-            Entrenador
-          </div>
-          <div class="mt-0 pt-0 text-muted align-top" style="font-size: 14px;">
-            Este entrenador solo guiara al competidor en esta Competencia
-          </div>
-          <select class="form-control mt-2">
-              <option>Sin Asignar</option>
-              <option>Raul Barajas Fierros</option>
-              <option>Rafael Silva Campos</option>
-              <option>Julieta Venegas</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
+      <form class="form-horizontal"  name="formularioAsignar" action="" onSubmit="asignarCompetencia(); return false">
 
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      Este competidor ya esta en esa competencia. Seleccione otra.
+          <input type="hidden" name="_token" value="{{ csrf_token() }}" id="tokenAsignar">
+          
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="asignarCompetencia">Competencia</label>
+              <select id="asignarCompetencia" name="asignarCompetencia" class="form-control">
+                  <option value="0">Sin Asignar</option>
+
+                  @foreach($allCompetencias as $competencia)
+                    <option value="{{ $competencia->idCompetencia }}">{{ $competencia->nombreCompetencia }}</option>
+                  @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+
+              <div class="m-0 p-0">
+                Entrenador
+              </div>
+              <div class="mt-0 pt-0 text-muted align-top" style="font-size: 14px;">
+                Este entrenador solo guiara al competidor en esta Competencia
+              </div>
+              <select id="asignarEntrenador" name="asignarEntrenador" class="form-control mt-2">
+                  <option value="0">Sin Asignar</option>
+
+                  @foreach($allEntrenadores as $entrenador)
+                    <option value="{{ $entrenador->idEntrenador }}">{{ $entrenador->nombre }} {{ $entrenador->apellidoPaterno }} {{ $entrenador->apellidoMaterno }}</option>
+                  @endforeach
+
+              </select>
+            </div>
+
+            <div class="container d-flex justify-content-center">
+              <div class="col-md-8">
+                <label for="mesesEntrenamiento">Tiempo de Entrenamiento</label>
+                <div class="d-flex w-50 mx-auto">
+                  <input type="number" class="form-control" id="mesesEntrenamiento" name="mesesEntrenamiento" min="0" max="18" value="0">
+                  <label class="mt-auto ml-3">Meses</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-toggle="modal">Guardar</button>
+          </div>
+      </form>
+
     </div>
   </div>
 </div>

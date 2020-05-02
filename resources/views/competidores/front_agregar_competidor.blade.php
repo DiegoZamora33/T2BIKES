@@ -70,7 +70,7 @@
     <div class="col-md-4">
       <label for="tiempoEntrenamiento">Tiempo de Entrenamiento</label>
       <div class="d-flex w-50 mx-auto">
-        <input type="number" class="form-control" id="tiempoEntrenamiento" name="tiempoEntrenamiento" min="0" max="18" placeholder="0">
+        <input type="number" class="form-control" id="tiempoEntrenamiento" name="tiempoEntrenamiento" min="0" max="18" value="0">
         <label class="mt-auto ml-3">Meses</label>
       </div>
     </div>

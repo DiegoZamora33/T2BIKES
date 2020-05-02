@@ -836,3 +836,54 @@ function enviarCompetidor()
   });
 }
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <----------------------------------------- FUNCION PARA ENVIAR ASIGNACION DE COMPETENCIA ------------------------------------------------------->
+
+function asignarCompetencia()
+{
+  var numeroCompetidor = $('#_numeroCompetidor').val();
+  var competencia = $('#asignarCompetencia').val();
+  var entrenador = $('#asignarEntrenador').val();
+  var mesesEntrenamiento = $('#mesesEntrenamiento').val();
+
+  var token = $('#tokenAsignar').val();
+
+   $.ajax({
+    url: url+'/home/competidores/asignarCompetencia',
+    headers: {'X-CSRF-TOKEN':token},
+    type: 'POST',
+    dataType: 'json',
+    data:{competencia: competencia, entrenador: entrenador, mesesEntrenamiento: mesesEntrenamiento},
+    
+    success:function(response)
+    {
+      switch(response['codigo'])
+      {
+        case "creado":
+            getSuccess(response['mensaje']);
+        break;
+
+        case "creadoSinEntrenador":
+            getWarning(response['mensaje']);
+        break;
+
+        case "duplicadoFaltaEntrenador":
+            getDanger(response['mensaje']);
+        break;
+
+        case "duplicado":;
+            getDanger(response['mensaje']);
+        break;
+
+        default:
+            getDanger(response['mensaje']);
+        break;
+      }
+    }
+
+    });
+}
+
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->

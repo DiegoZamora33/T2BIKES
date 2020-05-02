@@ -35,9 +35,9 @@ Route::match(['get', 'post'], '/home/graficas/competidor_competencia_pai', 'Graf
 // Para Acceder a la Grafica competidor_competencia_bar
 Route::match(['get', 'post'], '/home/graficas/competidor_competencia_bar', 'Graficas@competidor_competencia_bar')->name('competidor_competencia_bar');
 
-// Experimento de time
-Route::match(['get', 'post'], '/home/graficas/time', 'Graficas@time')->name('time');
 
+// Para Asignar una Competencia a un Competidor
+Route::match(['get', 'post'], '/home/competidores/asignarCompetencia', 'Competidores@asignarCompetencia')->name('asignarCompetencia');
 
 
 //Ruta para los controladores resource

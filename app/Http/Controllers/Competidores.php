@@ -26,6 +26,131 @@ class Competidores extends Controller
     }
 
 
+    public function asignarCompetencia(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Verificamos que Si esta Seleccionando Algo
+            if ($data['competencia'] != '0' && $data['entrenador'] != '0') 
+            {
+                // Vamos a Valdidar que no se repita en la tabla Entrenador_Competidor_Competencia
+                $queryEntrenamiento = DB::select(" SELECT * FROM entrenador__competidor__competencias
+                                                    WHERE idEntrenador = '".$data['entrenador']."'
+                                                        AND numeroCompetidor = '".$data['numeroCompetidor']."'
+                                                        AND idCompetencia = '".$data['competencia']."' ");
+
+                $queryPuntajeCompetencia = DB::select(" SELECT * FROM puntaje__competidor__competencias
+                                                    WHERE numeroCompetidor = '".$data['numeroCompetidor']."'
+                                                        AND idCompetencia = '".$data['competencia']."' ");
+
+
+                if($queryEntrenamiento == null && $queryPuntajeCompetencia == null)
+                {
+                    // Creamos el Registro en la tabla de Entrenador_Competidor_Competencias
+                    $nuevoEntrenamiento = new Entrenador_Competidor_Competencia();
+                    $nuevoEntrenamiento->idEntrenador = $data['entrenador'];
+                    $nuevoEntrenamiento->numeroCompetidor = $data['numeroCompetidor'];
+                    $nuevoEntrenamiento->idCompetencia = $data['competencia'];
+
+                    /// Proceso Para Calculo de Fechas
+                    $fecha = date('Y-m-j');
+                    $nuevafecha = strtotime ( '+'.$data['mesesEntrenamiento'].' month' , strtotime ( $fecha ) ) ;
+                    $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+                    
+                    $nuevoEntrenamiento->fechaInicio = $fecha;
+                    $nuevoEntrenamiento->fechaFin = $nuevafecha;
+                    $nuevoEntrenamiento->mesesEntrenamiento = $data['mesesEntrenamiento'];
+                    $nuevoEntrenamiento->save();
+
+                    // Asignacion en la tabla de Puntaje_Competidor_Competencia
+                    $nuevaPuntajeCompetencia = new Puntaje_Competidor_Competencia();
+                    $nuevaPuntajeCompetencia->numeroCompetidor = $nuevoNumeroCompetidor;
+                    $nuevaPuntajeCompetencia->idCompetencia = $data['competencia'];
+                    $nuevaPuntajeCompetencia->puntajeGlobal = 0;
+                    $nuevaPuntajeCompetencia->save();
+
+                    // Vamos a crear los Registros de las Carreras Correspondientes
+                    $misCarreras = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
+                        ON carreras.idCompetencia = competencias.idCompetencia
+                            AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
+                        WHERE competencias.idCompetencia = '".$request['competencia']."'");
+
+                    foreach ($misCarreras as &$carrera) 
+                    {
+                        $nuevaPuntajeCarrera = new Puntaje_Competidor_Carrera();
+                        $nuevaPuntajeCarrera->numeroCompetidor = $nuevoNumeroCompetidor;
+                        $nuevaPuntajeCarrera->idCarrera = $carrera->idCarrera;
+                        $nuevaPuntajeCarrera->lugarLlegada = 0;
+                        $nuevaPuntajeCarrera->puntaje = 0;
+                        $nuevaPuntajeCarrera->idEstatus = 5;
+                        $nuevaPuntajeCarrera->save();
+                    }
+
+                    // Mendaje de Exito
+                    return response()->json(['codigo' => 'creado', 'mensaje' => 'Competencia y Entrenador asignados con exito...']);
+                }
+                else
+                {
+                    // Ya existe en la tabla Entrenador_Competidor_Competencias y en la Tabla Puntaje_Competidor_Competencias
+                    return response()->json(['codigo' => 'duplicado', 'mensaje' => 'Este Competidor ya esta dentro de la Competencia y ya tiene a un Entrenador asignado']);
+                }
+
+            }
+            else
+            {
+                //Vemos si solo Selecciono una Competencia pero ningun Entrenador
+                if ($data['competencia'] != '0' && $data['entrenador'] == '0') 
+                {
+                    //Validamos que no se repita en la tabla Puntaje_Competidor_Competencias
+                    $queryPuntajeCompetencia = DB::select(" SELECT * FROM puntaje__competidor__competencias
+                                                    WHERE numeroCompetidor = '".$data['numeroCompetidor']."'
+                                                        AND idCompetencia = '".$data['competencia']."' ");
+
+                    if($queryPuntajeCompetencia == null)
+                    {
+                         // Asignacion en la tabla de Puntaje_Competidor_Competencia
+                        $nuevaPuntajeCompetencia = new Puntaje_Competidor_Competencia();
+                        $nuevaPuntajeCompetencia->numeroCompetidor = $nuevoNumeroCompetidor;
+                        $nuevaPuntajeCompetencia->idCompetencia = $data['competencia'];
+                        $nuevaPuntajeCompetencia->puntajeGlobal = 0;
+                        $nuevaPuntajeCompetencia->save();
+
+                        // Vamos a crear los Registros de las Carreras Correspondientes
+                        $misCarreras = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
+                            ON carreras.idCompetencia = competencias.idCompetencia
+                                AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
+                            WHERE competencias.idCompetencia = '".$request['competencia']."'");
+
+                        foreach ($misCarreras as &$carrera) 
+                        {
+                            $nuevaPuntajeCarrera = new Puntaje_Competidor_Carrera();
+                            $nuevaPuntajeCarrera->numeroCompetidor = $nuevoNumeroCompetidor;
+                            $nuevaPuntajeCarrera->idCarrera = $carrera->idCarrera;
+                            $nuevaPuntajeCarrera->lugarLlegada = 0;
+                            $nuevaPuntajeCarrera->puntaje = 0;
+                            $nuevaPuntajeCarrera->idEstatus = 5;
+                            $nuevaPuntajeCarrera->save();
+                        }
+
+                        // Mendaje de Exito
+                        return response()->json(['codigo' => 'creadoSinEntrenador', 'mensaje' => 'Competencia asignada con exito, NO se asignó ningun Entrenador...']);
+                    }
+                    else
+                    {
+                        // Ya existe en la Tabla Puntaje_Competidor_Competencias
+                        return response()->json(['codigo' => 'duplicadoFaltaEntrenador', 'mensaje' => 'Este Competidor ya esta dentro de la Competencia, solo le falta el Entrenador, puede asignarlo en el apartado de "Ver Estadisticas" de la competencia.']);
+                    }
+                }
+                else
+                {
+                    // Quisa no ha seleccionado nada o solo selecciono a un Entrenador
+                    return response()->json(['codigo' => 'nadaSeleccionado', 'mensaje' => 'Primero debes elegir una Competencia']);
+                }
+            }
+        }
+    }
+
+
     public function estadistica(Request $data)
     {
         if($data->ajax())
@@ -82,6 +207,10 @@ class Competidores extends Controller
                             AND competencias.idEstatus = estatuses.idEstatus
                             
                         WHERE puntaje__competidor__competencias.numeroCompetidor = '".$data['numeroCompetidor']."' ");
+
+            $misDatos['allCompetencias'] = Competencia::all();
+
+            $misDatos['allEntrenadores'] = Entrenador::all();
 
 
             return view('competidores.front_perfil_competidor', $misDatos);
@@ -148,7 +277,7 @@ class Competidores extends Controller
 
                         /// Proceso Para Calculo de Fechas
                         $fecha = date('Y-m-j');
-                        $nuevafecha = strtotime ( '+'.$request['mesesEntrenamiento'].' month' , strtotime ( $fecha ) ) ;
+                        $nuevafecha = strtotime ( '+'.$request['tiempoEntrenamiento'].' month' , strtotime ( $fecha ) ) ;
                         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
                         
                         $nuevoEntrenamiento->fechaInicio = $fecha;
@@ -285,7 +414,7 @@ class Competidores extends Controller
             else
             {
                 //Si el numero de competidor es 0 enviamos un mensaje
-                return response()->json(['mensaje' => 'numCero']);
+                return response()->json(['codigo' => 'numCero', 'mensaje' => 'El Numero de Competidor no puede ser Cero...']);
             }
         }
     }
