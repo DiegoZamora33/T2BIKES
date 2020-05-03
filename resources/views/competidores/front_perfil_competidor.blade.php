@@ -88,11 +88,13 @@
         </button>
       </div>
 
-      <form class="form-horizontal"  name="formularioAsignar" action="" onSubmit="asignarCompetencia(); return false">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}" id="tokenAsignar">
 
-          <input type="hidden" name="_token" value="{{ csrf_token() }}" id="tokenAsignar">
-          
-          <div class="modal-body">
+        <div class="alert alert-info mb-0 mt-4" id="miAlert">
+          Primero seleccione una Competencia.
+        </div>
+               
+          <div class="modal-body mt-1">
             <div class="form-group">
               <label for="asignarCompetencia">Competencia</label>
               <select id="asignarCompetencia" name="asignarCompetencia" class="form-control">
@@ -135,9 +137,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary" data-toggle="modal">Guardar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" onclick="asignarCompetencia()">Guardar</button>
           </div>
-      </form>
 
     </div>
   </div>

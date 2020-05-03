@@ -14,10 +14,10 @@
   </a>
 </div>
 
-<h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Perfil del Competidor</h3>
+<h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Estadisticas sobre la Competencia</h3>
 
 </div>
-<h3>"{{ $competidor->numeroCompetidor }}"</h3>
+<h5>Numero de Competidor: "{{ $competidor->numeroCompetidor }}"</h5>
 <h5>Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
 
 @if($entrenador != null)

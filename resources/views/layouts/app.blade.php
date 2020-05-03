@@ -34,6 +34,9 @@
     <script src="{{ asset('t2bikes/js/chart.js') }}"></script>
 
     <script src="{{ asset('dinamico.js') }}"></script>
+    <script src="{{ asset('inserts.js') }}"></script>
+    <script src="{{ asset('updates.js') }}"></script>
+    <script src="{{ asset('deletes.js') }}"></script>
 
     <script src="{{ asset('t2bikes/js/alert.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('t2bikes/css/animate.css') }}">
