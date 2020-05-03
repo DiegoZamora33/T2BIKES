@@ -94,7 +94,6 @@ class Competidores extends Controller
                     // Ya existe en la tabla Entrenador_Competidor_Competencias y en la Tabla Puntaje_Competidor_Competencias
                     return response()->json(['codigo' => 'duplicado', 'mensaje' => 'Este Competidor ya esta dentro de la Competencia y ya tiene a un Entrenador asignado']);
                 }
-
             }
             else
             {

@@ -3,7 +3,7 @@
 var graficaCompetidor = "bar";
 var graficaCompetencia = "bar";
 var graficaCarrera = "bar";
-const url = 'http://localhost/T2BIKES/public';
+const url = 'http://localhost:8000';
 
 
 
@@ -848,7 +848,7 @@ function asignarCompetencia()
   var mesesEntrenamiento = $('#mesesEntrenamiento').val();
 
   var token = $('#tokenAsignar').val();
-
+  
    $.ajax({
     url: url+'/home/competidores/asignarCompetencia',
     headers: {'X-CSRF-TOKEN':token},
