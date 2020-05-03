@@ -108,7 +108,6 @@ class Competidores extends Controller
                             return response()->json(['codigo' => 'duplicado', 'mensaje' => 'Este Competidor ya esta dentro de la Competencia y ya tiene a un Entrenador asignado']);
                         }
                 }
-
             }
             else
             {
