@@ -135,7 +135,7 @@
 
 
 
-              <div class="modal fade" id="modalCarrera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="modalCarrera" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -159,6 +159,8 @@
 
                       <label for="lugarLlegadaCarrera">Lugar de llegada</label><br>
                       <input id="lugarLlegadaCarrera" name="lugarLlegadaCarrera" class="form-control w-25 mx-auto" type="number" min="0" max="1000" step="1"/>
+
+                      <input type="hidden" name="idCarrera" id="idCarrera" value="0">
 
                     </div>
                     <div class="modal-footer">

@@ -34,6 +34,9 @@ Route::match(['get', 'post'], '/home/competidores/asignarCompetencia', 'Competid
 // Para obtener info sobre una carrera de un Competidor
 Route::match(['get', 'post'], '/home/competidores/datosPuntajeCarrera', 'Competidores@datosPuntajeCarrera')->name('datosPuntajeCarrera');
 
+// Para Asignar puntaje de una Carrera de un Competidor
+Route::match(['get', 'post'], '/home/competidores/asignarPuntajeCarrera', 'Competidores@asignarPuntajeCarrera')->name('asignarPuntajeCarrera');
+
 // Para hacer update de un Competidor
 Route::match(['get', 'post'], '/home/competidores/update', 'Competidores@update')->name('update');
 

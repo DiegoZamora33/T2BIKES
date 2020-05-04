@@ -377,15 +377,16 @@ function dataCarrera(idCarrera)
       {
         document.getElementById('puntajeCarrera').value = response['puntaje'];
         document.getElementById('lugarLlegadaCarrera').value = response['lugar'];
+        document.getElementById('idCarrera').value = response['idCarrera'];
         statusCarrera = response['status'];
       }
 
   });
 }
 
-// <---------------------------------------------------------------------------------------->
+// <------------------------------------------------------------------------------------------>
 
-
+// <-------------------------- FUNCIONES PARA MOSTRAR UNA ESTADISTICA ------------------------>
 function getStat(miStat)
 {
   var idCompetencia = miStat.id;
@@ -408,6 +409,31 @@ function getStat(miStat)
 
   });
 }
+
+function getStatR()
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var token = $('#token').val();
+
+  $.ajax({
+      url: url+'/home/competidores/estadistica',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
+      }
+
+  });
+}
+
+// <------------------------------------------------------------------------------------------>
 
 function competidores(){
 
