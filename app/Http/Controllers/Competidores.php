@@ -476,15 +476,14 @@ class Competidores extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $datosCompetidor=request()->except(['_token','_method']);
-        Competidor::where('numeroCompetidor','=',$id)->update($datosCompetidor);
-        
-        $competidor = Competidor::where('numeroCompetidor', $id)->first();
-
-        return response()->json(['codigo' => 'update', 'mensaje' => 'Actualizacion de datos con exito...']);
-        //return view('competidores.front_editar_competidor',compact('competidor'));
+        if($request->ajax())
+        {
+            $datosCompetidor=$request->all();
+            Competidor::where('numeroCompetidor','=',$request['numeroCompetidor'])->update($datosCompetidor);
+              return response()->json(['codigo' => 'update', 'mensaje' => 'Actualizacion de datos con exito...']);
+        }
     }
 
     /**
