@@ -36,7 +36,7 @@
   <div class="form-row">
       <div class="form-group col-md-4 mx-auto">
         <label for="numeroCompetidor">Numero de Competidor</label>
-        <input title="Solo se admiten numeros en un rango de 50 digitos" pattern="([0-9]+){0,50}" type="text" class="form-control" id="numeroCompetidor" name="numeroCompetidor" placeholder="" required>
+        <input title="Solo se admiten numeros en un rango de 10 digitos" pattern="[0-9]{1,10}" type="text" class="form-control" id="numeroCompetidor" name="numeroCompetidor" placeholder="" required>
       </div>
 
     <div class="form-group col-md-4">

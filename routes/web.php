@@ -55,6 +55,3 @@ Route::resources([
 Route::get('/ajax', function () {
     return view('pruebaAJAX');
 });
-
-
-

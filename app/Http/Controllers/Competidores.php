@@ -493,9 +493,13 @@ class Competidores extends Controller
      */
     public function destroy($id)
     {
-        //Buscamos al competidor con el id dado y lo eliminamos
+        //Buscamos todos los datos del competidor en su tabla y las demas tablas de la BD
+        Entrenador_Competidor_Competencia::where('numeroCompetidor', $id)->delete();
+        Puntaje_Competidor_Competencia::where('numeroCompetidor', $id)->delete();
+        Puntaje_Competidor_Carrera::where('numeroCompetidor', $id)->delete();
         Competidor::where('numeroCompetidor', $id)->delete();
-        //Mensaje de confirmacion
-        return 'Eliminado';
+        
+        //Mensaje de Confirmacion
+        return response()->json(['codigo' => 'eliminado', 'mensaje' => 'El competidor con numero '.$id.' a sido eliminado exitosamente']);
     }
 }

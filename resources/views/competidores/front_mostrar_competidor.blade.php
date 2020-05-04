@@ -19,7 +19,7 @@
       <td data-label="Nombre">{{ $competidor->nombre }}</td>
       <td data-label="Paterno">{{ $competidor->apellidoPaterno }}</td>
       <td data-label="Materno">{{ $competidor->apellidoMaterno }}</td>
-      <td data-label="Registro">{{ str_limit($competidor->created_at, $limit = 10, $end = " ") }}</td>
+      <td data-label="Registro">{{ substr(str_limit($competidor->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),0,4)}}</td>
     </tr>
     @endforeach
 

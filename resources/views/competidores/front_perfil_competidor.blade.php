@@ -18,7 +18,7 @@
 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 <input type="hidden" id="{{ $competidor->numeroCompetidor }}">
 <h5>Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
-<h5>Fecha de Registro: {{ str_limit($competidor->created_at, $limit = 10, $end = " ") }}</h5>
+<h5>Fecha de Registro: {{ substr(str_limit($competidor->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),0,4) }}</h5>
 
 
 
@@ -72,7 +72,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
+        <button type="button" class="btn btn-danger" onclick="eliminarCompetidor()">Eliminar</button>
       </div>
     </div>
   </div>
