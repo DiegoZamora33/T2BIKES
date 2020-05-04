@@ -7,6 +7,7 @@ var graficaCompetidor = "bar";
 var graficaCompetencia = "bar";
 var graficaCarrera = "bar";
 const url = 'http://localhost/T2BIKES/public';
+var statusCarrera = 5;
 
 
 
@@ -317,6 +318,72 @@ function getInfo(miMensaje)
   });
 }
 // <--------------------------------------------------------------------->
+
+// <---------------- FUNCIONES PARA MOSTRAR LA INFO DE UNA CARRERA EN EL MODAL --------------->
+
+function clickStatus(boton)
+{
+  switch(boton.id)
+  {
+    case "pendiente":
+      statusCarrera = 5;
+    break;
+
+    case "siTermino":
+      statusCarrera = 3;
+    break;
+
+    case "noTermino":
+      statusCarrera = 4;
+    break;
+  }
+
+  miFocus(boton);
+
+}
+
+
+function miFocus(miBoton)
+{
+  var misBotones = document.getElementById('contenedorStatus').children;
+  miBoton.style = "transform: scale(1.15);";
+  miBoton.classList.add('active');
+
+  for (var i = 0; i < misBotones.length; i++) 
+  {
+    if(misBotones[i].id != miBoton.id)
+    {
+      misBotones[i].style = "transform: scale(1);";
+      misBotones[i].classList.remove('active');
+    }
+  }
+  
+}
+
+
+function dataCarrera(idCarrera)
+{
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var token = $('#token').val();
+
+  $.ajax({
+      url: url+'/home/competidores/datosPuntajeCarrera',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCarrera: idCarrera},
+
+      success:function(response)
+      {
+        document.getElementById('puntajeCarrera').value = response['puntaje'];
+        document.getElementById('lugarLlegadaCarrera').value = response['lugar'];
+        statusCarrera = response['status'];
+      }
+
+  });
+}
+
+// <---------------------------------------------------------------------------------------->
 
 
 function getStat(miStat)

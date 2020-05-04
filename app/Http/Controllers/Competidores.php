@@ -26,6 +26,17 @@ class Competidores extends Controller
     }
 
 
+    public function datosPuntajeCarrera(Request $data)
+    {
+        if ($data->ajax()) 
+        {
+            $puntaje = Puntaje_Competidor_Carrera::where('idCarrera', '=', $data['idCarrera'])->where('numeroCompetidor', '=', $data['numeroCompetidor'])->first();
+
+           return response()->json(['puntaje' => $puntaje->puntaje, 'status' => $puntaje->idEstatus, 'lugar' => $puntaje->lugarLlegada]);
+        }
+    }
+
+
     public function asignarCompetencia(Request $data)
     {
         if($data->ajax())

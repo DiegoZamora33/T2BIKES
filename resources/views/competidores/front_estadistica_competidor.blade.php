@@ -52,7 +52,7 @@
                   <thead>
                     <tr>
                       <th scope="col">Nombre</th>
-                      <th scope="col">Llegada</th>
+                      <th scope="col">Lugar de llegada</th>
                       <th scope="col">Puntaje</th>
                       <th scope="col">Status</th>
                     </tr>
@@ -60,7 +60,7 @@
                   <tbody>
 
                     @foreach($carreras as $miCarrera)
-                    <tr data-toggle="modal" data-target="#modalCarrera">
+                    <tr onclick="dataCarrera('{{ $miCarrera->idCarrera }}')" data-toggle="modal" data-target="#modalCarrera" style="cursor: pointer;">
                       <td data-label="Nombre de la Carrera">{{ $miCarrera->nombreCarrera }}</td>
                       <td data-label="Lugar de llegada">{{ $miCarrera->lugarLlegada }}</td>
                       <td data-label="Puntaje">{{ $miCarrera->puntaje }}</td>
@@ -147,22 +147,23 @@
                     <div class="modal-body">
 
 
-                      <label for="inputAddress">Puntos a asignar/restar:</label><br>
-                      <input class="form-control w-25 mx-auto" type="number" value="0" min="-50" max="1000" step="1"/><br><br>
+                      <label for="puntajeCarrera">Puntos a asignar/restar:</label><br>
+                      <input id="puntajeCarrera" name="puntajeCarrera" class="form-control w-25 mx-auto" type="number" min="-50" max="1000" step="1"/><br>
                       <label for="inputAddress">¿Terminó la carrera?</label><br>
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-warning">En Curso</button>
-                        <button type="button" class="btn btn-success">Si terminó</button>
-                        <button type="button" class="btn btn-danger">No terminó</button>
+
+                      <div id="contenedorStatus" class="btn-group" role="group" aria-label="Basic example">
+                        <button onclick="clickStatus(this)" type="button" id="pendiente" class="btn btn-warning">Pendiente</button>
+                        <button onclick="clickStatus(this)" type="button" id="siTermino" class="btn btn-success">Si terminó</button>
+                        <button onclick="clickStatus(this)" type="button" id="noTermino" class="btn btn-danger">No terminó</button>
                       </div><br><br>
-                      <label for="inputAddress">Lugar de llegada</label><br>
-                      <input class="form-control w-25 mx-auto" type="number" value="5" min="0" max="1000" step="1"/>
-                    
+
+                      <label for="lugarLlegadaCarrera">Lugar de llegada</label><br>
+                      <input id="lugarLlegadaCarrera" name="lugarLlegadaCarrera" class="form-control w-25 mx-auto" type="number" min="0" max="1000" step="1"/>
 
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Asignar</button>
+                      <button onclick="enviarPuntajeCarrera()" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Asignar</button>
                     </div>
                   </div>
                 </div>
