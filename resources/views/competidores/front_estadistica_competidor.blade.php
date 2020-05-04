@@ -25,9 +25,11 @@
     <h5>Entrenador: {{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</h5>
     <h5>Tiempo de Entrenamiento: {{ $miEntrenador->mesesEntrenamiento }}</h5>
     <h5 class="text-muted"> De {{ $miEntrenador->fechaInicio }} a {{ $miEntrenador->fechaFin }}</h5>
+
   @endforeach
 @else
   <h5 class="text-muted">**No tiene un entrenador Asigando a esta Competencia**</h5>
+  
 @endif
 
              	<div class="text-center mb-5">
