@@ -544,21 +544,25 @@ function newComp(){
 // <----------------------------------------------------------------------------------->
 
 
+// <----------------- FUNCION PARA EDOTAR LOS DATOS DE UN COMPETIDOR ------------------>
+function editComp()
+{
+  var numeroCompetidor = $('#_numeroCompetidor').val();
 
-function editComp(){
-  this.className = 'active';
   $.ajax({
-    url: 'forms/editar-competidor.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
-                effectFadeOut();
-                effectFadeIn();
-      }
-    );
-  }
+        type: "get",
+        url: url+"/home/competidores/"+numeroCompetidor+"/edit",
+        dataType: "html",
+
+    success: function(data)
+    { 
+      $('#mostrador').html(data);
+              effectFadeOut();
+              effectFadeIn();
+    }
   });
 }
+// <----------------------------------------------------------------------------------->
 
 function editEntre(){
   this.className = 'active';

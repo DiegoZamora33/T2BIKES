@@ -14,7 +14,7 @@ function eliminarCompetidor() {
         success: function (response) {
             switch(response['codigo']){
                 case "eliminado":
-                    getDanger(response['mensaje']);
+                    getSuccess(response['mensaje']);
                     $('#exampleModal').modal('hide');
                     competidores();
                 break;

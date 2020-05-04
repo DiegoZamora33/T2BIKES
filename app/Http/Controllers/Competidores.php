@@ -482,7 +482,9 @@ class Competidores extends Controller
         Competidor::where('numeroCompetidor','=',$id)->update($datosCompetidor);
         
         $competidor = Competidor::where('numeroCompetidor', $id)->first();
-        return view('competidores.front_editar_competidor',compact('competidor'));
+
+        return response()->json(['codigo' => 'update', 'mensaje' => 'Actualizacion de datos con exito...']);
+        //return view('competidores.front_editar_competidor',compact('competidor'));
     }
 
     /**
