@@ -29,9 +29,11 @@
   @endforeach
 @else
   <h5 class="text-muted">**No tiene un entrenador Asigando a esta Competencia**</h5>
-  
-@endif
 
+@endif
+  <div class="text-center mt-3">
+  <button type="button" id="download-pdf" class="btn btn-warning">Descargar Reporte</button>
+  </div><br><br>
              	<div class="text-center mb-5">
 
                 @foreach($competencia as $miCompetencia)
@@ -50,7 +52,7 @@
                 @endforeach
                 <br><br>
                 <h4 class="text-danger">Haga click en una fila para sumar/restar puntos</h4><br>
-                <table class="mx-auto">
+                <table id="carrers"  class="mx-auto">
                   <thead>
                     <tr>
                       <th scope="col">Nombre</th>
@@ -81,28 +83,28 @@
                     var myChart = new Chart(ctx, {
                       type: "bar",
                       data: {
-                        labels: 
-                        <?php 
+                        labels:
+                        <?php
 
                           $out = "";
                           foreach ($carreras as &$miCarrera) {
                               $out = $out."'".$miCarrera->nombreCarrera."',";
                           }
 
-                          echo "[".$out."]"; 
+                          echo "[".$out."]";
 
                         ?>,
                         datasets: [{
                           label: 'Puntos',
-                          data: 
-                          <?php 
-                          
+                          data:
+                          <?php
+
                             $out = "";
                             foreach ($carreras as &$miCarrera) {
                                 $out = $out.$miCarrera->puntaje.",";
                             }
 
-                            echo "[".$out."]"; 
+                            echo "[".$out."]";
 
                           ?>,
                           backgroundColor: [
@@ -123,6 +125,37 @@
                         }
                       }
                     });
+
+                    //add event listener to 2nd button
+                        document.getElementById('download-pdf').addEventListener("click", downloadPDF);
+
+                        //PDF a maxima calidad
+                        function downloadPDF() {
+                          var newCanvas = document.querySelector('#competidor-grafica-bar');
+
+                          //Imagen desde la etiqueta canvas
+                        	var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
+
+                          //Crear lienzo PDF
+                        	var doc = new jsPDF('portrait');
+                          //Añadiendo elementos al PDF
+                        	doc.setFontSize(15);
+                        	doc.text("Perfil de competidor: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}", 15, 20);
+                          doc.text("Numero: {{ $competidor->numeroCompetidor }}", 15, 25);
+                          doc.setFontStyle("bold");
+                          doc.text("Estadisticas sobre la competencia: {{ $miCompetencia->nombreCompetencia }}", 15, 35);
+                          doc.setFontStyle("normal");
+                          doc.setFontSize(10);
+                          doc.text("Puntaje global: {{ $miCompetencia->puntajeGlobal}}", 15, 45);
+                          doc.text("Periodo: {{ $miCompetencia->periodo}}", 15, 50);
+
+                          doc.autoTable({ html: '#carrers', margin: {top: 60} });
+
+                        	doc.addImage(newCanvasImg, 'PNG', 25, 85, 150, 120 );
+                          //Guardar
+                        	doc.save('{{ $competidor->nombre }}.pdf');
+                         }
+
                   </script>
                 </div>
 	            </div>
@@ -131,7 +164,6 @@
         <div class="justify-content-center mt-3 d-flex mx-auto">
           <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competidor" onclick="grafCompetidor()">
           Cambiar a Grafica de Pastel</button>
-          <button type="button" class="btn btn-warning ml-2">Descargar Reporte</button>
         </div>
       </div>
 

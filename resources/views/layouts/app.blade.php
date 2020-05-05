@@ -32,6 +32,9 @@
     <script src="{{ asset('t2bikes/js/bootstrap.min.js') }}"></script>
 
     <script src="{{ asset('t2bikes/js/chart.js') }}"></script>
+    <script src="{{ asset('t2bikes/js/jspdf.min.js') }}"></script>
+
+    <script src="{{ asset('t2bikes/js/jspdf.plugin.autotable.min.js') }}"></script>
 
     <script src="{{ asset('dinamico.js') }}"></script>
     <script src="{{ asset('inserts.js') }}"></script>
@@ -42,12 +45,12 @@
     <link rel="stylesheet" href="{{ asset('t2bikes/css/animate.css') }}">
 
   </head>
-   
+
 <body>
     <div id="app">
 
         <!-- Para poder Registrar un nuevo Usuario usando el NAV de LARAVEL Descometar el nav siguiente -->
-      
+
         <!--nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -65,7 +68,7 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                   
+
                     <ul class="nav navbar-nav">
                         &nbsp;
                     </ul>
