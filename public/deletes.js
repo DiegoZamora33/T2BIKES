@@ -1,6 +1,7 @@
 // # EN ESTE ARCHIVO JS VAN TODAS LAS FUNCIONES AJAX PARA ELIMINAR 
 // ADEMAS DE MOSTRAR EN FRON-END LA RESPUESTA DEL SERVIDOR
 
+// <--------------------------- FUNCION PARA ELIMINAR COMPETIDOR ---------------------------->
 function eliminarCompetidor() {
     var numeroCompetidor = $('#_numeroCompetidor').val();
     var token = $('#tokenAsignar').val();
@@ -22,3 +23,38 @@ function eliminarCompetidor() {
         }
     });
 }
+// <----------------------------------------------------------------------------------------->
+
+// <--------------------------- FUNCION PARA QUITAR UN ENTRENADOR --------------------------->
+
+function quitarEntrenador()
+{
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var idEntrenador = $('#idEntrenador').val();
+  var idCompetencia = $('#idCompetencia').val();
+  var token = $('#token').val();
+
+   $.ajax({
+      url: url+'/home/competidores/quitarEntrenador',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia, 
+              idEntrenador: idEntrenador},
+
+      success:function(response)
+      {
+        getSuccess(response['mensaje']);
+        $('#modalQuitarEntrenador').modal('hide');
+        setTimeout(
+          function() {
+            getStatR();
+           $('#modalQuitarEntrenador').modal('hide');
+          },300
+        );
+      }
+
+  });
+}
+
+// <----------------------------------------------------------------------------------------->

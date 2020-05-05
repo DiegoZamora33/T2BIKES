@@ -28,12 +28,45 @@ class Competidores extends Controller
 
     public function asignarEntrenador(Request $data)
     {
-        
+        if ($data->ajax()) 
+        {
+            // Nos fijamos que que el id no sea cero
+            if ($data['idEntrenador'] != '0') 
+            {
+                $nuevoEntrenamiento = new Entrenador_Competidor_Competencia();
+                $nuevoEntrenamiento->idEntrenador = $data['idEntrenador'];
+                $nuevoEntrenamiento->numeroCompetidor = $data['numeroCompetidor'];
+                $nuevoEntrenamiento->idCompetencia = $data['idCompetencia'];
+
+                 /// Proceso Para Calculo de Fechas
+                $fecha = date('Y-m-j');
+                $nuevafecha = strtotime ( '+'.$data['mesesEntrenamiento'].' month' , strtotime ( $fecha ) ) ;
+                $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+                
+                $nuevoEntrenamiento->fechaInicio = $fecha;
+                $nuevoEntrenamiento->fechaFin = $nuevafecha;
+                $nuevoEntrenamiento->mesesEntrenamiento = $data['mesesEntrenamiento'];
+                $nuevoEntrenamiento->save();
+
+                // Mensaje de exito
+                return response()->json(['mensaje' => 'Se Agregó el Entrenador con exito...']);
+            }
+            else
+            {
+                // Mensaje de exito
+                 return response()->json(['mensaje' => 'No se Asignó un Entrenador, todo sigue igual...']);
+            }
+
+        }
     }
 
     public function quitarEntrenador(Request $data)
     {
+        //Buscamos el registro y lo eliminamos
+        DB::delete("delete from entrenador__competidor__competencias where numeroCompetidor = ".$data['numeroCompetidor'].              " AND idEntrenador = ".$data['idEntrenador']." AND idCompetencia = ".$data['idCompetencia']."");
 
+        // Mensaje de exito
+        return response()->json(['codigo' => 'update', 'mensaje' => 'Se ha quitado el Entrendor...']);
     }
 
 
@@ -223,7 +256,7 @@ class Competidores extends Controller
         {
             $datos['competidor']=Competidor::where('numeroCompetidor', $data['numeroCompetidor'])->first();
 
-            $datos['entrenador'] = DB::select(" SELECT entrenadors.nombre, entrenadors.apellidoPaterno, entrenadors.apellidoMaterno, mesesEntrenamiento, fechaInicio, fechaFin
+            $datos['entrenador'] = DB::select(" SELECT entrenadors.idEntrenador, entrenadors.nombre, entrenadors.apellidoPaterno, entrenadors.apellidoMaterno, mesesEntrenamiento, fechaInicio, fechaFin
                 FROM entrenador__competidor__competencias INNER JOIN entrenadors 
                 ON entrenador__competidor__competencias.idEntrenador = entrenadors.idEntrenador
                 WHERE entrenador__competidor__competencias.numeroCompetidor = ".$data['numeroCompetidor']." 

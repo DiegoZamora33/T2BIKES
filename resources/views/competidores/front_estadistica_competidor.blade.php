@@ -22,6 +22,7 @@
 
 @if($entrenador != null)
   @foreach($entrenador as $miEntrenador)
+    <input type="hidden" name="idEntrenador" id="idEntrenador" value="{{ $miEntrenador->idEntrenador}}">
     <h5 class="mt-3">Entrenador: {{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</h5>
     <h5>Tiempo de Entrenamiento: {{ $miEntrenador->mesesEntrenamiento }}</h5>
     <h5 class="text-muted"> De {{ $miEntrenador->fechaInicio }} a {{ $miEntrenador->fechaFin }}</h5>
@@ -123,45 +124,6 @@
                         }
                       }
                     });
-
-                    //add event listener to 2nd button
-                        document.getElementById('download-pdf').addEventListener("click", downloadPDF);
-
-                        //PDF a maxima calidad
-                        function downloadPDF() 
-                        {
-                          if ( document.getElementById( "competidor-grafica-bar" )) 
-                          {
-                             var newCanvas = document.querySelector('#competidor-grafica-bar');
-                          }
-                          else
-                          {
-                             var newCanvas = document.querySelector('#competidor-grafica-pie');
-                          }
-
-                          //Imagen desde la etiqueta canvas
-                        	var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
-
-                          //Crear lienzo PDF
-                        	var doc = new jsPDF('portrait');
-                          //Añadiendo elementos al PDF
-                        	doc.setFontSize(15);
-                        	doc.text("Perfil de competidor: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}", 15, 20);
-                          doc.text("Numero: {{ $competidor->numeroCompetidor }}", 15, 25);
-                          doc.setFontStyle("bold");
-                          doc.text("Estadisticas sobre la competencia: {{ $miCompetencia->nombreCompetencia }}", 15, 35);
-                          doc.setFontStyle("normal");
-                          doc.setFontSize(10);
-                          doc.text("Puntaje global: {{ $miCompetencia->puntajeGlobal}}", 15, 45);
-                          doc.text("Periodo: {{ $miCompetencia->periodo}}", 15, 50);
-
-                          doc.autoTable({ html: '#carrers', margin: {top: 60} });
-
-                        	doc.addImage(newCanvasImg, 'PNG', 25, 85, 160, 80 );
-                          //Guardar
-                        	doc.save('{{ $competidor->nombre }}.pdf');
-                         }
-
                   </script>
                 </div>
 	            </div>
@@ -171,7 +133,7 @@
           <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competidor" onclick="grafCompetidor()">
           Cambiar a Grafica de Pastel</button>
 
-           <button type="button" id="download-pdf" class="btn btn-warning ml-3">Descargar Reporte</button>
+           <button type="button" onclick="downloadPDF()" class="btn btn-warning ml-3">Descargar Reporte</button>
  
         </div>
       </div>
@@ -218,6 +180,15 @@
                           @endforeach
 
                       </select>
+                    <div class="container d-flex justify-content-center">
+                      <div class="col-md-8">
+                        <label for="mesesEntrenamiento">Tiempo de Entrenamiento</label>
+                        <div class="d-flex w-50 mx-auto">
+                          <input type="number" class="form-control" id="mesesEntrenamiento" name="mesesEntrenamiento" min="0" max="18" value="0">
+                          <label class="mt-auto ml-3">Meses</label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

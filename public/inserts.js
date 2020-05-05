@@ -226,7 +226,8 @@ function asignarEntrenador()
 {
   var numeroCompetidor = $('#numeroCompetidor').val();
   var idEntrenador = $('#asignarEntrenador').val();
-  var idCompetencia = $('#idCompetencia').val;
+  var idCompetencia = $('#idCompetencia').val();
+  var mesesEntrenamiento = $('#mesesEntrenamiento').val();
   var token = $('#token').val();
 
    $.ajax({
@@ -235,17 +236,21 @@ function asignarEntrenador()
       type: 'POST',
       dataType: 'json',
       data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia, 
-              idEntrenador: idEntrenador},
+              idEntrenador: idEntrenador, mesesEntrenamiento: mesesEntrenamiento},
 
       success:function(response)
       {
         getSuccess(response['mensaje']);
+        $('#modalEntrenador').modal('hide');
+        setTimeout(
+          function() {
+            getStatR();
+           $('#modalEntrenador').modal('hide');
+          },300
+        );
       }
 
   });
-
-
 }
-
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
