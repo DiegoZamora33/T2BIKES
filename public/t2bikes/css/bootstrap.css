@@ -71,6 +71,11 @@ body {
   border: solid 0px #000;
 }
 
+.escalar
+{
+  transform: scale(1.15);
+}
+
 .superBoton
 {
   background: #e2f2ff;

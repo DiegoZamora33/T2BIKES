@@ -139,13 +139,23 @@ function asignarCompetencia()
         case "creado":
             getSuccess(response['mensaje']);
             $('#exampleModal2').modal('hide');
-            getCompR();
+            setTimeout(
+              function() {
+                getCompR();
+               $('#exampleModal2').modal('hide');
+              },300
+            );
         break;
 
         case "creadoSinEntrenador":
             getWarning(response['mensaje']);
             $('#exampleModal2').modal('hide');
-            getCompR();
+            setTimeout(
+              function() {
+                getCompR();
+               $('#exampleModal2').modal('hide');
+              },300
+            );
         break;
 
         case "duplicadoFaltaEntrenador":
@@ -173,4 +183,69 @@ function asignarCompetencia()
 
     });
 }
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+// <---------------------------------- PARA ENVIAR PUNTAJE DE UNA CARRERA ------------------------------------------------------------------------->
+
+function enviarPuntajeCarrera()
+{
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var idCarrera = $('#idCarrera').val();
+  var puntaje = $('#puntajeCarrera').val();
+  var lugarLlegada = $('#lugarLlegadaCarrera').val();
+  var token = $('#token').val();
+
+   $.ajax({
+      url: url+'/home/competidores/asignarPuntajeCarrera',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCarrera: idCarrera, puntaje: puntaje, 
+        lugarLlegada: lugarLlegada, idEstatus: statusCarrera},
+
+      success:function(response)
+      {
+        getSuccess(response['mensaje']);
+        $('#modalCarrera').modal('hide');
+        setTimeout(
+          function() {
+            getStatR();
+           $('#modalCarrera').modal('hide');
+          },300
+        );
+      }
+
+  });
+}
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <--------------------------------------- ASIGNAR ENTRENADOR A UNA COMPETENCIA DE UN COMPETIDOR ----------------------------------------->
+
+function asignarEntrenador()
+{
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var idEntrenador = $('#asignarEntrenador').val();
+  var idCompetencia = $('#idCompetencia').val;
+  var token = $('#token').val();
+
+   $.ajax({
+      url: url+'/home/competidores/asignarEntrenador',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia, 
+              idEntrenador: idEntrenador},
+
+      success:function(response)
+      {
+        getSuccess(response['mensaje']);
+      }
+
+  });
+
+
+}
+
+
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
