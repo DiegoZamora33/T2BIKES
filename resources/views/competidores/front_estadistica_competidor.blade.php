@@ -32,12 +32,8 @@
     <h5 class="mt-4 text-muted">**No tiene un entrenador Asigando a esta Competencia**</h5>
     <button class="btn btn-warning btn-sm mt-0" data-toggle="modal" data-target="#modalEntrenador">Asignar Entrenador</button>
 @endif
-  <div class="text-center mt-3">
-      <button type="button" id="download-pdf" class="btn btn-warning">Descargar Reporte</button>
-  </div><br><br>
-      
 
-      	<div class="text-center mb-5">
+      	<div class="text-center mt-5 mb-5">
                @foreach($competencia as $miCompetencia)
 
                   <input type="hidden" name="_idCompetencia" value="{{ $miCompetencia->idCompetencia }}" id="idCompetencia">
@@ -132,8 +128,16 @@
                         document.getElementById('download-pdf').addEventListener("click", downloadPDF);
 
                         //PDF a maxima calidad
-                        function downloadPDF() {
-                          var newCanvas = document.querySelector('#competidor-grafica-bar');
+                        function downloadPDF() 
+                        {
+                          if ( document.getElementById( "competidor-grafica-bar" )) 
+                          {
+                             var newCanvas = document.querySelector('#competidor-grafica-bar');
+                          }
+                          else
+                          {
+                             var newCanvas = document.querySelector('#competidor-grafica-pie');
+                          }
 
                           //Imagen desde la etiqueta canvas
                         	var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
@@ -153,7 +157,7 @@
 
                           doc.autoTable({ html: '#carrers', margin: {top: 60} });
 
-                        	doc.addImage(newCanvasImg, 'PNG', 25, 85, 150, 120 );
+                        	doc.addImage(newCanvasImg, 'PNG', 25, 85, 160, 80 );
                           //Guardar
                         	doc.save('{{ $competidor->nombre }}.pdf');
                          }
@@ -166,6 +170,9 @@
         <div class="justify-content-center mt-3 d-flex mx-auto">
           <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competidor" onclick="grafCompetidor()">
           Cambiar a Grafica de Pastel</button>
+
+           <button type="button" id="download-pdf" class="btn btn-warning ml-3">Descargar Reporte</button>
+ 
         </div>
       </div>
 

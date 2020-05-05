@@ -25,8 +25,8 @@ class Graficas extends Controller
                         AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera 
                         AND carreras.idCompetencia = competencias.idCompetencia
                         AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
-                    WHERE puntaje__competidor__carreras.numeroCompetidor = '".$data['numeroCompetidor']."'
-                        AND competencias.idCompetencia = '".$data['idCompetencia']."' ");
+                    WHERE puntaje__competidor__carreras.numeroCompetidor = ".$data['numeroCompetidor']."
+                        AND competencias.idCompetencia = ".$data['idCompetencia']." ");
 
         return view('graficas.competidor_competencia_pai', $datos);
     }
@@ -42,8 +42,8 @@ class Graficas extends Controller
                         AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera 
                         AND carreras.idCompetencia = competencias.idCompetencia
                         AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
-                    WHERE puntaje__competidor__carreras.numeroCompetidor = '".$data['numeroCompetidor']."'
-                        AND competencias.idCompetencia = '".$data['idCompetencia']."' ");
+                    WHERE puntaje__competidor__carreras.numeroCompetidor = ".$data['numeroCompetidor']."
+                        AND competencias.idCompetencia = ".$data['idCompetencia']." ");
 
         return view('graficas.competidor_competencia_bar', $datos);
     }
