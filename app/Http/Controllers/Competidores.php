@@ -26,14 +26,27 @@ class Competidores extends Controller
     }
 
 
+    public function asignarEntrenador(Request $data)
+    {
+        
+    }
+
+    public function quitarEntrenador(Request $data)
+    {
+
+    }
+
+
     public function asignarPuntajeCarrera(Request $data)
     {
         if ($data->ajax()) 
         {
             $puntaje = $data->all();
-            
+
+            // Buscamos y hacemos el update 
             Puntaje_Competidor_Carrera::where('numeroCompetidor','=',$data['numeroCompetidor'])->where('idCarrera', '=', $data['idCarrera'])->update($puntaje);
 
+            // Mensaje de exito
               return response()->json(['codigo' => 'update', 'mensaje' => 'Actualizacion de datos con exito...']);
         }
     }
@@ -43,8 +56,10 @@ class Competidores extends Controller
     {
         if ($data->ajax()) 
         {
+            // Buscamos en la base de datos
             $puntaje = Puntaje_Competidor_Carrera::where('idCarrera', '=', $data['idCarrera'])->where('numeroCompetidor', '=', $data['numeroCompetidor'])->first();
 
+            // Retornamos los datos en un JSON
            return response()->json(['idCarrera' => $puntaje->idCarrera, 'puntaje' => $puntaje->puntaje, 'status' => $puntaje->idEstatus, 'lugar' => $puntaje->lugarLlegada]);
         }
     }
@@ -236,6 +251,9 @@ class Competidores extends Controller
                         AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
                     WHERE puntaje__competidor__carreras.numeroCompetidor = ".$data['numeroCompetidor']."
                         AND competencias.idCompetencia = ".$data['idCompetencia']." ");
+
+
+            $datos['allEntrenadores'] = Entrenador::all();
            
 
             return view('competidores.front_estadistica_competidor',$datos);

@@ -22,17 +22,17 @@
 
 @if($entrenador != null)
   @foreach($entrenador as $miEntrenador)
-    <h5>Entrenador: {{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</h5>
+    <h5 class="mt-3">Entrenador: {{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</h5>
     <h5>Tiempo de Entrenamiento: {{ $miEntrenador->mesesEntrenamiento }}</h5>
     <h5 class="text-muted"> De {{ $miEntrenador->fechaInicio }} a {{ $miEntrenador->fechaFin }}</h5>
-
+    <button class="btn btn-danger btn-sm mt-0" data-toggle="modal" data-target="#modalQuitarEntrenador">Quitar Entrenador</button>
   @endforeach
 @else
-  <h5 class="text-muted">**No tiene un entrenador Asigando a esta Competencia**</h5>
-  
+    <h5 class="mt-4 text-muted">**No tiene un entrenador Asigando a esta Competencia**</h5>
+    <button class="btn btn-warning btn-sm mt-0" data-toggle="modal" data-target="#modalEntrenador">Asignar Entrenador</button>
 @endif
 
-             	<div class="text-center mb-5">
+             	<div class="text-center mb-5 mt-5">
 
                 @foreach($competencia as $miCompetencia)
 
@@ -134,6 +134,57 @@
           <button type="button" class="btn btn-warning ml-2">Descargar Reporte</button>
         </div>
       </div>
+
+      <div class="modal fade" id="modalQuitarEntrenador" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Quitar Entrenador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Este Entrenador dejará de guiar al competidor a lo lardo de la competencia.      Puede volver asignar otro entrenador en el momento que guste.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" onclick="quitarEntrenador()">Quitar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <div class="modal fade" id="modalEntrenador" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Elija un Entrenador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Puede asignar un entrenador a ente competidor durante la competencia</p>
+                      <div class="mt-0 pt-0 text-muted align-top" style="font-size: 14px;">
+                        Este entrenador solo guiara al competidor en esta Competencia
+                      </div>
+                      <select id="asignarEntrenador" name="asignarEntrenador" class="form-control mt-2">
+                          <option value="0">Sin Asignar</option>
+
+                          @foreach($allEntrenadores as $entrenador)
+                            <option value="{{ $entrenador->idEntrenador }}">{{ $entrenador->nombre }} {{ $entrenador->apellidoPaterno }} {{ $entrenador->apellidoMaterno }}</option>
+                          @endforeach
+
+                      </select>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="asignarEntrenador()">Guardar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
 

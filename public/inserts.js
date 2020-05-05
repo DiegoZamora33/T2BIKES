@@ -217,8 +217,35 @@ function enviarPuntajeCarrera()
 
   });
 }
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
 
 
+// <--------------------------------------- ASIGNAR ENTRENADOR A UNA COMPETENCIA DE UN COMPETIDOR ----------------------------------------->
+
+function asignarEntrenador()
+{
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var idEntrenador = $('#asignarEntrenador').val();
+  var idCompetencia = $('#idCompetencia').val;
+  var token = $('#token').val();
+
+   $.ajax({
+      url: url+'/home/competidores/asignarEntrenador',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia, 
+              idEntrenador: idEntrenador},
+
+      success:function(response)
+      {
+        getSuccess(response['mensaje']);
+      }
+
+  });
+
+
+}
 
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

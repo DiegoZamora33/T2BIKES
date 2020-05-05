@@ -19,30 +19,32 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+
+////////////////////////////////// RUTAS PARA FUNCIONES DE COMPETIDOR //////////////////////////////////
 // Para Acceder aun Perfil de un Usuario
 Route::match(['get', 'post'], '/home/usuarios/perfilUsuario', 'Usuarios@perfilUsuario')->name('perfilUsuario');
-
 // Para Acceder a un Perfil de un Competidor
 Route::match(['get', 'post'], '/home/competidores/perfilCompetidor', 'Competidores@perfilCompetidor')->name('perfilCompetidor');
-
 // Para Acceder a una Estadistica
 Route::match(['get', 'post'], '/home/competidores/estadistica', 'Competidores@estadistica')->name('estadistica');
-
 // Para Asignar una Competencia a un Competidor
 Route::match(['get', 'post'], '/home/competidores/asignarCompetencia', 'Competidores@asignarCompetencia')->name('asignarCompetencia');
-
 // Para obtener info sobre una carrera de un Competidor
 Route::match(['get', 'post'], '/home/competidores/datosPuntajeCarrera', 'Competidores@datosPuntajeCarrera')->name('datosPuntajeCarrera');
-
 // Para Asignar puntaje de una Carrera de un Competidor
 Route::match(['get', 'post'], '/home/competidores/asignarPuntajeCarrera', 'Competidores@asignarPuntajeCarrera')->name('asignarPuntajeCarrera');
-
 // Para hacer update de un Competidor
 Route::match(['get', 'post'], '/home/competidores/update', 'Competidores@update')->name('update');
+// Para asignale un entrenador
+Route::match(['get', 'post'], '/home/competidores/asignarEntrenador', 'Competidores@asignarEntrenador')->name('asignarEntrenador');
+// Para quitarle un entrenador
+Route::match(['get', 'post'], '/home/competidores/quitarEntrenador', 'Competidores@quitarEntrenador')->name('quitarEntrenador');
 
+
+////////////////////////////////// RUTAS PARA FUNCIONES DE GRAFICAS //////////////////////////////////
 // Para Acceder a la Grafica competidor_competencia_pai
 Route::match(['get', 'post'], '/home/graficas/competidor_competencia_pai', 'Graficas@competidor_competencia_pai')->name('competidor_competencia_pai');
-
 // Para Acceder a la Grafica competidor_competencia_bar
 Route::match(['get', 'post'], '/home/graficas/competidor_competencia_bar', 'Graficas@competidor_competencia_bar')->name('competidor_competencia_bar');
 
