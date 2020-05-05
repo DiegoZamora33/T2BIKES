@@ -13,19 +13,15 @@ class tiposUsuario extends Seeder
     public function run()
     {
         $tipoUsuario = new TipoUsuario();
-        $tipoUsuario->tipo = 'Root';
-        $tipoUsuario->save();
-
-        $tipoUsuario = new TipoUsuario();
         $tipoUsuario->tipo = 'Administrador';
         $tipoUsuario->save();
 
         $tipoUsuario = new TipoUsuario();
-        $tipoUsuario->tipo = 'Consulta';
+        $tipoUsuario->tipo = 'Registro';
         $tipoUsuario->save();
 
         $tipoUsuario = new TipoUsuario();
-        $tipoUsuario->tipo = 'Registro';
+        $tipoUsuario->tipo = 'Consulta';
         $tipoUsuario->save();
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Estatus;
 
-class CrearEstatus extends Seeder
+class crearEstatus extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,26 +12,24 @@ class CrearEstatus extends Seeder
      */
     public function run()
     {
-        //Estatus de las Competencias
         $estatus = new Estatus();
-        $estatus->estatus = 'Activa';
+        $estatus->estatus = 'Terminada';
         $estatus->save();
 
-        $estatus = new Estatus();
-        $estatus->estatus = 'Finalizada';
-        $estatus->save();
-
-        //Estatus de las Carreras
         $estatus = new Estatus();
         $estatus->estatus = 'En Curso';
         $estatus->save();
 
         $estatus = new Estatus();
-        $estatus->estatus = 'Si Termino';
+        $estatus->estatus = 'Si Terminó';
         $estatus->save();
 
         $estatus = new Estatus();
-        $estatus->estatus = 'No Termino';
+        $estatus->estatus = 'No Terminó';
+        $estatus->save();
+
+        $estatus = new Estatus();
+        $estatus->estatus = 'Pendiente';
         $estatus->save();
     }
 }
