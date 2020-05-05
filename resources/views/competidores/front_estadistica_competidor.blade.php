@@ -38,7 +38,7 @@
       
 
       	<div class="text-center mb-5">
-|               @foreach($competencia as $miCompetencia)
+               @foreach($competencia as $miCompetencia)
 
                   <input type="hidden" name="_idCompetencia" value="{{ $miCompetencia->idCompetencia }}" id="idCompetencia">
 
