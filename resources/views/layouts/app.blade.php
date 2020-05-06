@@ -35,6 +35,9 @@
     <script src="{{ asset('t2bikes/js/jspdf.min.js') }}"></script>
 
     <script src="{{ asset('t2bikes/js/jspdf.plugin.autotable.min.js') }}"></script>
+    <script src="{{ asset('t2bikes/js/html2canvas.js') }}"></script>
+    <script src="{{ asset('t2bikes/js/jspdf.plugin.html.min.js') }}"></script>
+    <script src="{{ asset('t2bikes/js/jspdf.plugin.addHTML.min.js') }}"></script>
 
     <script src="{{ asset('dinamico.js') }}"></script>
     <script src="{{ asset('inserts.js') }}"></script>

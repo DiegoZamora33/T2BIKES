@@ -17,15 +17,15 @@
 <h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Estadisticas sobre la Competencia</h3>
 
 </div>
-<h5>Numero de Competidor: "{{ $competidor->numeroCompetidor }}"</h5>
-<h5>Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
+<h5 id="miNumeroCompetidor">Numero de Competidor: "{{ $competidor->numeroCompetidor }}"</h5>
+<h5 id="miCompetidor">Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
 
 @if($entrenador != null)
   @foreach($entrenador as $miEntrenador)
     <input type="hidden" name="idEntrenador" id="idEntrenador" value="{{ $miEntrenador->idEntrenador}}">
-    <h5 class="mt-3">Entrenador: {{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</h5>
-    <h5>Tiempo de Entrenamiento: {{ $miEntrenador->mesesEntrenamiento }}</h5>
-    <h5 class="text-muted"> De {{ $miEntrenador->fechaInicio }} a {{ $miEntrenador->fechaFin }}</h5>
+    <h5 id="miEntrenador" class="mt-3">Entrenador: {{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</h5>
+    <h5 id="miMesesEntrenamiento">Tiempo de Entrenamiento: {{ $miEntrenador->mesesEntrenamiento }}</h5>
+    <h5 id="miFechaEntrenamiento" class="text-muted"> De {{ $miEntrenador->fechaInicio }} a {{ $miEntrenador->fechaFin }}</h5>
     <button class="btn btn-danger btn-sm mt-0" data-toggle="modal" data-target="#modalQuitarEntrenador">Quitar Entrenador</button>
   @endforeach
 @else
@@ -39,15 +39,16 @@
 
                   <input type="hidden" name="_idCompetencia" value="{{ $miCompetencia->idCompetencia }}" id="idCompetencia">
 
-                  <div class="card text-center text-white mt-4">
-                    <div class="card-header bg-dark" style="font-size: 150%">
+                  <div id="miCajaCompetencia" class="card text-center text-white mt-4">
+                    <div id="miCompetencia" class="card-header bg-dark" style="font-size: 150%">
                        {{ $miCompetencia->nombreCompetencia }}
                     </div>
                     <div class="card-body text-black">
-                      <h5 class="text-muted">Puntaje Global: {{ $miCompetencia->puntajeGlobal}}</h5>
-                      <h5 class="text-muted">Periodo: {{ $miCompetencia->periodo }}</h5>
+                      <h5 id="miPuntajeGlobal" class="text-muted">Puntaje Global: {{ $miCompetencia->puntajeGlobal}}</h5>
+                      <h5 id="miPeriodoCompetencia" class="text-muted">Periodo: {{ $miCompetencia->periodo }}</h5>
                     </div>
                   </div>
+
                 @endforeach
                 <br><br>
                 <h4 class="text-danger">Haga click en una fila para sumar/restar puntos</h4><br>
@@ -126,14 +127,14 @@
                     });
                   </script>
                 </div>
-	            </div>
+          </div>
 
       <div class="w-100">
         <div class="justify-content-center mt-3 d-flex mx-auto">
           <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competidor" onclick="grafCompetidor()">
           Cambiar a Grafica de Pastel</button>
 
-           <button type="button" onclick="downloadPDF()" class="btn btn-warning ml-3">Descargar Reporte</button>
+           <button type="button" onclick="compStatPDF()" class="btn btn-warning ml-3">Descargar Reporte</button>
  
         </div>
       </div>
