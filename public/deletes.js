@@ -70,22 +70,22 @@ function eliminarUsuario() {
           switch(response['codigo']){
               case "eliminado":
                   getSuccess(response['mensaje']);
-                  $('#modalQuitarEntrenador').modal('hide');
+                  $('#modalDeleteUser').modal('hide');
                   setTimeout(
                     function() {
                       usuarios();
-                     $('#modalQuitarEntrenador').modal('hide');
+                     $('#modalDeleteUser').modal('hide');
                     },300
                   );
               break;
 
               case "root":
                   getDanger(response['mensaje']);
-                  $('#modalQuitarEntrenador').modal('hide');
+                  $('#modalDeleteUser').modal('hide');
                   setTimeout(
                     function() {
                       usuarios();
-                     $('#modalQuitarEntrenador').modal('hide');
+                     $('#modalDeleteUser').modal('hide');
                     },300
                   );
               break;
