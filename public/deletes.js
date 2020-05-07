@@ -16,8 +16,13 @@ function eliminarCompetidor() {
             switch(response['codigo']){
                 case "eliminado":
                     getSuccess(response['mensaje']);
-                    $('#exampleModal').modal('hide');
-                    competidores();
+                    $('#deleteCompetidor').modal('hide');
+                    setTimeout(
+                      function() {
+                        competidores();
+                       $('#deleteCompetidor').modal('hide');
+                      },300
+                    );
                 break;
             }
         }

@@ -53,16 +53,16 @@
 <ul class="d-flex align-items-end flex-column fixed-bottom text-white">
   <li id="registrar-entrenador" class="p-2">
     <a type="button" class="btn btn-warning" onclick="editComp();">Editar datos</a>
-    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Eliminar competidor</a>
+    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteCompetidor">Eliminar competidor</a>
   </li>
 </ul>
 <br><br><br>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteCompetidor" tabindex="-1" role="dialog" aria-labelledby="deleteCompetidor" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eliminar competidor</h5>
+        <h5 class="modal-title" id="deleteCompetidor">Eliminar competidor</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
