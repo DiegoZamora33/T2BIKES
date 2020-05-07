@@ -53,6 +53,7 @@
 <body>
     <div id="app">
 
+        <input type="hidden" value="<?php echo $_SERVER['SERVER_ADDR']; ?>" id="miIP">
         <!-- Para poder Registrar un nuevo Usuario usando el NAV de LARAVEL Descometar el nav siguiente -->
 
         <!--nav class="navbar navbar-default navbar-static-top">

@@ -6,13 +6,19 @@
 var graficaCompetidor = "bar";
 var graficaCompetencia = "bar";
 var graficaCarrera = "bar";
-const url = 'http://localhost/T2BIKES/public';
+var ip = 'localhost';
+var url = ' ';
 var statusCarrera = 5;
 
 
 
 $(document).ready(function ()
 {
+
+    ip = document.getElementById('miIP').value;
+    url = 'http://'+ip+'/T2BIKES/public';
+    alert(url);
+
     // Funcion para el menu
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
