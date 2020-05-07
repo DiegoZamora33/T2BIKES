@@ -53,7 +53,7 @@
   </div>
 
   <br>
-  <input type="reset" class="btn btn-danger" value="Cancelar">
+  <input type="button" onclick="usuarios()" class="btn btn-danger" value="Cancelar">
   <input type="submit" class="btn btn-primary" value="Editar">
 </form>
 
