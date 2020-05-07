@@ -95,19 +95,13 @@ class Usuarios extends Controller
         //Buscamos al usuario en la BD
         $usuario = User::find($id);
 
-        //Verificamos si cambio de correo
-        if ($usuario->email == $request->email) {
+        //Verificamos si es su mismo correro o si el nuevo correo esta disponible
+        if ($usuario->email == $request->email || User::where('email', $request->email)->first() == null) {
             $usuario->name = $request->name;
+            $usuario->email = $request->email;
             $usuario->idtipoUsuario = $request->idtipoUsuario;
         } else {
-            //Si cambio de correo verificamos que este disponible
-            if (User::where('email', $request->email)->first() == null) {
-                $usuario->name = $request->name;
-                $usuario->email = $request->email;
-                $usuario->idtipoUsuario = $request->idtipoUsuario;
-            }else {
-                return response()->json(["codigo" => "correoOcupado", "mensaje" => 'El email '.$request->email.' ya esta ocupado por otro usuario, escriba otro']);
-            }
+            return response()->json(["codigo" => "correoOcupado", "mensaje" => 'El email '.$request->email.' ya esta ocupado por otro usuario, escriba otro']);
         }
 
         //Verificamos si actualizo la contraseña
@@ -137,10 +131,15 @@ class Usuarios extends Controller
 
         //Verificamos que el usuario principal no pueda ser elimando
         if ($id == '1') {
-            return response()->json(['codigo' => 'root', 'mensaje' => 'El Usuario '.$nombreUsuario.' no puede ser eliminado']);    
+            return response()->json(['codigo' => 'root', 'mensaje' => 'El Usuario '.$nombreUsuario.' no puede ser eliminado']);
         }
 
-        //Si no es el usuario principal lo eliminamos
+        //Verificamos que no se pueda eliminar a si mismo
+        if ($id == auth()->user()->id) {
+            return response()->json(['codigo' => 'autoEliminacion', 'mensaje' => 'No puedes Eliminar tu propio Usuario']);
+        }
+
+        //Si no es el usuario principal y no es el mismo lo eliminamos
         User::destroy($id);
         return response()->json(['codigo' => 'eliminado', 'mensaje' => 'El Usuario '.$nombreUsuario.' a sido eliminado exitosamente']);
     }

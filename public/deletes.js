@@ -64,6 +64,7 @@ function quitarEntrenador()
 
 // <----------------------------------------------------------------------------------------->
 
+// <-------------------------------     Eliminar Usuario         ---------------------------->
 function eliminarUsuario() {
   $.ajax({
       type: "delete",
@@ -93,6 +94,11 @@ function eliminarUsuario() {
                      $('#modalDeleteUser').modal('hide');
                     },300
                   );
+              break;
+
+              case "autoEliminacion":
+                  getDanger(response['mensaje']);
+                  $('#modalDeleteUser').modal('hide');
               break;
           }
       }
