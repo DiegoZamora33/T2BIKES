@@ -18,7 +18,7 @@
       <td data-label="Nombre">{{ $usuario->name }}</td>
       <td data-label="Email">{{ $usuario->email }}</td>
       <td data-label="Tipo">{{ $usuario->idtipoUsuario }}</td>
-      <td data-label="Registro">{{str_limit($usuario->created_at, $limit = 10, $end = " ")}}</td>
+      <td data-label="Registro">{{substr(str_limit($usuario->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($usuario->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($usuario->created_at, $limit = 10, $end = " "),0,4)}}</td>
     </tr>
     @endforeach
 

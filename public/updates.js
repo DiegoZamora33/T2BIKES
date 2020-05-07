@@ -32,3 +32,45 @@ function updateCompetidor()
         }
     });
 }
+
+//-------------------------------------------------         Editar un Usuario       ----------------------------------------------------------------------------
+function editarUsuario(){
+    $.ajax({
+        type: "PUT",
+        headers: {'X-CSRF-TOKEN':$('#token').val()},
+        url: url+"/home/usuarios/"+$('#idUsuario').val(),
+        data: {
+                name: $('#name').val(),
+                email: $('#email').val(),
+                password: $('#password').val(),
+                passwordConfirm: $('#password-confirm').val(),
+                idtipoUsuario: $('#tipoUsuario').val()
+              },
+        dataType: "json",
+        success: function (response) {
+            switch(response['codigo'])
+            {
+                case "updated":
+                    getSuccess(response['mensaje']);
+                    usuarios();
+                break;
+
+                case "correoOcupado":
+                    getDanger(response['mensaje']);
+                    document.getElementById('email').focus();
+                break;
+
+                case "noCoincidePassword":
+                    getDanger(response['mensaje']);
+                    $('#password-confirm').val('');
+                    document.getElementById('password-confirm').focus();
+                break;
+
+                default:
+                    getDanger(response['mensaje']);
+                break;
+            }
+        }
+    });
+    return false;
+}

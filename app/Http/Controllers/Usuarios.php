@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\TipoUsuario;
 
 class Usuarios extends Controller
 {
@@ -23,11 +24,16 @@ class Usuarios extends Controller
     public function perfilUsuario(Request $data)
     {
         if($data->ajax())
-        {
-             $datos['usuario'] = DB::select('SELECT name, email, tipo_usuarios.tipo AS idtipoUsuario, 
-                users.created_at, users.idtipoUsuario as id FROM users INNER JOIN tipo_usuarios WHERE users.idtipoUsuario = tipo_usuarios.idTipoUsuario AND users.email = "'.$data['user'].'"');
+        {   
+            //Extraemos la informacion de la Base de Datos
+            $usuario = User::where('email', $data['user'])->first();
+            $tipoUsuario = $usuario->tipoUsuario()->first();
 
-             return view('usuarios.front_perfil_usuario', $datos);
+            //Tipos de Usuario
+            $tiposUsuario = TipoUsuario::all();
+
+            //Mostramos la Vista
+            return view('usuarios.front_perfil_usuario', compact('usuario', 'tiposUsuario'));
         }
 
     }
@@ -51,14 +57,19 @@ class Usuarios extends Controller
             {
                 if(User::where('email','=',$data['email'])->first() == null)
                 {
-                    User::create([
-                        'name' => $data['name'],
-                        'email' => $data['email'],
-                        'password' => bcrypt($data['password']),
-                        'idtipoUsuario' => $data['idtipoUsuario'],
-                    ]);
+                    //Verificacion de la confirmacion de la contraseña
+                    if ($data['password'] == $data['passwordConfirm']) {
+                        User::create([
+                            'name' => $data['name'],
+                            'email' => $data['email'],
+                            'password' => bcrypt($data['password']),
+                            'idtipoUsuario' => $data['idtipoUsuario'],
+                        ]);
+                        return response()->json(["mensaje" => "creado", "name" => $data['name'], "email" => $data['email']]);
 
-                    return response()->json(["mensaje" => "creado", "name" => $data['name'], "email" => $data['email']]);
+                    } else {
+                        return response()->json(["mensaje" => "passwordNoCoincide"]);
+                    }
                 }
                 else
                 {
@@ -70,7 +81,67 @@ class Usuarios extends Controller
                 return response()->json(["mensaje" => "noUsuario", "name" => $data['name'], "email" => $data['email']]);
             }
         }
+    }
 
-        //return view('home');
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {   
+        //Buscamos al usuario en la BD
+        $usuario = User::find($id);
+
+        //Verificamos si cambio de correo
+        if ($usuario->email == $request->email) {
+            $usuario->name = $request->name;
+            $usuario->idtipoUsuario = $request->idtipoUsuario;
+        } else {
+            //Si cambio de correo verificamos que este disponible
+            if (User::where('email', $request->email)->first() == null) {
+                $usuario->name = $request->name;
+                $usuario->email = $request->email;
+                $usuario->idtipoUsuario = $request->idtipoUsuario;
+            }else {
+                return response()->json(["codigo" => "correoOcupado", "mensaje" => 'El email '.$request->email.' ya esta ocupado por otro usuario, escriba otro']);
+            }
+        }
+
+        //Verificamos si actualizo la contraseña
+        if ($request->password != '') {
+            //Verificamos si las nuevas contraseñas coinciden
+            if ($request->password == $request->passwordConfirm) {
+                $usuario->password =  bcrypt($request->password);
+            }else {
+                return response()->json(["codigo" => "noCoincidePassword", "mensaje" => 'Las nuevas contraseñas no coinciden, por favor vuelva a confirmar la nueva contraseña']);
+            }
+        }
+
+        $usuario->save();
+        return response()->json(["codigo" => "updated", "mensaje" => 'El usuario '.$usuario->name.' a sido actualizado satisfactoriamente']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //Buscamos el nombre del usuario en la base de datos
+        $nombreUsuario = User::find($id)->name;
+
+        //Verificamos que el usuario principal no pueda ser elimando
+        if ($id == '1') {
+            return response()->json(['codigo' => 'root', 'mensaje' => 'El Usuario '.$nombreUsuario.' no puede ser eliminado']);    
+        }
+
+        //Si no es el usuario principal lo eliminamos
+        User::destroy($id);
+        return response()->json(['codigo' => 'eliminado', 'mensaje' => 'El Usuario '.$nombreUsuario.' a sido eliminado exitosamente']);
     }
 }

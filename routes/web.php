@@ -48,8 +48,6 @@ Route::match(['get', 'post'], '/home/graficas/competidor_competencia_pai', 'Graf
 // Para Acceder a la Grafica competidor_competencia_bar
 Route::match(['get', 'post'], '/home/graficas/competidor_competencia_bar', 'Graficas@competidor_competencia_bar')->name('competidor_competencia_bar');
 
-
-
 //Ruta para los controladores resource
 Route::resources([
     '/home/competidores'=>'Competidores', //Controlador de Competidores

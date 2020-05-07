@@ -58,3 +58,27 @@ function quitarEntrenador()
 }
 
 // <----------------------------------------------------------------------------------------->
+
+function eliminarUsuario() {
+  $.ajax({
+      type: "delete",
+      headers: {'X-CSRF-TOKEN':$('#token').val()},
+      url: url+"/home/usuarios/"+$('#idUsuario').val(),
+      data: {},
+      dataType: "json",
+      success: function (response) {
+          switch(response['codigo']){
+              case "eliminado":
+                  getSuccess(response['mensaje']);
+                  $('#exampleModal').modal('hide');
+                  usuarios();
+              break;
+
+              case "root":
+                  getDanger(response['mensaje']);
+                  $('#exampleModal').modal('hide');
+              break;
+          }
+      }
+  });
+}

@@ -19,10 +19,11 @@ function enviarUsuario()
     headers: {'X-CSRF-TOKEN':token},
     type: 'POST',
     dataType: 'json',
-    data:{name: name, email: email, password: password, idtipoUsuario: tipoUsuario},
+    data:{name: name, email: email, password: password, passwordConfirm: password_confirm,idtipoUsuario: tipoUsuario},
 
     success:function(response)
     {
+      console.log(response);
       switch(response['mensaje'])
       {
         case "creado":
@@ -38,6 +39,12 @@ function enviarUsuario()
         case "noUsuario":
           getDanger("Dedes elegir un tipo de Usuario!!!");
           document.getElementById('tipoUsuario').focus();
+        break;
+
+        case "passwordNoCoincide":
+          getDanger("Las contraseñas no coinciden, por favor vuelva a confirmar la contraseña");
+          $('#password-confirm').val('');
+          document.getElementById('password-confirm').focus();
         break;
 
         default:

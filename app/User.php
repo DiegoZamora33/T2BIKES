@@ -24,6 +24,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token',
     ];
+
+    public function tipoUsuario(){
+        return $this->belongsTo('App\TipoUsuario', 'idtipoUsuario', 'idTipoUsuario');
+    }
 }
