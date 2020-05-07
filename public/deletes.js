@@ -70,13 +70,24 @@ function eliminarUsuario() {
           switch(response['codigo']){
               case "eliminado":
                   getSuccess(response['mensaje']);
-                  $('#exampleModal').modal('hide');
-                  usuarios();
+                  $('#modalQuitarEntrenador').modal('hide');
+                  setTimeout(
+                    function() {
+                      usuarios();
+                     $('#modalQuitarEntrenador').modal('hide');
+                    },300
+                  );
               break;
 
               case "root":
                   getDanger(response['mensaje']);
-                  $('#exampleModal').modal('hide');
+                  $('#modalQuitarEntrenador').modal('hide');
+                  setTimeout(
+                    function() {
+                      usuarios();
+                     $('#modalQuitarEntrenador').modal('hide');
+                    },300
+                  );
               break;
           }
       }

@@ -213,6 +213,7 @@ function enviarPuntajeCarrera()
       success:function(response)
       {
         getSuccess(response['mensaje']);
+        
         $('#modalCarrera').modal('hide');
         setTimeout(
           function() {
