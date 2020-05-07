@@ -17,7 +17,7 @@ $(document).ready(function ()
 
     ip = document.getElementById('miIP').value;
     url = 'http://'+ip+'/T2BIKES/public';
-    alert(url);
+    //alert(url);
 
     // Funcion para el menu
     $('#sidebarCollapse').on('click', function () {
