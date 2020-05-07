@@ -145,22 +145,22 @@ function asignarCompetencia()
       {
         case "creado":
             getSuccess(response['mensaje']);
-            $('#exampleModal2').modal('hide');
+            $('#modalAsignarCompe').modal('hide');
             setTimeout(
               function() {
                 getCompR();
-               $('#exampleModal2').modal('hide');
+               $('#modalAsignarCompe').modal('hide');
               },300
             );
         break;
 
         case "creadoSinEntrenador":
             getWarning(response['mensaje']);
-            $('#exampleModal2').modal('hide');
+            $('#modalAsignarCompe').modal('hide');
             setTimeout(
               function() {
                 getCompR();
-               $('#exampleModal2').modal('hide');
+               $('#modalAsignarCompe').modal('hide');
               },300
             );
         break;

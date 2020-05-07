@@ -44,7 +44,7 @@
 
 
 <div class="text-center mt-5">
-  <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#exampleModal2">
+  <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalAsignarCompe">
     <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
     <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Asignar Competencia</label>
   </a>
@@ -78,11 +78,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalAsignarCompe" tabindex="-1" role="dialog" aria-labelledby="modalAsignarCompe" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Asignar competencia</h5>
+        <h5 class="modal-title" id="modalAsignarCompe">Asignar competencia</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
