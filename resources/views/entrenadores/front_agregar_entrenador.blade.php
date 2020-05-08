@@ -1,83 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registrar Entrenador</title>
-</head>
-<style>
-    *{
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-    h1{
-        padding: 1em;
-    }
-    .Dato{
-        width: 70%;
-        margin: auto;
-        padding: 1em;
-    }
-    .Dato > label{
-        float: left;
-        font-size: 1.3em;
-    }
-    .Dato > input{
-        float: right;
-        font-size: 1.3em;
-        width: 70%;
-        text-align: left;
-    }
-    .Dato > textarea{
-        float: right;
-        font-size: 1.3em;
-        width: 70%;
-        height: 5em;
-        text-align: left;
-    }
-    .Boton{
-        padding: 2em;
-        margin: auto;
-        margin-top: 4em;
-    }
-    .Boton > input{
-        font-size: 1.2em;
-    }
-</style>
-<body>
-    <h1>Agregar un Entrenador</h1>
-    <form action="/home/entrenadores" method="post">
-        {{ csrf_field() }}
-        <div class="Dato">
-            <label for="nombre">Nombre: </label>
-            <input type="text" name="nombre" id="nombre" pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" title="El nombre solo pose letras, acentos, puntos y espacios (Maximo 50 caracteres)" required>    
-        </div class="Dato"> 
-        
-        <div class="Dato">
-            <label for="apellidoPaterno">Apellido Paterno: </label>
-            <input type="text" name="apellidoPaterno" id="apellidoPaterno" pattern="^[a-zA-ZñÑáéíóú]{0,50}$" title="El apellido paterno solo pose letras y acentos (Maximo 50 caracteres)" required>    
-        </div class="Dato"> 
-        
-        <div class="Dato">
-            <label for="apellidoMaterno">Apellido Materno: </label>
-            <input type="text" name="apellidoMaterno" id="apellidoMaterno" pattern="^[a-zA-ZñÑáéíóú]{0,50}$" title="El apellido materno solo pose letras y acentos (Maximo 50 caracteres)">    
-        </div class="Dato"> 
-        
-        <div class="Dato">
-            <label for="fechaRegistro">Fecha de Registro:  </label>
-            <input type="date" name="fechaRegistro" id="fechaRegistro" value="{{date('Y-m-d')}}" required>
-        </div>
+<div class="row">
 
-        <div class="Dato">
-            <label for="patrocinio">Patrocinadores: </label>
-            <textarea name="patrocinio" id="patrocinio"></textarea>
-        </div>
+<div class="text-left col-md-2">
+  <a onclick="entrenadores()" type="button" href="#" class="bg-primary border border-primary rounded p-1 superBoton text-left text-success">
+  <i class="align-middle fas fa-arrow-left text-white" style="font-size: 24px;"></i>
+    <label class="mt-2 text-white d-md-inline" style="cursor: pointer; font-size: 15px;">Atras</label>
+  </a>
+</div>
 
-        <div class="Boton">
-            <input type="submit" value="Enviar">
-        </div>
-    </form>
-</body>
-</html>
+<h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Registrar Entrenador</h3>
+
+</div>
+
+
+<br>
+<form>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputEmail4">Nombre</label>
+      <input type="text" class="form-control" id="inputEmail4" placeholder="">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">Apellido Paterno</label>
+      <input type="text" class="form-control" id="inputPassword4" placeholder="">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputAddress">Apellido Materno</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4 mx-auto">
+      <label for="inputCity">Patrocinadores</label>
+      <textarea type="text" class="form-control" id="inputCity" row="5"> </textarea>
+      <small id="emailHelp" class="form-text text-muted"> Escriba todas la empresas u organizaciones separadas por una coma (,) </small>
+    </div>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
