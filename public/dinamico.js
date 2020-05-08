@@ -580,8 +580,8 @@ function getEntre(miEntrenador)
 
 function getEntreR()
 {
-  var numeroCompetidor = $('#idEntrenador').val();
-  var token = $('#tokenAsignar').val();
+  var idEntrenador = $('#idEntrenador').val();
+  var token = $('#token').val();
 
   $.ajax({
       url: url+'/home/entrenadores/perfilEntrenador',
@@ -701,18 +701,22 @@ function editComp()
 
 // <------------------ FUNCION PARA MOSTRAR FORM EDITAR ENTRENADOR -------------------->
 function editEntre(){
-  this.className = 'active';
+  
+  var idEntrenador = $('#idEntrenador').val();
+
   $.ajax({
-    url: 'forms/editar-entrenador.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
-                effectFadeOut();
-                effectFadeIn();
-      }
-    );
-  }
+        type: "get",
+        url: url+"/home/entrenadores/"+idEntrenador+"/edit",
+        dataType: "html",
+
+    success: function(data)
+    { 
+      $('#mostrador').html(data);
+              effectFadeOut();
+              effectFadeIn();
+    }
   });
+
 }
 // <----------------------------------------------------------------------------------->
 

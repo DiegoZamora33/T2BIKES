@@ -13,7 +13,10 @@
 
 
 <br>
-<form>
+<form class="form-horizontal"  name="formulario" action="" onSubmit="enviarEntrenador(); return false">
+
+  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Nombre</label>

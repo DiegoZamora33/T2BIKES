@@ -9,6 +9,10 @@
   </a>
 </div>
 
+<input type="hidden" name="idEntrenador" value="{{ $entrenador->idEntrenador }}" id="idEntrenador">
+<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
+
 <h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Perfil del Entrenador</h3>
 
 </div>
@@ -23,7 +27,10 @@
 </div><br><br>
 
 <br>
-<h4>Entrena a 2 Competidores</h4>
+
+@foreach($total as $miTotal)
+  <h4>Entrena a {{ $miTotal->total }} Competidores</h4>
+@endforeach
 
 @foreach($entrenamientos as $entrenamiento)
   <div class="card text-center text-white mt-3">
