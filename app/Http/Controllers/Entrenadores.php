@@ -38,7 +38,7 @@ class Entrenadores extends Controller
                 AND entrenador__competidor__competencias.idCompetencia = competencias.idCompetencia
             WHERE entrenadors.idEntrenador = ".$data['idEntrenador']." ");
 
-            $datos['total'] = DB::select("  ");
+            //$datos['total'] = DB::select("  ");
 
             return view('entrenadores.front_perfil_entrenador',$datos);
         }
