@@ -19,22 +19,22 @@
 
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="inputEmail4">Nombre</label>
-      <input type="text" class="form-control" id="inputEmail4" placeholder="">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" placeholder=" " required>
     </div>
     <div class="form-group col-md-4">
-      <label for="inputPassword4">Apellido Paterno</label>
-      <input type="text" class="form-control" id="inputPassword4" placeholder="">
+      <label for="apellidoPaterno">Apellido Paterno</label>
+      <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" placeholder="" required>
     </div>
     <div class="form-group col-md-4">
-      <label for="inputAddress">Apellido Materno</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="">
+      <label for="apellidoMaterno">Apellido Materno</label>
+      <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" placeholder="">
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4 mx-auto">
-      <label for="inputCity">Patrocinadores</label>
-      <textarea type="text" class="form-control" id="inputCity" row="5"> </textarea>
+      <label for="patrocinio">Patrocinadores</label>
+      <textarea type="text" class="form-control" id="patrocinio" name="patrocinio" row="5"> </textarea>
       <small id="emailHelp" class="form-text text-muted"> Escriba todas la empresas u organizaciones separadas por una coma (,) </small>
     </div>
   </div>

@@ -17,25 +17,29 @@
 
 
 <br>
-<form>
+
+<form class="form-horizontal"  name="formulario" action="" onSubmit="updateEntrenador(); return false">
+  
+  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="inputEmail4">Nombre</label>
-      <input type="text" class="form-control" id="inputEmail4" value=" {{ $entrenador->nombre }} ">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" name="nombre" type="text" class="form-control" value=" {{ $entrenador->nombre }} " required>
     </div>
     <div class="form-group col-md-4">
-      <label for="inputPassword4">Apellido Paterno</label>
-      <input type="text" class="form-control" id="inputPassword4" value=" {{ $entrenador->apellidoPaterno }} ">
+      <label for="apellidoPaterno">Apellido Paterno</label>
+      <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoPaterno }} " required>
     </div>
     <div class="form-group col-md-4">
-      <label for="inputAddress">Apellido Materno</label>
-      <input type="text" class="form-control" id="inputAddress" value=" {{ $entrenador->apellidoMaterno }} ">
+      <label for="apellidoMaterno">Apellido Materno</label>
+      <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoMaterno }} ">
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4 mx-auto">
-      <label for="inputCity">Patrocinadores</label>
-      <textarea type="text" class="form-control" id="inputCity" row="5" > {{ $entrenador->patrocinio }} </textarea>
+      <label for="patrocinio">Patrocinadores</label>
+      <textarea type="text" class="form-control" id="patrocinio" name="patrocinio" row="5" > {{ $entrenador->patrocinio }} </textarea>
       <small id="emailHelp" class="form-text text-muted"> Escriba todas la empresas u organizaciones separadas por una coma (,) </small>
     </div>
   </div>
