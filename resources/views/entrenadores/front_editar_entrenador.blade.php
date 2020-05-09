@@ -44,5 +44,6 @@
     </div>
   </div>
   
-  <button type="submit" class="btn btn-primary">Registrar</button>
+  <button type="button" onclick="getEntreR()" class="btn btn-danger">Cancelar</button>
+  <button type="submit" class="btn btn-primary">Guardar</button>
 </form>

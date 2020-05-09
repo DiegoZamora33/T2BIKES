@@ -45,16 +45,16 @@
 <ul class="d-flex align-items-end flex-column fixed-bottom text-white">
   <li id="registrar-entrenador" class="p-2">
     <a type="button" class="btn btn-warning" onclick="editEntre();">Editar datos</a>
-    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Eliminar entrenador</a>
+    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteEntrenador">Eliminar entrenador</a>
   </li>
 </ul>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteEntrenador" tabindex="-1" role="dialog" aria-labelledby="deleteEntrenador" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eliminar entrenador</h5>
+        <h5 class="modal-title" id="deleteEntrenador">Eliminar entrenador</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -64,7 +64,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
+        <button type="button" class="btn btn-danger" onclick="deleteEntrenador()">Eliminar</button>
       </div>
     </div>
   </div>
