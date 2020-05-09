@@ -74,10 +74,28 @@ class Competidores extends Controller
     {
         if ($data->ajax()) 
         {
-            $puntaje = $data->all();
+            $puntaje = $data->except('idCompetencia');
 
-            // Buscamos y hacemos el update 
+            // Buscamos y hacemos el update en la carrera
             Puntaje_Competidor_Carrera::where('numeroCompetidor','=',$data['numeroCompetidor'])->where('idCarrera', '=', $data['idCarrera'])->update($puntaje);
+
+            //Sacamos mi valor de sumatoria de todas las carreras en la competencia
+            $global = DB::select(" SELECT SUM(puntaje__competidor__carreras.puntaje) AS total
+                    FROM puntaje__competidor__carreras 
+                    INNER JOIN carreras INNER JOIN tipo_carreras INNER JOIN competencias INNER JOIN estatuses
+                    ON puntaje__competidor__carreras.idCarrera = carreras.idCarrera 
+                        AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera 
+                        AND carreras.idCompetencia = competencias.idCompetencia
+                        AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
+                    WHERE puntaje__competidor__carreras.numeroCompetidor = ".$data['numeroCompetidor']."
+                        AND competencias.idCompetencia = ".$data['idCompetencia']." ");
+
+            //Actualizamos el Puntaje Global
+            foreach ($global as &$miGlobal) 
+            {
+                $affectwed = DB::update("update puntaje__competidor__competencias                              set puntajeGlobal = ".$miGlobal->total." where numeroCompetidor = ".$data['numeroCompetidor']." AND idCompetencia = ".$data['idCompetencia']." ");
+                break;
+            }
 
             // Mensaje de exito
               return response()->json(['codigo' => 'update', 'mensaje' => 'Actualizacion de datos con exito...']);

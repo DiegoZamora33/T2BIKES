@@ -200,6 +200,7 @@ function enviarPuntajeCarrera()
   var idCarrera = $('#idCarrera').val();
   var puntaje = $('#puntajeCarrera').val();
   var lugarLlegada = $('#lugarLlegadaCarrera').val();
+  var idCompetencia = $('#idCompetencia').val();
   var token = $('#token').val();
 
    $.ajax({
@@ -208,7 +209,7 @@ function enviarPuntajeCarrera()
       type: 'POST',
       dataType: 'json',
       data:{numeroCompetidor: numeroCompetidor, idCarrera: idCarrera, puntaje: puntaje, 
-        lugarLlegada: lugarLlegada, idEstatus: statusCarrera},
+        lugarLlegada: lugarLlegada, idEstatus: statusCarrera, idCompetencia: idCompetencia},
 
       success:function(response)
       {
