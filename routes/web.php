@@ -75,8 +75,3 @@ Route::resources([
     '/home/usuarios'=>'Usuarios',  //Controlador Usuarios
     '/home/graficas'=>'Graficas',  //Controlador Graficas
 ]);
-
-//Prueba AJAX
-Route::get('/ajax', function () {
-    return view('pruebaAJAX');
-});
