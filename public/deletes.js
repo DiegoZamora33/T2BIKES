@@ -70,12 +70,9 @@ function quitarEntrenador()
 function quitarCompcia()
 {
   var idCompetencia = estaCompetencia;
-  var numeroCompetidor = $('#numeroCompetidor').val();
+  var numeroCompetidor = $('#_numeroCompetidor').val();
   var token = $('#token').val();
 
-  alert(idCompetencia);
-
-/*
    $.ajax({
       url: url+'/home/competidores/quitarCompetencia',
       headers: {'X-CSRF-TOKEN':token},
@@ -96,7 +93,6 @@ function quitarCompcia()
       }
 
   });
-  */
 }
 
 // <------------------------------------------------------------------------------------------------------------>

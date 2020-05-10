@@ -267,55 +267,45 @@ class Competidores extends Controller
         }
     }
 
+    
     public function quitarCompetencia(Request $data)
     {
         if($data->ajax())
         {
             // Buscamos los registros de la competencia y la relacin con este competidor y los eliminamos
-            // Vemos si estaba siendo entrenado
-            $entrenamiento = Entrenador_Competidor_Competencia::where('numeroCompetidor', $data['numeroCompetidor'])->where('idCompetencia', '
-                =', $data['idCompetencia'])->first();
-            if($entrenamiento != null)
-            {
-                DB::delete(" DELETE FROM entrenador__competidor__competencias 
+
+             $affected = DB::delete(" DELETE FROM entrenador__competidor__competencias 
                                 WHERE
-                                idEntrenador = ".$entrenamiento->idEntrenador." AND
-                                numeroCompetidor = ".$data['numeroCompetidor']." AND 
-                                idCompetencia = ".$data['idCompetencia']." ");
-            }
+                                  numeroCompetidor = ".$data['numeroCompetidor']."  AND 
+                                  idCompetencia = ".$data['idCompetencia']." ");
+
 
             // Buscamos todas las carreras de la competencia a quitar
-            $misCarreras = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
+            $carres = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
                 ON carreras.idCompetencia = competencias.idCompetencia
                     AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
-                WHERE competencias.idCompetencia = ".$data['idCompetencia']);
+                WHERE competencias.idCompetencia = ".$data['idCompetencia']." ");
 
-            foreach ($misCarreras as &$carrera) 
+
+            foreach($carres as &$miCarrers) 
             {
                 $affected = DB::delete(" DELETE FROM puntaje__competidor__carreras
-                                WHERE
-                                numeroCompetidor = '".$data['numeroCompetidor']."' AND idCarrera = '".$carrera->idCarrera."'");
+                        WHERE
+                        numeroCompetidor = ".$data['numeroCompetidor']." AND 
+                        idCarrera = ".$miCarrers->idCarrera." ");
             }
 
 
             // Borramos el registro de Carrera Competidor
-            /*
-            $miCompetencia = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
-                ON carreras.idCompetencia = competencias.idCompetencia
-                    AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
-                WHERE competencias.idCompetencia = ".$data['idCompetencia']);
-            */
 
             $affected = DB::delete(" DELETE FROM puntaje__competidor__competencias
                             WHERE
-                            numeroCompetidor = '".$data['numeroCompetidor']."' AND 
-                            idCompetencia = '".$data['idCompetencia']."'");
-
+                            numeroCompetidor = ".$data['numeroCompetidor']." AND 
+                            idCompetencia = ".$data['idCompetencia']." ");
 
             return response()->json(['mensaje' => 'Se ha quitado la competencia...']);
         }
     }
-
 
     public function estadistica(Request $data)
     {
@@ -367,7 +357,7 @@ class Competidores extends Controller
         {
             $misDatos['competidor']=Competidor::where('numeroCompetidor', $data['numeroCompetidor'])->first();
 
-            $misDatos['competencias'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
+            $misDatos['d'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
                         FROM competidors 
                             INNER JOIN puntaje__competidor__competencias INNER JOIN competencias INNER JOIN estatuses
                         ON competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor 

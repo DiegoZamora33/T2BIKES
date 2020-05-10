@@ -1,9 +1,9 @@
 <?php  //Generar mi Array de Competencias
     $arrComptencias = array();
 
-    foreach ($competencias as &$miCompetencia) 
+    foreach ($d as &$g) 
     {
-      $arrComptencias[] = $miCompetencia->nombreCompetencia;
+      $arrComptencias[] = $g->nombreCompetencia;
     }
 ?>
 
@@ -35,7 +35,7 @@
 
 <h3 class="font-weight-bold">Competencias</h3>
 
-@foreach( $competencias as $miCompetencia )
+@foreach( $d as $miCompetencia )
 <div class="card text-center text-white mt-4">
   <div class="card-header bg-dark">
    {{ $miCompetencia->nombreCompetencia }}
@@ -45,7 +45,7 @@
     <h6 class="card-text mt-1 text-muted">"Periodo: {{ $miCompetencia->periodo }}"</h6>
     <h6 class="card-text mt-1 text-muted">"{{ $miCompetencia->estatus }}"</h6>
     <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="getStat(this);" class="btn btn-primary mt-2">Ver estadísticas</a>
-    <!--a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" class="btn btn-danger mt-2" data-toggle="modal" data-target="#modalQuitarCompetencia" onclick="quitaEstaCompe(this);" >Quitar Competencia</a-->
+    <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" class="btn btn-danger mt-2" data-toggle="modal" data-target="#modalQuitarCompetencia" onclick="quitaEstaCompe(this);" >Quitar Competencia</a>
   </div>
 </div>
 @endforeach
