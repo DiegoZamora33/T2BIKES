@@ -267,6 +267,11 @@ class Competidores extends Controller
         }
     }
 
+    public function quitarCompetencia(Request $data)
+    {
+
+    }
+
 
     public function estadistica(Request $data)
     {

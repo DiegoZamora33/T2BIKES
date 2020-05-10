@@ -50,6 +50,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 		// Para quitarle un entrenador
 		Route::match(['get', 'post'], '/home/competidores/quitarEntrenador', 'Competidores@quitarEntrenador')->name('quitarEntrenador');
 
+		// Para quitarle una Competencia
+		Route::match(['get', 'post'], '/home/competidores/quitarCompetencia', 'Competidores@quitarCompetencia')->name('quitarCompetencia');
+
 
 ////////////////////////////////// RUTAS PARA FUNCIONES DE ENTRENADORES //////////////////////////////////
 		// Para Acceder a un Perfil de un Entrenador
