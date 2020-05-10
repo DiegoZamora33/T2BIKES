@@ -95,11 +95,12 @@ class Usuarios extends Controller
         //Buscamos al usuario en la BD
         $usuario = User::find($id);
 
+        $usuario->name = $request->name;
+        $usuario->idtipoUsuario = $request->idtipoUsuario;
+
         //Verificamos si es su mismo correro o si el nuevo correo esta disponible
         if ($usuario->email == $request->email || User::where('email', $request->email)->first() == null) {
-            $usuario->name = $request->name;
-            $usuario->email = $request->email;
-            $usuario->idtipoUsuario = $request->idtipoUsuario;
+            $usuario->email = $request->email;            
         } else {
             return response()->json(["codigo" => "correoOcupado", "mensaje" => 'El email '.$request->email.' ya esta ocupado por otro usuario, escriba otro']);
         }
