@@ -1,9 +1,33 @@
 <?php  //Generar mi Array de Competencias
-    $arrComptencias = array();
+    $arrNombres = array();
+    $arrPuntaje = array();
+    $arrPeriodo = array();
+    $arrEstatus = array();
+    $arrEntrenador = array();
 
-    foreach ($d as &$g) 
+    $select = DB::select("select * from competencias where idCompetencia = 78");
+
+    foreach ($competencias as &$aux) 
     {
-      $arrComptencias[] = $g->nombreCompetencia;
+      $arrNombres[] = $aux->nombreCompetencia;
+      $arrPuntaje[] = $aux->puntajeGlobal;
+      $arrPeriodo[] = $aux->periodo;
+      $arrEstatus[] = $aux->estatus;
+
+      $select = DB::select(" SELECT entrenadors.idEntrenador, entrenadors.nombre, entrenadors.apellidoPaterno, entrenadors.apellidoMaterno, mesesEntrenamiento, fechaInicio, fechaFin
+                FROM entrenador__competidor__competencias INNER JOIN entrenadors 
+                ON entrenador__competidor__competencias.idEntrenador = entrenadors.idEntrenador
+                WHERE entrenador__competidor__competencias.numeroCompetidor = ".$competidor->numeroCompetidor."       AND entrenador__competidor__competencias.idCompetencia = ".$aux->idCompetencia);
+
+      if($select != null)
+      {
+        $arrEntrenador[] = $select[0]->nombre." ".$select[0]->apellidoPaterno." ".$select[0]->apellidoMaterno;
+      }
+      else
+      {
+        $arrEntrenador[] = "No tiene un Entrenador en esta Competencia";
+      }
+
     }
 ?>
 
@@ -20,22 +44,22 @@
 
 </div>
 
-<h3>"{{ $competidor->numeroCompetidor }}"</h3>
+<h3 id="miNumeroCompetidor">"{{ $competidor->numeroCompetidor }}"</h3>
 <input type="hidden" name="_numeroCompetidor" value="{{ $competidor->numeroCompetidor }}" id="_numeroCompetidor">
 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 <input type="hidden" id="{{ $competidor->numeroCompetidor }}">
-<h5>Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
-<h5>Fecha de Registro: {{ substr(str_limit($competidor->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),0,4) }}</h5>
+<h5 id="miCompetidor">Nombre: {{ $competidor->nombre }} {{ $competidor->apellidoPaterno }} {{ $competidor->apellidoMaterno }}</h5>
+<h5 id="miFechaRegistro">Fecha de Registro: {{ substr(str_limit($competidor->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($competidor->created_at, $limit = 10, $end = " "),0,4) }}</h5>
 
 
 
 <div class="text-center mt-3">
-  <button type="button" class="btn btn-warning">Descargar Reporte</button>
+  <button type="button" class="btn btn-warning" onclick='<?php echo "compAllPDF(".json_encode($arrNombres).",".json_encode($arrPuntaje).",".json_encode($arrPeriodo).",".json_encode($arrEstatus).",".json_encode($arrEntrenador).")" ?>' >Descargar Reporte</button>
 </div><br><br>
 
 <h3 class="font-weight-bold">Competencias</h3>
 
-@foreach( $d as $miCompetencia )
+@foreach( $competencias as $miCompetencia )
 <div class="card text-center text-white mt-4">
   <div class="card-header bg-dark">
    {{ $miCompetencia->nombreCompetencia }}
