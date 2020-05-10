@@ -67,9 +67,36 @@ function quitarEntrenador()
 
 // <--------------------------- FUNCION PARA QUITAR UNA COMPETENCIA DE UN COMPETIDOR --------------------------->
 
-function quitarCompcia(miCompetencia)
+function quitarCompcia()
 {
-  alert("quitar");
+  var idCompetencia = estaCompetencia;
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var token = $('#token').val();
+
+  alert(idCompetencia);
+
+/*
+   $.ajax({
+      url: url+'/home/competidores/quitarCompetencia',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+        getSuccess(response['mensaje']);
+        $('#modalQuitarCompetencia').modal('hide');
+        setTimeout(
+          function() {
+            getCompR();
+           $('#modalQuitarCompetencia').modal('hide');
+          },300
+        );
+      }
+
+  });
+  */
 }
 
 // <------------------------------------------------------------------------------------------------------------>

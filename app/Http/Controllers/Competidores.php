@@ -269,7 +269,51 @@ class Competidores extends Controller
 
     public function quitarCompetencia(Request $data)
     {
+        if($data->ajax())
+        {
+            // Buscamos los registros de la competencia y la relacin con este competidor y los eliminamos
+            // Vemos si estaba siendo entrenado
+            $entrenamiento = Entrenador_Competidor_Competencia::where('numeroCompetidor', $data['numeroCompetidor'])->where('idCompetencia', '
+                =', $data['idCompetencia'])->first();
+            if($entrenamiento != null)
+            {
+                DB::delete(" DELETE FROM entrenador__competidor__competencias 
+                                WHERE
+                                idEntrenador = ".$entrenamiento->idEntrenador." AND
+                                numeroCompetidor = ".$data['numeroCompetidor']." AND 
+                                idCompetencia = ".$data['idCompetencia']." ");
+            }
 
+            // Buscamos todas las carreras de la competencia a quitar
+            $misCarreras = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
+                ON carreras.idCompetencia = competencias.idCompetencia
+                    AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
+                WHERE competencias.idCompetencia = ".$data['idCompetencia']);
+
+            foreach ($misCarreras as &$carrera) 
+            {
+                $affected = DB::delete(" DELETE FROM puntaje__competidor__carreras
+                                WHERE
+                                numeroCompetidor = '".$data['numeroCompetidor']."' AND idCarrera = '".$carrera->idCarrera."'");
+            }
+
+
+            // Borramos el registro de Carrera Competidor
+            /*
+            $miCompetencia = DB::select(" SELECT carreras.idCarrera FROM carreras INNER JOIN competencias     INNER JOIN tipo_carreras
+                ON carreras.idCompetencia = competencias.idCompetencia
+                    AND carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
+                WHERE competencias.idCompetencia = ".$data['idCompetencia']);
+            */
+
+            $affected = DB::delete(" DELETE FROM puntaje__competidor__competencias
+                            WHERE
+                            numeroCompetidor = '".$data['numeroCompetidor']."' AND 
+                            idCompetencia = '".$data['idCompetencia']."'");
+
+
+            return response()->json(['mensaje' => 'Se ha quitado la competencia...']);
+        }
     }
 
 
@@ -282,8 +326,8 @@ class Competidores extends Controller
             $datos['entrenador'] = DB::select(" SELECT entrenadors.idEntrenador, entrenadors.nombre, entrenadors.apellidoPaterno, entrenadors.apellidoMaterno, mesesEntrenamiento, fechaInicio, fechaFin
                 FROM entrenador__competidor__competencias INNER JOIN entrenadors 
                 ON entrenador__competidor__competencias.idEntrenador = entrenadors.idEntrenador
-                WHERE entrenador__competidor__competencias.numeroCompetidor = ".$data['numeroCompetidor']." 
-                     AND entrenador__competidor__competencias.idCompetencia = ".$data['idCompetencia']." ");
+                WHERE entrenador__competidor__competencias.numeroCompetidor = ".$data['numeroCompetidor']."   
+                     AND entrenador__competidor__competencias.idCompetencia = ".$data['idCompetencia']);
 
             $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
                     FROM competidors 
@@ -331,6 +375,7 @@ class Competidores extends Controller
                             AND competencias.idEstatus = estatuses.idEstatus
                             
                         WHERE puntaje__competidor__competencias.numeroCompetidor = ".$data['numeroCompetidor']." ");
+
 
             $misDatos['allCompetencias'] = Competencia::all();
 

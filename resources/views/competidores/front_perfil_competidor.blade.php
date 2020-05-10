@@ -45,7 +45,7 @@
     <h6 class="card-text mt-1 text-muted">"Periodo: {{ $miCompetencia->periodo }}"</h6>
     <h6 class="card-text mt-1 text-muted">"{{ $miCompetencia->estatus }}"</h6>
     <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="getStat(this);" class="btn btn-primary mt-2">Ver estadísticas</a>
-    <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="quitarCompcia(this);" class="btn btn-danger mt-2">Quitar Competencia</a>
+    <!--a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" class="btn btn-danger mt-2" data-toggle="modal" data-target="#modalQuitarCompetencia" onclick="quitaEstaCompe(this);" >Quitar Competencia</a-->
   </div>
 </div>
 @endforeach
@@ -65,6 +65,29 @@
   </li>
 </ul>
 <br><br><br>
+
+
+<div class="modal fade" id="modalQuitarCompetencia" tabindex="-1" role="dialog" aria-labelledby="modalQuitarCompetencia" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalQuitarCompetencia">Quitar Competencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Esta acción no se podrá deshacer, La competencia y carreras en las que este competidor participó se perderan.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" onclick="quitarCompcia();">Quitar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div class="modal fade" id="deleteCompetidor" tabindex="-1" role="dialog" aria-labelledby="deleteCompetidor" aria-hidden="true">
   <div class="modal-dialog" role="document">

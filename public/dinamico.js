@@ -9,6 +9,7 @@ var graficaCarrera = "bar";
 var ip = 'localhost';
 var url = ' ';
 var statusCarrera = 5;
+var estaCompetencia = 0;
 
 
 
@@ -325,6 +326,15 @@ function getInfo(miMensaje)
   });
 }
 // <--------------------------------------------------------------------->
+
+// <---------------- FUNCIONES PARA SABER CUAL COMPETENCIA VAMOS A QUITAR -------------------->
+
+function quitaEstaCompe(miCompetencia)
+{
+  estaCompetencia = miCompetencia.id;
+}
+
+// <------------------------------------------------------------------------------------------>
 
 // <---------------- FUNCIONES PARA MOSTRAR LA INFO DE UNA CARRERA EN EL MODAL --------------->
 
