@@ -25,11 +25,12 @@ $(document).ready(function ()
     });
 
     // Funcion para Mostar Lista de Competidores
-    $('#competidores').click(function () { 
+    $('#competidores').click(function ()
+    { 
 
       miOff();
       this.className = "active";
-          $.ajax({
+        $.ajax({
               type: "get",
               url: url+"/home/competidores",
               data: {},
@@ -47,16 +48,16 @@ $(document).ready(function ()
     {
       miOff();
       this.className = "active";
-        $.ajax({
-          url: "tables/lista-entrenadores.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
+      $.ajax({
+              type: "get",
+              url: url+"/home/entrenadores",
+              data: {},
+              dataType: "html",
+              success: function (response) {
+                  $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
-            }
-          );
-        }
+              }
         });
    });
 
@@ -441,8 +442,8 @@ function getStatR()
 
 // <------------------------------------------------------------------------------------------>
 
+// <------------------------------ PARA REGRESAR A VER LOS COMPETIDORES ---------------------->
 function competidores(){
-
     $.ajax({
         type: "get",
         url: url+"/home/competidores",
@@ -455,21 +456,24 @@ function competidores(){
         }
   });
 }
+// <------------------------------------------------------------------------------------------>
 
 
+// <------------------------------ PARA REGRESAR A VER LOS ENTRENADORES ---------------------->
 function entrenadores(){
         $.ajax({
-          url: "tables/lista-entrenadores.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-            }
-          );
+        type: "get",
+        url: url+"/home/entrenadores",
+        data: {},
+        dataType: "html",
+        success: function (response) {
+            $('#mostrador').html(response);
+          effectFadeOut();
+          effectFadeIn();
         }
-        });
+  });
 }
+// <------------------------------------------------------------------------------------------>
 
 function competencias(){
         $.ajax({
@@ -551,20 +555,51 @@ function getCompR()
 }
 // <------------------------------------------------------------------------------------------------>
 
-function getEntre(){
-  this.className = 'active';
+// <---------------------- PARA MOSTRAR EL PERFIL DE UN ENTRENADOR --------------------------------->
+function getEntre(miEntrenador)
+{
+  var idEntrenador = miEntrenador.id;
+  var token = miEntrenador.children[0].value;
+
   $.ajax({
-    url: 'perfil-entrenador.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
+      url: url+'/home/entrenadores/perfilEntrenador',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idEntrenador: idEntrenador},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
       }
-    );
-  }
+
   });
 }
+
+function getEntreR()
+{
+  var idEntrenador = $('#idEntrenador').val();
+  var token = $('#token').val();
+
+  $.ajax({
+      url: url+'/home/entrenadores/perfilEntrenador',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idEntrenador: idEntrenador},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
+      }
+
+  });
+}
+// <------------------------------------------------------------------------------------------------>
 
 
 function getTour(){
@@ -663,36 +698,46 @@ function editComp()
 }
 // <----------------------------------------------------------------------------------->
 
+
+// <------------------ FUNCION PARA MOSTRAR FORM EDITAR ENTRENADOR -------------------->
 function editEntre(){
-  this.className = 'active';
+  
+  var idEntrenador = $('#idEntrenador').val();
+
   $.ajax({
-    url: 'forms/editar-entrenador.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
+        type: "get",
+        url: url+"/home/entrenadores/"+idEntrenador+"/edit",
+        dataType: "html",
+
+    success: function(data)
+    { 
+      $('#mostrador').html(data);
+              effectFadeOut();
+              effectFadeIn();
+    }
+  });
+
+}
+// <----------------------------------------------------------------------------------->
+
+// <------------------ FUNCION PARA MOSTRAR FORM DE NUEVO ENTRENADOR ------------------>
+function newTrain()
+{
+  this.className = 'active';
+
+  $.ajax({
+     type: "get",
+        url: url+"/home/entrenadores/create",
+        data: {},
+        dataType: "html",
+        success: function (response) {
+            $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
-      }
-    );
-  }
+        }
   });
 }
-
-function newTrain(){
-  this.className = 'active';
-  $.ajax({
-    url: 'forms/registrar-entrenador.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
-                effectFadeOut();
-                effectFadeIn();
-      }
-    );
-  }
-  });
-}
-
+// <------------------------------------------------------------------------------------>
 
 // Funcion para mostrar FORM de Nuevo Usuario.
 function newUser()

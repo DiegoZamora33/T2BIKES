@@ -1,4 +1,11 @@
+<?php  //Generar mi Array de Competencias
+    $arrComptencias = array();
 
+    foreach ($competencias as &$miCompetencia) 
+    {
+      $arrComptencias[] = $miCompetencia->nombreCompetencia;
+    }
+?>
 
 <div class="row">
 
@@ -37,7 +44,8 @@
     <h5 class="card-text text-muted">Puntaje global: {{ $miCompetencia->puntajeGlobal }} puntos</h5>
     <h6 class="card-text mt-1 text-muted">"Periodo: {{ $miCompetencia->periodo }}"</h6>
     <h6 class="card-text mt-1 text-muted">"{{ $miCompetencia->estatus }}"</h6>
-    <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="getStat(this);" class="btn btn-primary mt-4">Ver estadísticas</a>
+    <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="getStat(this);" class="btn btn-primary mt-2">Ver estadísticas</a>
+    <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="quitarCompcia(this);" class="btn btn-danger mt-2">Quitar Competencia</a>
   </div>
 </div>
 @endforeach

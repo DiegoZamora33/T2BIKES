@@ -1,83 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar entrenador</title>
-</head>
-<style>
-    *{
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-    h1{
-        padding: 1em;
-    }
-    .Dato{
-        width: 70%;
-        margin: auto;
-        padding: 1em;
-    }
-    .Dato > label{
-        float: left;
-        font-size: 1.3em;
-    }
-    .Dato > input{
-        float: right;
-        font-size: 1.3em;
-        width: 70%;
-        text-align: left;
-    }
-    .Dato > textarea{
-        float: right;
-        font-size: 1.3em;
-        width: 70%;
-        height: 5em;
-        text-align: left;
-    }
-    .Boton{
-        padding: 2em;
-        margin: auto;
-        margin-top: 4em;
-    }
-    .Boton > input{
-        font-size: 1.2em;
-    }
-</style>
-<body>
-    <h1>Editar Entrenador</h1>
-    <form action="/home/entrenadores/{{$entrenador->idEntrenador}}" method="post">
-        {{ csrf_field() }}
-        {{ method_field('PUT') }}
-        <div class="Dato">
-            <label for="nombre">Nombre: </label>
-            <input type="text" name="nombre" id="nombre" value="{{$entrenador->nombre}}" pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" title="El nombre solo pose letras, acentos, puntos y espacios (Maximo 50 caracteres)" required>    
-        </div> 
-        
-        <div class="Dato">
-            <label for="apellidoPaterno">Apellido Paterno: </label>
-            <input type="text" name="apellidoPaterno" id="apellidoPaterno" value="{{$entrenador->apellidoPaterno}}" pattern="^[a-zA-ZñÑáéíóú]{0,50}$" title="El apellido paterno solo pose letras y acentos (Maximo 50 caracteres)" required>    
-        </div> 
-        
-        <div class="Dato">
-            <label for="apellidoMaterno">Apellido Materno: </label>
-            <input type="text" name="apellidoMaterno" id="apellidoMaterno" value="{{$entrenador->apellidoMaterno}}" pattern="^[a-zA-ZñÑáéíóú]{0,50}$" title="El apellido materno solo pose letras y acentos (Maximo 50 caracteres)">    
-        </div>
+<div class="row">
 
-        <div class="Dato">
-            <label for="fechaRegistro">Fecha de Registro:  </label>
-            <input type="date" name="fechaRegistro" id="fechaRegistro" value="{{$entrenador->fechaRegistro}}" required>
-        </div>
+<div class="text-left col-md-2">
+  <a onclick="getEntreR()" type="button" href="#" class="bg-primary border border-primary rounded p-1 superBoton text-left text-success">
+  <i class="align-middle fas fa-arrow-left text-white" style="font-size: 24px;"></i>
+    <label class="mt-2 text-white d-md-inline" style="cursor: pointer; font-size: 15px;">Atras</label>
+  </a>
+</div>
 
-        <div class="Dato">
-            <label for="patrocinio">Patrocinadores: </label>
-            <textarea name="patrocinio" id="patrocinio">{{$entrenador->patrocinio}}</textarea>
-        </div>
+<h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">Editar Entrenador</h3>
 
-        <div class="Boton">
-            <input type="submit" value="Editar">
-        </div>
-    </form>
-</body>
-</html>
+
+<input type="hidden" name="idEntrenador" value="{{ $entrenador->idEntrenador }}" id="idEntrenador">
+<input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
+</div>
+
+
+<br>
+
+<form class="form-horizontal"  name="formulario" action="" onSubmit="updateEntrenador(); return false">
+  
+  <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" name="nombre" type="text" class="form-control" value=" {{ $entrenador->nombre }} " required>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="apellidoPaterno">Apellido Paterno</label>
+      <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoPaterno }} " required>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="apellidoMaterno">Apellido Materno</label>
+      <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoMaterno }} ">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4 mx-auto">
+      <label for="patrocinio">Patrocinadores</label>
+      <textarea type="text" class="form-control" id="patrocinio" name="patrocinio" row="5" > {{ $entrenador->patrocinio }} </textarea>
+      <small id="emailHelp" class="form-text text-muted"> Escriba todas la empresas u organizaciones separadas por una coma (,) </small>
+    </div>
+  </div>
+  
+  <button type="button" onclick="getEntreR()" class="btn btn-danger">Cancelar</button>
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
