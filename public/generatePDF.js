@@ -1,15 +1,15 @@
 // # EN ESTE ARCHIVO JS VAN TODAS LAS FUNCIONES PARA GENERAR LOS REPORTES PDF 
 
-//PDF a maxima calidad
+// <----------- Generar PDF de una Estadistica de un Competidor PDF a maxima calidad --------------------------->
 function compStatPDF() 
 {
-// Buscamos toda mi info
+      // Buscamos toda mi info
         var miCompetidor = $('#miCompetidor').text();
         var miNumeroCompetidor = $('#miNumeroCompetidor').text();
         var miCompetencia = $('#miCompetencia').text();
         var miPuntajeGlobal = $('#miPuntajeGlobal').text();
         var miPeriodoCompetencia  = $('#miPeriodoCompetencia').text();
-        var namePDF = miCompetidor.replace('Nombre:', ' ').trim();
+        var namePDF = "Estadistica-"+miCompetidor.replace('Nombre:', ' ').trim();
 
 
         // Vemos cual grafica enta en Pantalla
@@ -147,3 +147,115 @@ function addWaterMark(doc)
   return doc;
 }
 // <----------------------------------------------------------------------------------------->
+
+
+// <------------------------- FUNCION PARA GENERAR PDF DE PERFIL COMPETIDOR---------------------------->
+
+function compAllPDF(miCompetencia, miPuntajeGlobal, miPeriodo, miEstatus, miEntrenador)
+{
+  // Buscamos toda mi info
+    var miCompetidor = $('#miCompetidor').text();
+    var miNumeroCompetidor = $('#miNumeroCompetidor').text();
+    var miFechaRegistro =$('#miFechaRegistro').text();
+
+    var namePDF = "Perfil-"+miCompetidor.replace('Nombre:', ' ').trim();
+
+    //Crear lienzo PDF
+    var doc = new jsPDF('portrait');
+
+
+     //Añadiendo elementos al PDF
+        doc.setFontSize(20);
+        doc.setFontStyle("bold");
+        doc.text("Perfil del Competidor", 70, 20);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Numero de Competidor:', 22, 30);
+
+        doc.setFontSize(15);
+        doc.setFontStyle("normal");
+        doc.text(miNumeroCompetidor, 80, 30);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Nombre:', 22, 36);
+
+        doc.setFontSize(15);
+        doc.setFontStyle("normal")
+        doc.text(miCompetidor.replace('Nombre:', ' '), 42, 36);
+
+        // Titulo de Competencias
+        doc.setFontSize(20);
+        doc.setFontStyle("bold");
+        doc.text("Competencias", 80, 46);
+
+        if(miCompetencia.length > 0)
+        {
+            // Comenzamosa pintar mis competencias
+            var y=50;
+
+            for (var i = 0; i < miCompetencia.length; i++) 
+            {
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Competencia:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal")
+                doc.text(miCompetencia[i], 57, y);
+
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Puntaje Global:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal");
+                doc.text(" "+miPuntajeGlobal[i], 60, y);
+
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Periodo:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal")
+                doc.text(miPeriodo[i], 45, y);
+
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Estatus:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal")
+                doc.text(miEstatus[i], 45, y);
+
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Entrenador:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal")
+                doc.text(miEntrenador[i], 53, y);
+
+                y += 4;
+            }
+        }
+        else
+        {
+          // No tiene Competencias
+           doc.setFontSize(14);
+            doc.setFontStyle("bold");
+            doc.text('** Este Competidor no esta en ninguna competencia **', 22, 56);
+        }
+
+
+    //Guardar
+    doc.save(namePDF);
+}
+
+// <--------------------------------------------------------------------------------------------------->

@@ -357,7 +357,7 @@ class Competidores extends Controller
         {
             $misDatos['competidor']=Competidor::where('numeroCompetidor', $data['numeroCompetidor'])->first();
 
-            $misDatos['d'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
+            $misDatos['competencias'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
                         FROM competidors 
                             INNER JOIN puntaje__competidor__competencias INNER JOIN competencias INNER JOIN estatuses
                         ON competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor 
