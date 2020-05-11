@@ -37,7 +37,7 @@
     <div class="card-header bg-dark">
       <label class="my-auto"> {{ $entrenamiento->nombre }} {{ $entrenamiento->apellidoPaterno }} {{ $entrenamiento->apellidoMaterno }} en la Competencia "{{ $entrenamiento->nombreCompetencia }}"</label><br>
       <label class="my-auto">Durante {{$entrenamiento->mesesEntrenamiento}} Meses</label><br>
-      <label class="my-auto">De {{$entrenamiento->fechaInicio}} a {{$entrenamiento->fechaFin}}</label>
+      <label class="my-auto">Del {{ substr($entrenamiento->fechaInicio,8,2)."/".substr($entrenamiento->fechaInicio,5,2)."/".substr($entrenamiento->fechaInicio,0,4)}} al {{ substr($entrenamiento->fechaFin,8,2)."/".substr($entrenamiento->fechaFin,5,2)."/".substr($entrenamiento->fechaFin,0,4)}}</label>
     </div>
   </div>
 @endforeach

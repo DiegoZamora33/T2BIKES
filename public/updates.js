@@ -84,7 +84,22 @@ function editarUsuario(){
 
 function updateEntrenador()
 {
-  alert("update");
+    $.ajax({
+        type: "PUT",
+        headers: {'X-CSRF-TOKEN':$('#token').val()},
+        url: url+'/home/entrenadores/'+$('#idEntrenador').val(),
+        data: {
+            nombre: $('#nombre').val(),
+            apellidoPaterno: $('#apellidoPaterno').val(), 
+            apellidoMaterno: $('#apellidoMaterno').val(), 
+            patrocinio: $('#patrocinio').val()
+        },
+        dataType: "json",
+        success: function (response) {
+            getSuccess(response['mensaje']);
+            getEntreR();
+        }
+    });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

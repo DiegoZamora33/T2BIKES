@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Entrenador;
+use App\Entrenador_Competidor_Competencia;
 
 class Entrenadores extends Controller
 {
@@ -66,8 +67,12 @@ class Entrenadores extends Controller
      */
     public function store(Request $request)
     {
-        Entrenador::create($request->all());
-        return redirect()->route('entrenadores.index');
+        if($request->ajax())
+        {
+            Entrenador::create($request->all());
+            return response()->json(['codigo' => 'registrado', 'mensaje' => 'El entrenador '.$request->nombre.' '.$request->apellidoPaterno.' '.$request->apellidoMaterno.' a sido registrado correctamente']);
+        }
+        
     }
 
     /**
@@ -109,8 +114,8 @@ class Entrenadores extends Controller
         $nuevosDatos=request()->except(['_token','_method']);
         //Actualizamos los campos de la bd con los nuevos datos
         Entrenador::where('idEntrenador', $id)->update($nuevosDatos);
-        //Nos redireccionamos al index
-        return redirect()->route('entrenadores.index');
+        //Regresamos mensaje de confirmacion
+        return response()->json(['codigo' => 'actualizado', 'mensaje' => 'El entrenador '.$request->nombre.' '.$request->apellidoPaterno.' '.$request->apellidoMaterno.' a sido actualizado correctamente']);
     }
 
     /**
@@ -121,7 +126,15 @@ class Entrenadores extends Controller
      */
     public function destroy($id)
     {
+        //Buscamos el nombre de entrenador
+        $entrenador = Entrenador::where('idEntrenador', $id)->first();
+        $nombreEntrenador = $entrenador->nombre.' '.$entrenador->apellidoPaterno.' '.$entrenador->apellidoMaterno;
+        
+        //Eliminamos al entrenador de la base de datos
+        Entrenador_Competidor_Competencia::where('idEntrenador', $id)->delete();
         Entrenador::where('idEntrenador', $id)->delete();
-        return redirect()->route('entrenadores.index');
+
+        //Mensaje de confirmacion
+        return response()->json(['codigo' => 'Eliminado', 'mensaje' => 'El entrenador '.$nombreEntrenador.' a sido eliminado correctamente']);
     }
 }

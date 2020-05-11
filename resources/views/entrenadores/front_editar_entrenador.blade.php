@@ -25,15 +25,15 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="nombre">Nombre</label>
-      <input id="nombre" name="nombre" type="text" class="form-control" value=" {{ $entrenador->nombre }} " required>
+      <input id="nombre" name="nombre" type="text" class="form-control" value=" {{ $entrenador->nombre }} " title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" maxlength="50" required>
     </div>
     <div class="form-group col-md-4">
       <label for="apellidoPaterno">Apellido Paterno</label>
-      <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoPaterno }} " required>
+      <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoPaterno }} " title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" maxlength="50" required>
     </div>
     <div class="form-group col-md-4">
       <label for="apellidoMaterno">Apellido Materno</label>
-      <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoMaterno }} ">
+      <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" value=" {{ $entrenador->apellidoMaterno }} " title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" maxlength="50">
     </div>
   </div>
   <div class="form-row">

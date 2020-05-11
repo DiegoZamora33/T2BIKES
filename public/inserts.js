@@ -268,7 +268,22 @@ function asignarEntrenador()
 
 function enviarEntrenador()
 {
-  alert("insert");
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/entrenadores',
+    data: {
+      nombre: $('#nombre').val(),
+      apellidoPaterno: $('#apellidoPaterno').val(), 
+      apellidoMaterno: $('#apellidoMaterno').val(), 
+      patrocinio: $('#patrocinio').val()
+    },
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      newTrain();
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

@@ -144,15 +144,23 @@ function eliminarUsuario() {
 
 function deleteEntrenador()
 {
-  alert("delete");
-  
-   $('#deleteEntrenador').modal('hide');
-    setTimeout(
-      function() {
-        entrenadores();
-       $('#deleteEntrenador').modal('hide');
-      },300
-    );
+  $.ajax({
+    type: "DELETE",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/entrenadores/'+$('#idEntrenador').val(),
+    data: {},
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      $('#deleteEntrenador').modal('hide');
+      setTimeout(
+        function() {
+          entrenadores();
+        $('#deleteEntrenador').modal('hide');
+        },300
+      );
+    }
+  });
 }
 
 // <---------------------------------------------------------------------------------------------------->

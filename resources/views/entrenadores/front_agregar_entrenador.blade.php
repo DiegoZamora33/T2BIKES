@@ -20,15 +20,15 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" placeholder=" " required>
+      <input type="text" class="form-control" id="nombre" name="nombre" placeholder=" " title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" maxlength="50" required>
     </div>
     <div class="form-group col-md-4">
       <label for="apellidoPaterno">Apellido Paterno</label>
-      <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" placeholder="" required>
+      <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" maxlength="50" required>
     </div>
     <div class="form-group col-md-4">
       <label for="apellidoMaterno">Apellido Materno</label>
-      <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" placeholder="">
+      <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno"  title="No se admiten caracteres especiales como '(){}?¿' etc..." pattern="^[a-zA-ZñÑáéíóú.\s]{0,50}$" maxlength="50">
     </div>
   </div>
   <div class="form-row">
