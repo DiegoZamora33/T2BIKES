@@ -15,10 +15,9 @@ var estaCompetencia = 0;
 
 $(document).ready(function ()
 {
-
+  // <-------------------------- PARA SIEMPRE RECORDAR LA URL Y FUNCIONE AJAX ------------------------------>
     ip = document.getElementById('miIP').value;
     url = 'http://'+ip+'/T2BIKES/public';
-    //alert(url);
 
     // Funcion para el menu
     $('#sidebarCollapse').on('click', function () {
@@ -44,7 +43,7 @@ $(document).ready(function ()
         });
       });
 
-    // Cuando damos click en Entrenadores y se ponga blanco el fondo
+    // Para Mostrar lista de Entrenadores
     $("#entrenadores").click(function()
     {
       miOff();
@@ -62,44 +61,7 @@ $(document).ready(function ()
         });
    });
 
-
-    // Funcion para mostrar  Reportes
-    $("#reportes").click(function()
-    {
-      miOff();
-      this.className = "active";
-        $.ajax({
-          url: "reportes.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-            });
-          }
-        });
-      });
-
-
-    // Funcion para mostrar  Estadisticas
-    $("#estadisticas").click(function()
-    {
-      miOff();
-      this.className = "active";
-        $.ajax({
-          url: "perfil-competidor.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-            }
-          );
-        }
-        });
-      });
-
-
+    // Para Mostrar lista de Competencias
     $("#competencias").click(function()
     {
       miOff();
@@ -117,85 +79,9 @@ $(document).ready(function ()
       });
     });
 
-    $("#tab").click(function()
-    {
-      miOff();
-      this.className = "active";
-      $.ajax({
-        url: "perfil-competidor.html" ,
-        success: function(data){
-          setTimeout(function(){
-            $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-          }
-        );
-      }
-      });
-    });
 
-
-
-    // Funcion para mostrar lista de Competidores
-    $("#lista-competidores").click(function()
-    {
-      miOff();
-      this.className = "active";
-        $.ajax({
-          url: "tables/lista-competidores.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-            }
-          );
-        }
-        });
-      });
-
-
-
-    // Funcion para mostrar  Form de Nuevo Competidor
-    $("#registrar-competidor").click(function()
-    {
-      miOff();
-      this.className = "active";
-        $.ajax({
-          url: "forms/registrar-competidor.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-            }
-          );
-        }
-        });
-      });
-
-
-
-    // Funcion para mostrar lista de Entrenadores
-    $("#lista-entrenadores").click(function()
-    {
-      miOff();
-      this.className = "active";
-        $.ajax({
-          url: "tables/lista-entrenadores.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-            }
-          );
-        }
-        });
-      });
-
-
-      $('#sistema').click(function () { 
+    // Para mostrar lista de Usuarios
+    $('#sistema').click(function () { 
 
         miOff();
         this.className = "active";

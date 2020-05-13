@@ -37,15 +37,13 @@
                         <span class="CTAs">Competencias</span>
                     </a>
                     <ul class="collapse list-unstyled" id="pageCompetencias">
+
+                    @foreach($competencias as $miCompetList)
                         <li>
-                            <a href="#">Tour Morelia 2020</a>
+                            <a id="{{ $miCompetList->idCompetencia }}" href="#">{{ $miCompetList->nombreCompetencia }}</a>
                         </li>
-                        <li>
-                            <a href="#">Racing Mountain</a>
-                        </li>
-                        <li>
-                            <a href="#">Los Azufres 40k</a>
-                        </li>
+                    @endforeach
+
                     </ul>
                 </li>
 
