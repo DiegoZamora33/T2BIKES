@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Competencia;
 use App\Estatus;
+use Illuminate\Support\Facades\DB;
+include('miDB.php');
+
+
+
 class Competencias extends Controller
 {
     /**
@@ -15,12 +20,19 @@ class Competencias extends Controller
     public function index()
     {
         
-       //inner join 
+       //Buscamos datos de las competencias
 
-        $competencias = Competencia::join("estatuses","estatuses.idEstatus","=","competencias.idEstatus")
-        -> select("idCompetencia","nombreCompetencia","periodo","estatus")
-        ->get();
-        return view('competencia.front_mostrar_competencias', compact('competencias'));
+        $query = " SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, 
+                    COUNT(*) AS carreras FROM competencias 
+                    INNER JOIN carreras INNER JOIN estatuses
+                    ON competencias.idCompetencia = carreras.idCompetencia 
+                        AND competencias.idEstatus = estatuses.idEstatus
+                    GROUP BY nombreCompetencia ";
+
+     
+        $datos['competencias'] = bd_consulta($query);
+
+        return view('competencia.front_mostrar_competencias', $datos);
     }
 
     /**

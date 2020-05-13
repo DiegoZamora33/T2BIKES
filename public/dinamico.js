@@ -67,16 +67,16 @@ $(document).ready(function ()
       miOff();
       this.className = "active";
       $.ajax({
-        url: "tables/lista-competencias.html" ,
-        success: function(data){
-          setTimeout(function(){
-            $("#mostrador").html(data);
+              type: "get",
+              url: url+"/home/competencias",
+              data: {},
+              dataType: "html",
+              success: function (response) {
+                  $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
-          }
-        );
-      }
-      });
+              }
+        });
     });
 
 
