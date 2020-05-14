@@ -47,4 +47,34 @@ class Graficas extends Controller
 
         return view('graficas.competidor_competencia_bar', $datos);
     }
+
+    public function competencia_bar(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Buscamos los datos de puntajes y demas
+            $datos['puntajesGlobales'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno, puntaje__competidor__competencias.puntajeGlobal
+                    FROM competencias INNER JOIN puntaje__competidor__competencias INNER JOIN competidors
+                    ON puntaje__competidor__competencias.idCompetencia = competencias.idCompetencia
+                        AND competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC ");
+
+            return view('graficas.competencia_bar', $datos);
+        }
+    }
+
+    public function competencia_pai(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Buscamos los datos de puntajes y demas
+            $datos['puntajesGlobales'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno, puntaje__competidor__competencias.puntajeGlobal
+                    FROM competencias INNER JOIN puntaje__competidor__competencias INNER JOIN competidors
+                    ON puntaje__competidor__competencias.idCompetencia = competencias.idCompetencia
+                        AND competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC ");
+
+            return view('graficas.competencia_pai', $datos);
+        }
+    }
 }

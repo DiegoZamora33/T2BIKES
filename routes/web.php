@@ -65,6 +65,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 		// Para Acceder a la Grafica competidor_competencia_bar
 		Route::match(['get', 'post'], '/home/graficas/competidor_competencia_bar', 'Graficas@competidor_competencia_bar')->name('competidor_competencia_bar');
 
+		// Para Acceder a la Grafica competencia_bar
+		Route::match(['get', 'post'], '/home/graficas/competencia_bar', 'Graficas@competencia_bar')->name('competencia_bar');
+
+		// Para Acceder a la Grafica competencia_pai
+		Route::match(['get', 'post'], '/home/graficas/competencia_pai', 'Graficas@competencia_pai')->name('competencia_pai');
+
+
+////////////////////////////////// RUTAS PARA FUNCIONES DE COMPETENCIAS  ////////////////////////////////////
+		// Para mostrar el perfil de una Competencia
+		Route::match(['get', 'post'], '/home/competencias/perfilCompetencia', 'Competencias@perfilCompetencia')->name('perfilCompetencia');
+
+
+
 //Ruta para los controladores resource
 Route::resources([
     '/home/competidores'=>'Competidores', //Controlador de Competidores

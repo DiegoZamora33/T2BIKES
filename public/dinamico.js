@@ -125,14 +125,8 @@ function miOff()
   document.getElementById('home').className = " ";
   document.getElementById('competidores').className = " ";
   document.getElementById('entrenadores').className = " ";
-  /*document.getElementById('reportes').className = " ";
-  document.getElementById('estadisticas').className = " ";*/
   document.getElementById('competencias').className = " ";
   document.getElementById('sistema').className = " ";
-  /*document.getElementById('registrar-competidor').className = " ";
-  document.getElementById('lista-competidores').className = " ";
-  document.getElementById('registrar-entrenador').className = " ";
-  document.getElementById('lista-entrenadores').className = " ";*/
 }
 
 
@@ -371,18 +365,19 @@ function entrenadores(){
 }
 // <------------------------------------------------------------------------------------------>
 
-function competencias(){
-        $.ajax({
-          url: "tables/lista-competencias.html" ,
-          success: function(data){
-            setTimeout(function(){
-              $("#mostrador").html(data);
-                effectFadeOut();
-                effectFadeIn();
-            }
-          );
+function competencias()
+{
+  $.ajax({
+        type: "get",
+        url: url+"/home/competencias",
+        data: {},
+        dataType: "html",
+        success: function (response) {
+            $('#mostrador').html(response);
+          effectFadeOut();
+          effectFadeIn();
         }
-        });
+  });
 }
 
 function usuarios(){
@@ -498,20 +493,54 @@ function getEntreR()
 // <------------------------------------------------------------------------------------------------>
 
 
-function getTour(){
-  this.className = 'active';
+// <--------------------------------- PARA MOTRAR EL PERFIL DE COMPETENCIA ---------------------------------->
+
+function getTour(miCompetencia)
+{
+  var idCompetencia = miCompetencia.id;
+  var token = $('#token').val();
+
   $.ajax({
-    url: 'tour.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
+      url: url+'/home/competencias/perfilCompetencia',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
       }
-    );
-  }
+
   });
 }
+
+
+function getTourR()
+{
+  var idCompetencia = $('idCompetencia').val();
+  var token = $('token').val();
+
+  $.ajax({
+      url: url+'/home/competencias/perfilCompetencia',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
+      }
+
+  });
+}
+
+// <--------------------------------------------------------------------------------------------------------->
 
 // <------------------ Mostrar Perfil de un Usuario ------------------->
 function getUser(miUser)
@@ -728,11 +757,19 @@ function grafCompetidor()
 // Funcion Para convertir Grafica (Competencia)
 function grafCompetencia()
 {
+
+  var idCompetencia = $('#idCompetencia').val();
+  var token = $('#token').val();
+
   if(graficaCompetencia == "bar")
   {
     graficaCompetencia = "pie";
     $.ajax({
-      url: 'graficas/competencia-pai.html' ,
+      url: url+'/home/graficas/competencia_pai' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-competencia').html(data);
@@ -746,7 +783,11 @@ function grafCompetencia()
   {
     graficaCompetencia = "bar";
     $.ajax({
-      url: 'graficas/competencia-bar.html' ,
+      url: url+'/home/graficas/competencia_bar' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-competencia').html(data);
@@ -756,7 +797,6 @@ function grafCompetencia()
     });
     document.getElementById('btn-cambiarGrafica-competencia').innerText = "Cambiar a Grafica de Pastel";
   }
-  $('html,body').animate({scrollTop: document.body.scrollHeight/4},"fast");
 }
 
 

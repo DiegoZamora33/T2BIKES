@@ -12,11 +12,7 @@ include('miDB.php');
 
 class Competencias extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         
@@ -35,23 +31,53 @@ class Competencias extends Controller
         return view('competencia.front_mostrar_competencias', $datos);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function perfilCompetencia(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Buscamos los datos de mi Competencia
+            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, competencias.created_at, estatuses.estatus 
+                    FROM competencias INNER JOIN estatuses ON competencias.idEstatus = estatuses.idEstatus
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ");
+
+
+            $datos['puntajesGlobales'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno, puntaje__competidor__competencias.puntajeGlobal
+                    FROM competencias INNER JOIN puntaje__competidor__competencias INNER JOIN competidors
+                    ON puntaje__competidor__competencias.idCompetencia = competencias.idCompetencia
+                        AND competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC ");
+
+            $datos['numParticipantes'] = DB::select("SELECT COUNT(*) inscritos FROM competencias
+                   INNER JOIN puntaje__competidor__competencias
+                    ON competencias.idCompetencia = puntaje__competidor__competencias.idCompetencia
+                    WHERE puntaje__competidor__competencias.idCompetencia = ".$data['idCompetencia']."");
+
+            $datos['numCarreras'] = DB::select(" SELECT COUNT(*) AS carreras FROM competencias 
+                    INNER JOIN carreras INNER JOIN estatuses
+                    ON competencias.idCompetencia = carreras.idCompetencia 
+                        AND competencias.idEstatus = estatuses.idEstatus
+                    WHERE carreras.idCompetencia = ".$data['idCompetencia']."");
+
+            $datos['carreras'] = DB::select(" SELECT carreras.idCarrera, carreras.nombreCarrera, carreras.descripcion, tipo_carreras.tipoCarrera
+                    FROM competencias INNER JOIN carreras INNER JOIN estatuses INNER JOIN tipo_carreras
+                    ON competencias.idCompetencia = carreras.idCompetencia 
+                        AND tipo_carreras.idTipoCarrera = carreras.idTipoCarrera
+                        AND competencias.idEstatus = estatuses.idEstatus
+                    WHERE carreras.idCompetencia = ".$data['idCompetencia']."");
+
+            return view('competencia.front_perfil_competencia', $datos);
+        }
+    }
+
+
     public function create()
     {
         //
         return view('competencia.front_agregar_competencia');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
@@ -61,23 +87,13 @@ class Competencias extends Controller
         return redirect()->route('competencias.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
        
@@ -89,13 +105,7 @@ class Competencias extends Controller
         return view('competencia.front_editar_competencia', compact('competencia','estatus'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
           $nuevosDatos=request()->except(['_token','_method','estado']);
@@ -105,12 +115,7 @@ class Competencias extends Controller
         return redirect()->route('competencias.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //buscammos coincidencia de una competencia con el id y se elimina

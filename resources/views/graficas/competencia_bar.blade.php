@@ -4,10 +4,30 @@
               var myChart = new Chart(ctx, {
                 type: "bar",
                 data: {
-                  labels: ['Carlos Castro Cázares', 'Brandon Rodriguez Molina', 'Diego Zamora Delgado'],
+                  labels: 
+                  <?php
+
+                    $out = "";
+                    foreach ($puntajesGlobales as &$miCompePuntaje) {
+                        $out = $out."'".$miCompePuntaje->nombre." ".$miCompePuntaje->apellidoPaterno." ".$miCompePuntaje->apellidoMaterno."',";
+                    }
+
+                    echo "[".$out."]";
+
+                  ?>,
                   datasets: [{
                     label: 'Rendimiento',
-                    data: [42, 36, 35],
+                    data: 
+                    <?php
+
+                      $out = "";
+                      foreach ($puntajesGlobales as &$miCompePuntaje) {
+                          $out = $out.$miCompePuntaje->puntajeGlobal.",";
+                      }
+
+                      echo "[".$out."]";
+
+                    ?>,
                     backgroundColor: [
                       'rgb(66, 134, 244)',
                       'rgb(100, 8, 75)',
