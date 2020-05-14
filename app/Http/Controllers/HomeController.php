@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $datos['competencias'] = DB::select(" SELECT * FROM competencias LIMIT 3 ");
+        $datos['competencias'] = DB::select(" SELECT * FROM competencias ORDER BY created_at DESC LIMIT 3 ");
         return view('home', $datos);
     }
 }

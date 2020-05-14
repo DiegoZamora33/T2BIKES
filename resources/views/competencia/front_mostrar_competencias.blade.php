@@ -1,12 +1,21 @@
 
 
     @foreach($competencias as $miCompetencia)
-      <div class="card text-center mt-2" style="color:white;">
+      <div class="card text-center mt-2 w-75 mx-auto" style="color:white;">
         <div class="card-header bg-dark">
           {{ $miCompetencia['nombreCompetencia'] }}
         </div>
         <div class="card-body"  style="color:black;">
-          
+
+          <?php
+           $query= DB::select("SELECT COUNT(*) inscritos FROM competencias
+                   INNER JOIN puntaje__competidor__competencias
+                    ON competencias.idCompetencia = puntaje__competidor__competencias.idCompetencia
+                    WHERE puntaje__competidor__competencias.idCompetencia = ".$miCompetencia['idCompetencia']."");      
+          ?>
+         @foreach($query as $miQuery)
+          <h5 class="card-title"> Participantes: {{ $miQuery->inscritos }} </h5>
+         @endforeach
           <h6 class="card-text text-muted">Periodo: {{ $miCompetencia['periodo'] }}</h6>
           <h6 class="card-text text-muted">Status: {{ $miCompetencia['estatus'] }}</h6>
           <a onclick="getTour();" class="btn btn-primary text-white">Ver más</a>

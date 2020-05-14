@@ -319,7 +319,7 @@ class Competidores extends Controller
                 WHERE entrenador__competidor__competencias.numeroCompetidor = ".$data['numeroCompetidor']."   
                      AND entrenador__competidor__competencias.idCompetencia = ".$data['idCompetencia']);
 
-            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
+            $datos['competencia'] = DB::select(" SELECT  puntaje__competidor__competencias.created_at, competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, puntaje__competidor__competencias.puntajeGlobal
                     FROM competidors 
                         INNER JOIN puntaje__competidor__competencias INNER JOIN competencias INNER JOIN estatuses
                     ON competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor 
@@ -364,7 +364,7 @@ class Competidores extends Controller
                             AND competencias.idCompetencia = puntaje__competidor__competencias.idCompetencia
                             AND competencias.idEstatus = estatuses.idEstatus
                             
-                        WHERE puntaje__competidor__competencias.numeroCompetidor = ".$data['numeroCompetidor']." ");
+                        WHERE puntaje__competidor__competencias.numeroCompetidor = ".$data['numeroCompetidor']." ORDER BY puntaje__competidor__competencias.created_at DESC");
 
 
             $misDatos['allCompetencias'] = Competencia::all();

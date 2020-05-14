@@ -27,7 +27,7 @@ class Competencias extends Controller
                     INNER JOIN carreras INNER JOIN estatuses
                     ON competencias.idCompetencia = carreras.idCompetencia 
                         AND competencias.idEstatus = estatuses.idEstatus
-                    GROUP BY nombreCompetencia ";
+                    GROUP BY nombreCompetencia ORDER BY competencias.created_at DESC";
 
      
         $datos['competencias'] = bd_consulta($query);
