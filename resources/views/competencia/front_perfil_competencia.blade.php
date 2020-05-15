@@ -131,36 +131,25 @@
 
 <br>
 <h4 class="mt-3">Carreras</h4>
-<div class="card text-center" style="color:white;">
-  <div class="card-header bg-dark">
-    Carrera 1
-  </div>
-  <div class="card-body"  style="color:black;">
-    <h6>Acueducto a Camelinas 10km</h6>
-    <p class="card-text">Tipo de Carrera: Montaña</p>
-    <a  style="color:white;" onclick="getCarrera();" class="btn btn-primary">Estadisticas</a>
-  </div>
-</div>
-<div class="card text-center" style="color:white;">
-  <div class="card-header bg-dark">
-    Carrera 2
-  </div>
-  <div class="card-body"  style="color:black;">
-    <h6>Tecnológico a Macroplaza 9km</h6>
-    <p class="card-text">Tipo de Carrera: Velocidad</p>
-    <a  style="color:white;" onclick="getCarrera();" class="btn btn-primary">Estadisticas</a>
-  </div>
-</div>
-<div class="card text-center" style="color:white;">
-  <div class="card-header bg-dark">
-    Carrera 3
-  </div>
-  <div class="card-body"  style="color:black;">
-    <h6>Xangari a La Huerta 17km</h6>
-    <p class="card-text">Tipo de Carrera: Terraceria</p>
-    <a  style="color:white;" onclick="getCarrera();" class="btn btn-primary">Estadisticas</a>
-  </div>
-</div><br>
+
+
+  @foreach($carreras as $miCarrera)
+    <div class="card text-center" style="color:white;">
+      <div class="card-header bg-dark">
+        {{$miCarrera->nombreCarrera}}
+      </div>
+      <div class="card-body"  style="color:black;">
+        <h6>{{$miCarrera->descripcion}}</h6>
+        <p class="card-text">Tipo de Carrera: {{$miCarrera->tipoCarrera}}</p>
+        <a id="{{$miCarrera->idCarrera}}"  style="color:white;" onclick="getCarrera(this);" class="btn btn-primary">Estadisticas</a>
+      </div>
+    </div>
+  @endforeach
+
+<br>
+
+
+
 <a type="button" class="btn btn-danger" data-toggle="modal" style="color:white;" data-target="#modalFinalizada"">Eliminar competencia</a>
 <br><br><br>
 <ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">

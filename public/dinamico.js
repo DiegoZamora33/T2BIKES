@@ -214,9 +214,9 @@ function quitaEstaCompe(miCompetencia)
   estaCompetencia = miCompetencia.id;
 }
 
-// <------------------------------------------------------------------------------------------>
+// <-------------------------------------------------------------------------------------------------------------------->
 
-// <---------------- FUNCIONES PARA MOSTRAR LA INFO DE UNA CARRERA EN EL MODAL --------------->
+// <---------------- FUNCIONES PARA MOSTRAR LA INFO DE UNA CARRERA DE ESTADISTICA COMPETIDOR EN EL MODAL --------------->
 
 function clickStatus(boton)
 {
@@ -281,9 +281,9 @@ function dataCarrera(idCarrera)
   });
 }
 
-// <------------------------------------------------------------------------------------------>
+// <---------------------------------------------------------------------------------------------------------------------->
 
-// <-------------------------- FUNCIONES PARA MOSTRAR UNA ESTADISTICA ------------------------>
+// <-------------------------- FUNCIONES PARA MOSTRAR UNA ESTADISTICA ---------------------------------------------------->
 function getStat(miStat)
 {
   var idCompetencia = miStat.id;
@@ -568,20 +568,30 @@ function getUser(miUser)
 }
 // <-------------------------------------------------------------------->
 
-function getCarrera(){
-  this.className = 'active';
+// <-------------------------------- FUNCION PARA MOSTRAR CARRERA DE UNA COMPETENCIA ---------------------------------->
+function getCarrera(miCarrera)
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var idCarrera = miCarrera.id;
+  var token = $('#token').val();
+
   $.ajax({
-    url: 'perfil-carrera.html' ,
-    success: function(data){
-      setTimeout(function(){
-        $('#mostrador').html(data);
+      url: url+'/home/carreras/perfilCarrera',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia, idCarrera: idCarrera},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
       }
-    );
-  }
-  });
+
+    });
 }
+// <------------------------------------------------------------------------------------------------------------------->
 
 
 // <------------------ Funcion para mostrar FORM de Nuevo Competidor ------------------->
@@ -805,11 +815,20 @@ function grafCompetencia()
 // Funcion Para convertir Grafica (Carrera)
 function grafCarrera()
 {
+
+  var idCarrera = $('#idCarrera').val();
+  var idCompetencia = $('#idCompetencia').val();
+  var token = $('#token').val();
+
   if(graficaCarrera == "bar")
   {
     graficaCarrera = "pie";
     $.ajax({
-      url: 'graficas/carrera-pai.html' ,
+      url: url+'/home/graficas/carrera_pai' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia, idCarrera: idCarrera},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-carrera').html(data);
@@ -823,7 +842,11 @@ function grafCarrera()
   {
     graficaCarrera = "bar";
     $.ajax({
-      url: 'graficas/carrera-bar.html' ,
+      url: url+'/home/graficas/carrera_bar' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia, idCarrera: idCarrera},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-carrera').html(data);

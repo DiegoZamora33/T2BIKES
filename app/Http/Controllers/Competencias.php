@@ -64,7 +64,7 @@ class Competencias extends Controller
                     ON competencias.idCompetencia = carreras.idCompetencia 
                         AND tipo_carreras.idTipoCarrera = carreras.idTipoCarrera
                         AND competencias.idEstatus = estatuses.idEstatus
-                    WHERE carreras.idCompetencia = ".$data['idCompetencia']."");
+                    WHERE carreras.idCompetencia = ".$data['idCompetencia']." ORDER BY carreras.created_at ASC");
 
             return view('competencia.front_perfil_competencia', $datos);
         }

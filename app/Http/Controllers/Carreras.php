@@ -6,14 +6,11 @@ use Illuminate\Http\Request;
 use App\Carrera;
 use App\Competencia;
 use App\TipoCarrera;
+use Illuminate\Support\Facades\DB;
 
 class Carreras extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //Extraemos todas las carreras
@@ -34,14 +31,38 @@ class Carreras extends Controller
             $carreras[] = $carrera; //Ponemos el arreglo de una carrera en el arreglo de todas las carreras
         }
         //Enviamos la informacion de las carreras a la vista
-        return view('carreras.front_mostrarCarreras', compact('carreras'));
+        return view('carreras.front_mostrar_carreras', compact('carreras'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function perfilCarrera(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Bucamos todos los datos necesarios
+            $datos['competencia'] = Competencia::where('idCompetencia', '=', $data['idCompetencia'])->first();
+
+            $datos['carrera'] = DB::select(" SELECT carreras.idCarrera, carreras.nombreCarrera, carreras.descripcion, carreras.created_at, tipo_carreras.tipoCarrera
+                FROM carreras  INNER JOIN tipo_carreras
+                ON  carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
+                WHERE carreras.idCarrera = ".$data['idCarrera']." 
+                    AND carreras.idCompetencia = ".$data['idCompetencia']." ");
+
+            $datos['participantes'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno,
+                    puntaje__competidor__carreras.lugarLlegada, puntaje__competidor__carreras.puntaje, estatuses.estatus
+                FROM carreras INNER JOIN puntaje__competidor__carreras INNER JOIN competencias INNER JOIN competidors INNER JOIN estatuses
+                ON carreras.idCarrera = puntaje__competidor__carreras.idCarrera 
+                    AND carreras.idCompetencia = competencias.idCompetencia
+                    AND competidors.numeroCompetidor = puntaje__competidor__carreras.numeroCompetidor
+                    AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
+                WHERE carreras.idCarrera = ".$data['idCarrera']."
+                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC ");
+
+
+            return view('carreras.front_perfil_carrera', $datos);
+        }
+    }
+
     public function create()
     {
         //Extraemos los datos de las competencias y tipos de carrera
@@ -52,12 +73,7 @@ class Carreras extends Controller
         return view('carreras.front_agregar_carrera', compact('competencias', 'tiposCarrera'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //Creamos un nuevo registro en la base de datos
@@ -66,12 +82,7 @@ class Carreras extends Controller
         return redirect()->route('carreras.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //Extraemos la informacion de la base de datos de la carrera deseada
@@ -88,12 +99,7 @@ class Carreras extends Controller
         return view('carreras.front_mostrar_Carrera', compact('datos'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //Extraemos los datos de las competencias y tipos de carrera
@@ -107,13 +113,7 @@ class Carreras extends Controller
         return view('carreras.front_editar_carrera', compact('competencias', 'tiposCarrera', 'carrera'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //Quitamos los datos no deseados del request
@@ -126,12 +126,7 @@ class Carreras extends Controller
         return redirect()->route('carreras.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //Buscamos y eliminamos el registro de la bd con el id

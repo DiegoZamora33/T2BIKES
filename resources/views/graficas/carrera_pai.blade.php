@@ -5,29 +5,29 @@
       type: "pie",
       data: {
         labels: 
-            <?php 
+        <?php
 
-              $out = "";
-              foreach ($carreras as &$miCarrera) {
-                  $out = $out."'".$miCarrera->nombreCarrera."',";
-              }
+          $out = "";
+          foreach ($participantes as &$miParticipanteG) {
+              $out = $out."'".$miParticipanteG->nombre." ".$miParticipanteG->apellidoPaterno." ".$miParticipanteG->apellidoMaterno."',";
+          }
 
-              echo "[".$out."]"; 
+          echo "[".$out."]";
 
-            ?>,
+        ?>,
         datasets: [{
           label: 'Puntaje',
           data: 
-            <?php 
-            
-              $out = "";
-              foreach ($carreras as &$miCarrera) {
-                  $out = $out.$miCarrera->puntaje.",";
-              }
+          <?php
 
-              echo "[".$out."]"; 
+            $out = "";
+            foreach ($participantes as &$miParticipanteG) {
+                $out = $out.$miParticipanteG->puntaje.",";
+            }
 
-            ?>,
+            echo "[".$out."]";
+
+          ?>,
           backgroundColor: [
             'rgb(66, 134, 244)',
             'rgb(100, 8, 75)',

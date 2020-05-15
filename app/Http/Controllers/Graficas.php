@@ -77,4 +77,42 @@ class Graficas extends Controller
             return view('graficas.competencia_pai', $datos);
         }
     }
+
+    public function carrera_bar(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Buscamos a mis participantes de esta carrera
+            $datos['participantes'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno,
+                    puntaje__competidor__carreras.lugarLlegada, puntaje__competidor__carreras.puntaje, estatuses.estatus
+                FROM carreras INNER JOIN puntaje__competidor__carreras INNER JOIN competencias INNER JOIN competidors INNER JOIN estatuses
+                ON carreras.idCarrera = puntaje__competidor__carreras.idCarrera 
+                    AND carreras.idCompetencia = competencias.idCompetencia
+                    AND competidors.numeroCompetidor = puntaje__competidor__carreras.numeroCompetidor
+                    AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
+                WHERE carreras.idCarrera = ".$data['idCarrera']."
+                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC ");
+
+            return view('graficas.carrera_bar', $datos);
+        }
+    }
+
+    public function carrera_pai(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Buscamos a mis participantes de esta carrera
+            $datos['participantes'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno,
+                    puntaje__competidor__carreras.lugarLlegada, puntaje__competidor__carreras.puntaje, estatuses.estatus
+                FROM carreras INNER JOIN puntaje__competidor__carreras INNER JOIN competencias INNER JOIN competidors INNER JOIN estatuses
+                ON carreras.idCarrera = puntaje__competidor__carreras.idCarrera 
+                    AND carreras.idCompetencia = competencias.idCompetencia
+                    AND competidors.numeroCompetidor = puntaje__competidor__carreras.numeroCompetidor
+                    AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
+                WHERE carreras.idCarrera = ".$data['idCarrera']."
+                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC ");
+
+            return view('graficas.carrera_pai', $datos);
+        }
+    }
 }
