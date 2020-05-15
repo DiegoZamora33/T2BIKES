@@ -38,7 +38,7 @@
   <tbody>
 
     @foreach($participantes as $miParticipante)
-      <tr data-toggle="modal" data-target="#modalPuntos">
+      <tr data-toggle="modal" onclick="dataCarreraCompetencia('{{$miParticipante->numeroCompetidor}} ')" data-target="#modalCarreraCompetidor">
         <td data-label="Nombre">{{$miParticipante->nombre}} {{$miParticipante->apellidoPaterno}} {{$miParticipante->apellidoMaterno}}</td>
         <td data-label="Núm. de competidor">{{$miParticipante->numeroCompetidor}}</td>
         <td data-label="Posición">{{$miParticipante->lugarLlegada}}</td>
@@ -113,30 +113,44 @@
 
 <a type="button" class="btn btn-danger" data-toggle="modal" style="color:white;" data-target="#modalCar"">Eliminar carrera</a>
 
-<div class="modal fade" id="modalPuntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+<div class="modal fade" id="modalCarreraCompetidor" tabindex="-1" role="dialog" aria-labelledby="modalCarreraCompetidor" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Asignar Puntos</h5>
+        <h5 class="modal-title" id="modalCarreraCompetidor">Asignar Puntos</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
         <div class="modal-body">
-          <label for="inputAddress">Puntos a asignar/restar:</label><br>
-          <input class="form-control w-25 mx-auto" type="number" value="0" min="-50" max="1000" step="1"/><br><br>
+
+
+          <label for="puntajeCarrera">Puntos a asignar/restar:</label><br>
+          <input id="puntajeCarrera" name="puntajeCarrera" class="form-control w-25 mx-auto" type="number" min="-50" max="1000" step="1"/><br>
           <label for="inputAddress">¿Terminó la carrera?</label><br>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-warning">En Curso</button>
-            <button type="button" class="btn btn-success">Si terminó</button>
-            <button type="button" class="btn btn-danger">No terminó</button>
+
+          <div id="contenedorStatus" class="btn-group" role="group" aria-label="Basic example">
+            <button onclick="clickStatus(this)" type="button" id="pendiente" class="btn btn-warning">Pendiente</button>
+            <button onclick="clickStatus(this)" type="button" id="siTermino" class="btn btn-success">Si terminó</button>
+            <button onclick="clickStatus(this)" type="button" id="noTermino" class="btn btn-danger">No terminó</button>
           </div><br><br>
-          <label for="inputAddress">Lugar de llegada</label><br>
-          <input class="form-control w-25 mx-auto" type="number" value="5" min="0" max="1000" step="1"/>
+
+          <label for="lugarLlegadaCarrera">Lugar de llegada</label><br>
+          <input id="lugarLlegadaCarrera" name="lugarLlegadaCarrera" class="form-control w-25 mx-auto" type="number" min="0" max="1000" step="1"/>
+
+          <input type="hidden" name="numeroCompetidor" id="numeroCompetidor" value="0">
+
+
+
         </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Asignar</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="enviarPuntajeCarreraComp()" data-target=".bd-example-modal-sm">Asignar</button>
       </div>
     </div>
   </div>

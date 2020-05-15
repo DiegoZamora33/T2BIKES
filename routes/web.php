@@ -85,6 +85,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 		// Para Mostrar una Carrera de una Competencia
 		Route::match(['get', 'post'], '/home/carreras/perfilCarrera', 'Carreras@perfilCarrera')->name('perfilCarrera');
 
+		// Para Mostrar puntaje de un competidor en una Carrera de una Competencia
+		Route::match(['get', 'post'], '/home/carreras/datosPuntajeCarrera', 'Carreras@datosPuntajeCarrera')->name('datosPuntajeCarrera');
+
+
+
+
 
 //Ruta para los controladores resource
 Route::resources([

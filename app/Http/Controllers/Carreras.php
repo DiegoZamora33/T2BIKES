@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Carrera;
 use App\Competencia;
 use App\TipoCarrera;
+use App\Puntaje_Competidor_Carrera;
 use Illuminate\Support\Facades\DB;
 
 class Carreras extends Controller
@@ -32,6 +33,19 @@ class Carreras extends Controller
         }
         //Enviamos la informacion de las carreras a la vista
         return view('carreras.front_mostrar_carreras', compact('carreras'));
+    }
+
+
+    public function datosPuntajeCarrera(Request $data)
+    {
+        if ($data->ajax()) 
+        {
+            // Buscamos en la base de datos
+            $puntaje = Puntaje_Competidor_Carrera::where('idCarrera', '=', $data['idCarrera'])->where('numeroCompetidor', '=', $data['numeroCompetidor'])->first();
+
+            // Retornamos los datos en un JSON
+           return response()->json(['numeroCompetidor' => $puntaje->numeroCompetidor, 'puntaje' => $puntaje->puntaje, 'status' => $puntaje->idEstatus, 'lugar' => $puntaje->lugarLlegada]);
+        }
     }
 
 

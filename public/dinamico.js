@@ -283,6 +283,40 @@ function dataCarrera(idCarrera)
 
 // <---------------------------------------------------------------------------------------------------------------------->
 
+
+
+// <---------------- FUNCION PARA MOSTRAR LA INFO DE UNA CARRERA COMPETIDOR EN EL MODAL (COMPETENCIAS) ------------------->
+
+function dataCarreraCompetencia(miNumeroCompetidor)
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var idCarrera = $('#idCarrera').val();
+  var numeroCompetidor = miNumeroCompetidor;
+
+  var token = $('#token').val();
+
+  $.ajax({
+      url: url+'/home/carreras/datosPuntajeCarrera',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCarrera: idCarrera, idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+        document.getElementById('puntajeCarrera').value = response['puntaje'];
+        document.getElementById('lugarLlegadaCarrera').value = response['lugar'];
+        document.getElementById('numeroCompetidor').value = response['numeroCompetidor'];
+        statusCarrera = response['status'];
+      }
+
+  });
+}
+
+// <---------------------------------------------------------------------------------------------------------------------->
+
+
+
 // <-------------------------- FUNCIONES PARA MOSTRAR UNA ESTADISTICA ---------------------------------------------------->
 function getStat(miStat)
 {
@@ -520,8 +554,8 @@ function getTour(miCompetencia)
 
 function getTourR()
 {
-  var idCompetencia = $('idCompetencia').val();
-  var token = $('token').val();
+  var idCompetencia = $('#idCompetencia').val();
+  var token = $('#token').val();
 
   $.ajax({
       url: url+'/home/competencias/perfilCompetencia',
@@ -568,11 +602,34 @@ function getUser(miUser)
 }
 // <-------------------------------------------------------------------->
 
-// <-------------------------------- FUNCION PARA MOSTRAR CARRERA DE UNA COMPETENCIA ---------------------------------->
+// <-------------------------------- FUNCIONES PARA MOSTRAR CARRERA DE UNA COMPETENCIA ---------------------------------->
 function getCarrera(miCarrera)
 {
   var idCompetencia = $('#idCompetencia').val();
   var idCarrera = miCarrera.id;
+  var token = $('#token').val();
+
+  $.ajax({
+      url: url+'/home/carreras/perfilCarrera',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia, idCarrera: idCarrera},
+
+      success:function(response)
+      {
+        $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
+      }
+
+    });
+}
+
+function getCarreraR()
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var idCarrera = $('#idCarrera').val();
   var token = $('#token').val();
 
   $.ajax({

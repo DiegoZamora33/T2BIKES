@@ -229,6 +229,46 @@ function enviarPuntajeCarrera()
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
 
 
+
+// <---------------------------------- PARA ENVIAR PUNTAJE DE UNA CARRERA COMPETENCIA -------------------------------------------------->
+
+function enviarPuntajeCarreraComp()
+{
+  var numeroCompetidor = $('#numeroCompetidor').val();
+  var idCarrera = $('#idCarrera').val();
+  var puntaje = $('#puntajeCarrera').val();
+  var lugarLlegada = $('#lugarLlegadaCarrera').val();
+  var idCompetencia = $('#idCompetencia').val();
+  var token = $('#token').val();
+
+   $.ajax({
+      url: url+'/home/competidores/asignarPuntajeCarrera',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCarrera: idCarrera, puntaje: puntaje, 
+        lugarLlegada: lugarLlegada, idEstatus: statusCarrera, idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+        getSuccess(response['mensaje']);
+        
+        $('#modalCarreraCompetidor').modal('hide');
+        setTimeout(
+          function() {
+            getCarreraR();
+           $('#modalCarreraCompetidor').modal('hide');
+          },300
+        );
+      }
+
+  });
+}
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+
 // <--------------------------------------- ASIGNAR ENTRENADOR A UNA COMPETENCIA DE UN COMPETIDOR ----------------------------------------->
 
 function asignarEntrenador()
