@@ -140,7 +140,7 @@ function eliminarUsuario() {
 
 // <----------------------------------------------------------------------------------------->
 
-// <-----------------------------------DELETE ENTRENADOR ----------------------------------------------->
+// <----------------------------------- DELETE ENTRENADOR ----------------------------------------------->
 
 function deleteEntrenador()
 {
@@ -163,4 +163,67 @@ function deleteEntrenador()
   });
 }
 
-// <---------------------------------------------------------------------------------------------------->
+// <----------------------------------------------------------------------------------------------------->
+
+
+// <----------------------------------- FINALIZA COMPETENCIA ----------------------------------------------->
+
+function finalizarCompetencia()
+{
+  var idCompetencia = $('#idCompetencia').val();
+
+
+  alert("Finalizar: "+idCompetencia);
+
+  $('#modalFin').modal('hide');
+      setTimeout(
+        function() {
+          getTourR();
+        $('#modalFin').modal('hide');
+        },300
+   );
+}
+
+// <----------------------------------------------------------------------------------------------------->
+
+
+// <----------------------------------- DELETE COMPETENCIA ----------------------------------------------->
+
+function deleteCompetencia()
+{
+  var idCompetencia = $('#idCompetencia').val();
+
+
+  alert("Delete: "+idCompetencia);
+
+  $('#modalDeleteCompetencia').modal('hide');
+      setTimeout(
+        function() {
+          competencias();
+        $('#modalDeleteCompetencia').modal('hide');
+        },300
+   );
+}
+
+// <----------------------------------------------------------------------------------------------------->
+
+// <-------------------------------------- DELETE CARRERA ----------------------------------------------->
+
+function deleteCarrera()
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var idCarrera = $('#idCarrera').val();
+
+
+  alert("Delete: "+idCompetencia+" : "+idCarrera);
+
+  $('#modalDelCarrera').modal('hide');
+      setTimeout(
+        function() {
+          getTourR();
+        $('#modalDelCarrera').modal('hide');
+        },300
+   );
+}
+
+// <--------------------------------------------------------------------------------------------------->

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<input type="hidden" name="_tokenG" value="{{ csrf_token() }}" id="tokenG">
 <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="">
@@ -108,7 +109,7 @@
                             <li class="nav-item active">
                               <form>
                                 <div class="form-group mt-lg-auto mt-md-3 mt-sm-4 mt-4">
-                                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Buscar">
+                                  <input type="text" class="form-control" onchange="buscar()" id="busqueda" aria-describedby="Buscar" placeholder="Buscar">
                                 </div>
                               </form>
                             </li>

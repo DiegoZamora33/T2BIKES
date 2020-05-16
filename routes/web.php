@@ -89,7 +89,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 		Route::match(['get', 'post'], '/home/carreras/datosPuntajeCarrera', 'Carreras@datosPuntajeCarrera')->name('datosPuntajeCarrera');
 
 
-
+////////////////////////////////// RUTA PARA FUNCIONE DE BUSCAR  ////////////////////////////////////
+		// Para buscar
+		Route::match(['get', 'post'], '/home/busqueda/buscar', 'Busqueda@buscar')->name('buscar');
 
 
 //Ruta para los controladores resource

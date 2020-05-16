@@ -103,3 +103,52 @@ function updateEntrenador()
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <--------------------------------------- UPDATE ENTRENADOR ------------------------------------------------------------------------------------->
+
+function updateCompetencia()
+{
+    var idCompetencia = $('#idCompetencia').val();
+    var nombreCompetencia = $('#nuevaCompetencia').val();
+    var periodo = $('#periodoCompetencia').val();
+
+    alert("Editar: "+idCompetencia+" : "+nombreCompetencia+" : "+periodo);
+
+  $('#modalEditCompetencia').modal('hide');
+      setTimeout(
+        function() {
+          getTourR();
+        $('#modalEditCompetencia').modal('hide');
+        },300
+   );
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <--------------------------------------- UPDATE CARRERA ------------------------------------------------------------------------------------->
+
+function updateCarrera()
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var nombreCarrera = $('#nombreCarrera').val();
+  var tipoCarrera = $('#tipoCarrera').val();
+  var descripcion = $('#descripcionCarrera').val();
+
+
+  //Guardamos
+  alert("Update: "+idCompetencia+" : "+nombreCarrera+" : "+tipoCarrera+" : "+descripcion);
+
+
+
+  $('#modalEditCarrera').modal('hide');
+  setTimeout(
+    function() {
+      getCarreraR();
+     $('#modalEditCarrera').modal('hide');
+    },300
+  );
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->

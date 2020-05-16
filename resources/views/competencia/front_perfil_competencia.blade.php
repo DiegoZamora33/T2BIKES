@@ -29,6 +29,7 @@
 
 
 <a href="reporte.pdf" download="reporte" class="btn btn-warning mt-3">Descargar reporte</a>
+<a type="button" class="btn btn-danger text-white mt-3" data-toggle="modal" data-target="#modalFin">Finalizar competencia</a>
 <br><br>
 <h4>Puntajes Globales de la Competecia</h4>
 <p>Deslice para ver más o menos participantes</p>
@@ -132,9 +133,16 @@
 <br>
 <h4 class="mt-3">Carreras</h4>
 
+<div class="text-center mt-2">
+  <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalNewCarrera">
+    <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
+    <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Nueva carrera</label>
+  </a>
+</div>
+<br>
 
   @foreach($carreras as $miCarrera)
-    <div class="card text-center" style="color:white;">
+    <div class="card text-center mt-5" style="color:white;">
       <div class="card-header bg-dark">
         {{$miCarrera->nombreCarrera}}
       </div>
@@ -149,52 +157,97 @@
 <br>
 
 
-
-<a type="button" class="btn btn-danger" data-toggle="modal" style="color:white;" data-target="#modalFinalizada"">Eliminar competencia</a>
 <br><br><br>
 <ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
   <li id="registrar-carrera" class="p-2">
-    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalFin"">Finalizar competencia</a>
-    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCarrera"">Nueva carrera</a>
+    <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEditCompetencia">Editar Competencia</a>
+    <a type="button" class="btn btn-danger" data-toggle="modal" style="color:white;" data-target="#modalDeleteCompetencia">Eliminar Competencia</a>
   </li>
 </ul>
-<div class="modal fade" id="modalCarrera" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+    <div class="modal fade" id="modalEditCompetencia" tabindex="-1" role="dialog" aria-labelledby="modalEditCompetencia" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditCompetencia">Renombrar competencia</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+           <form class="form-horizontal"  name="formulario" action="" onSubmit="updateCompetencia(); return false">
+              <div class="modal-body">
+
+                @foreach($competencia as $miCompetencia)
+                  <label for="nuevaCompetencia">Nombre de la competencia</label>
+                  <input required type="text" class="form-control" id="nuevaCompetencia" name="nuevaCompetencia" value="{{$miCompetencia->nombreCompetencia}}">
+
+                  <div class="form-group mt-4">
+                    <label for="periodoCompetencia">Periodo</label>
+                    <input required type="text" class="form-control" id="periodoCompetencia" name="periodoCompetencia" value="{{$miCompetencia->periodo}}">
+                  </div>
+                @endforeach
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Guardar</button>
+              </div>
+            </form>
+
+        </div>
+      </div>
+    </div>
+
+
+
+<div class="modal fade" id="modalNewCarrera" tabindex="-1" role="dialog" aria-labelledby="modalNewCarrera" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Crear carrera</h5>
+        <h5 class="modal-title" id="modalNewCarrera">Crear carrera</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <label for="inputAddress">Nombre de la carrera</label>
-        <input type="text" class="form-control" id="" placeholder="Ej. Carrera 1">
-        <div class="form-group mt-2">
-          <label for="inputCity">Tipo de Carrera</label>
-          <select class="form-control">
-              <option>Sin Asignar</option>
-              <option>Montaña</option>
-              <option>Velocidad</option>
-              <option>Terraceria</option>
-          </select>
-        </div>
-        <label class="mt-2" for="inputAddress">Descripción de la carrera</label>
-        <textarea type="text" rows="3" class="form-control" id="" placeholder="Ej. 10km"> </textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Guardar</button>
-      </div>
+
+      <form class="form-horizontal"  name="formulario" action="" onSubmit="enviarCarrera(); return false">
+          <div class="modal-body">
+
+              <label for="nombreCarrera">Nombre de la carrera</label>
+              <input type="text" class="form-control" id="nombreCarrera" name="nombreCarrera" placeholder="Ej. Carrera 1" autofocus required>
+              <div class="form-group mt-2">
+                <label for="tipoCarrera">Tipo de Carrera</label>
+                <select id="tipoCarrera" name="tipoCarrera" class="form-control">
+                    <option value="0">Sin Asignar</option>
+
+                    @foreach($tiposCarreras as $miTipoCarrera)
+                        <option value="{{$miTipoCarrera->idTipoCarrera}}" >{{$miTipoCarrera->tipoCarrera}}</option>
+                    @endforeach
+
+                </select>
+              </div>
+              <label class="mt-2" for="descripcionCarrera">Descripción de la carrera</label>
+              <textarea type="text" rows="3" class="form-control" id="descripcionCarrera" name="descripcionCarrera"></textarea>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Guardar</button>
+          </div>
+      </form>
+
+
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="modalFin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalFin" tabindex="-1" role="dialog" aria-labelledby="modalFin" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Finalizar competencia</h5>
+        <h5 class="modal-title" id="modalFin">Finalizar competencia</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -204,17 +257,17 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-sm">Finalizar</button>
+        <button type="button" class="btn btn-danger" onclick="finalizarCompetencia()" data-toggle="modal" data-target=".bd-example-modal-sm">Finalizar</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="modalFinalizada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDeleteCompetencia" tabindex="-1" role="dialog" aria-labelledby="modalDeleteCompetencia" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eliminar competencia</h5>
+        <h5 class="modal-title" id="modalDeleteCompetencia">Eliminar competencia</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -224,7 +277,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-sm">Eliminar</button>
+        <button type="button" class="btn btn-danger" onclick="deleteCompetencia()" data-toggle="modal" data-target=".bd-example-modal-sm">Eliminar</button>
       </div>
     </div>
   </div>

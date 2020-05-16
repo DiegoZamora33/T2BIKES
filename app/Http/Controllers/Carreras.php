@@ -56,7 +56,7 @@ class Carreras extends Controller
             // Bucamos todos los datos necesarios
             $datos['competencia'] = Competencia::where('idCompetencia', '=', $data['idCompetencia'])->first();
 
-            $datos['carrera'] = DB::select(" SELECT carreras.idCarrera, carreras.nombreCarrera, carreras.descripcion, carreras.created_at, tipo_carreras.tipoCarrera
+            $datos['carrera'] = DB::select(" SELECT carreras.idCarrera, carreras.nombreCarrera, carreras.descripcion, carreras.created_at, carreras.idTipoCarrera, tipo_carreras.tipoCarrera
                 FROM carreras  INNER JOIN tipo_carreras
                 ON  carreras.idTipoCarrera = tipo_carreras.idTipoCarrera
                 WHERE carreras.idCarrera = ".$data['idCarrera']." 
@@ -71,6 +71,8 @@ class Carreras extends Controller
                     AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
                 WHERE carreras.idCarrera = ".$data['idCarrera']."
                     AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC ");
+
+            $datos['tiposCarreras'] = TipoCarrera::all();
 
 
             return view('carreras.front_perfil_carrera', $datos);

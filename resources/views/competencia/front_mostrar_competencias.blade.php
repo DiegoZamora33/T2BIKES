@@ -1,9 +1,10 @@
-
+<h3>Competencias Registradas</h3>
+<br>
     
     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
 
     @foreach($competencias as $miCompetencia)
-      <div class="card text-center mt-2 w-75 mx-auto" style="color:white;">
+      <div class="card text-center mt-2 " style="color:white;">
         <div class="card-header bg-dark">
           {{ $miCompetencia['nombreCompetencia'] }}
         </div>
@@ -42,14 +43,24 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <label for="inputAddress">Nombre de la competencia</label>
-            <input type="text" class="form-control" id="" placeholder="">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Guardar</button>
-          </div>
+
+          <form class="form-horizontal"  name="formulario" action="" onSubmit="enviarCompetencia(); return false">
+              <div class="modal-body">
+
+                  <label for="nuevaCompetencia">Nombre de la competencia</label>
+                  <input required autofocus type="text" class="form-control" id="nuevaCompetencia" name="nuevaCompetencia" placeholder="">
+
+                  <div class="form-group mt-4">
+                    <label for="periodoCompetencia">Periodo</label>
+                    <input required type="text" class="form-control" id="periodoCompetencia" name="periodoCompetencia" placeholder="Ej: Enero - Junio 2020">
+                  </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Guardar</button>
+              </div>
+           </form>
         </div>
       </div>
     </div>

@@ -1076,7 +1076,34 @@ function asignarCompetencia()
 
     });
 }
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
 
+
+
+
+// <------------------------------------------------ FUNCION DE BUSQUEDA --------------------------------------------------------->
+
+function buscar()
+{
+  var busqueda = $('#busqueda').val();
+  var token = $('#tokenG').val();
+
+  $.ajax({
+      url: url+'/home/busqueda/buscar' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      data:{busqueda: busqueda},
+      dataType: 'html',
+      success:function(response)
+      {
+        $('#mostrador').html(response);
+                effectFadeOut();
+                effectFadeIn();
+      }
+    
+  });
+}
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
+
 

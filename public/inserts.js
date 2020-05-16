@@ -327,3 +327,53 @@ function enviarEntrenador()
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <--------------------------------------- ENVIAR NUEVA COMPETENCIA ------------------------------------------------------------------------------------->
+
+function enviarCompetencia()
+{
+  var nuevaCompetencia = $('#nuevaCompetencia').val();
+  var periodoCompetencia = $('#periodoCompetencia').val();
+
+  //Guardamos
+  alert("Guarda: "+nuevaCompetencia+" : "+periodoCompetencia);
+
+
+
+  $('#modalCompet').modal('hide');
+  setTimeout(
+    function() {
+      competencias();
+     $('#modalCompet').modal('hide');
+    },300
+  );
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+// <--------------------------------------- ENVIAR NUEVA CARRERA ------------------------------------------------------------------------------------->
+
+function enviarCarrera()
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var nombreCarrera = $('#nombreCarrera').val();
+  var tipoCarrera = $('#tipoCarrera').val();
+  var descripcion = $('#descripcionCarrera').val();
+
+
+  //Guardamos
+  alert("Guarda: "+idCompetencia+" : "+nombreCarrera+" : "+tipoCarrera+" : "+descripcion);
+
+
+
+  $('#modalNewCarrera').modal('hide');
+  setTimeout(
+    function() {
+      getTourR();
+     $('#modalNewCarrera').modal('hide');
+    },300
+  );
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Competencia;
 use App\Estatus;
+use App\TipoCarrera;
 use Illuminate\Support\Facades\DB;
 include('miDB.php');
 
@@ -65,6 +66,8 @@ class Competencias extends Controller
                         AND tipo_carreras.idTipoCarrera = carreras.idTipoCarrera
                         AND competencias.idEstatus = estatuses.idEstatus
                     WHERE carreras.idCompetencia = ".$data['idCompetencia']." ORDER BY carreras.created_at ASC");
+
+            $datos['tiposCarreras'] = TipoCarrera::all();
 
             return view('competencia.front_perfil_competencia', $datos);
         }

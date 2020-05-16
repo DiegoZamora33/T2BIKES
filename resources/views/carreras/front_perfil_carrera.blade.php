@@ -111,8 +111,61 @@
 </div>
 </div><br><br>
 
-<a type="button" class="btn btn-danger" data-toggle="modal" style="color:white;" data-target="#modalCar"">Eliminar carrera</a>
 
+
+<br><br><br>
+<ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
+  <li id="registrar-carrera" class="p-2">
+    <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEditCarrera">Editar Carrera</a>
+    <a type="button" class="btn btn-danger" data-toggle="modal" style="color:white;" data-target="#modalDelCarrera">Eliminar Carrera</a>
+  </li>
+</ul>
+
+
+
+<div class="modal fade" id="modalEditCarrera" tabindex="-1" role="dialog" aria-labelledby="modalEditCarrera" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditCarrera">Crear carrera</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form class="form-horizontal"  name="formulario" action="" onSubmit="updateCarrera(); return false">
+          <div class="modal-body">
+
+            @foreach($carrera as $miCarrera)
+              <label for="nombreCarrera">Nombre de la carrera</label>
+              <input required type="text" class="form-control" id="nombreCarrera" name="nombreCarrera" value="{{$miCarrera->nombreCarrera}}">
+              <div class="form-group mt-2">
+                <label for="tipoCarrera">Tipo de Carrera</label>
+                <select id="tipoCarrera" name="tipoCarrera" class="form-control">
+                    <option value="{{$miCarrera->idTipoCarrera}}">{{$miCarrera->tipoCarrera}}</option>
+
+                    @foreach($tiposCarreras as $miTipoCarrera)
+                      @if($miTipoCarrera->idTipoCarrera != $miCarrera->idTipoCarrera)
+                        <option value="{{$miTipoCarrera->idTipoCarrera}}" >{{$miTipoCarrera->tipoCarrera}}</option>
+                      @endif
+                    @endforeach
+
+                </select>
+              </div>
+              <label class="mt-2" for="descripcionCarrera">Descripción de la carrera</label>
+              <textarea type="text" rows="3" class="form-control" id="descripcionCarrera" name="descripcionCarrera">{{$miCarrera->descripcion}}</textarea>
+            @endforeach
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Guardar</button>
+          </div>
+      </form>
+
+    </div>
+  </div>
+</div>
 
 
 
@@ -156,11 +209,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalCar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDelCarrera" tabindex="-1" role="dialog" aria-labelledby="modalDelCarrera" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eliminar carrera</h5>
+        <h5 class="modal-title" id="modalDelCarrera">Eliminar carrera</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -170,7 +223,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-sm">Eliminar</button>
+        <button type="button" class="btn btn-danger" onclick="deleteCarrera()" data-toggle="modal" data-target=".bd-example-modal-sm">Eliminar</button>
       </div>
     </div>
   </div>
