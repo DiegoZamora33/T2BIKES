@@ -18,7 +18,7 @@
         {{ csrf_field() }}
 
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            <label for="email" class="col-md-4 control-label">Usuario/Correo Electronico</label>
+            <label for="email" class="col-md-4 control-label">Correo Electrónico</label>
 
                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
@@ -46,9 +46,9 @@
         </div>
 
 
-        <small id="emailHelp" class="form-text text-muted">Si no recuerdas la contraseña, comunicate con algún administrador..</small>
+        <small id="emailHelp" class="form-text text-muted">Si no recuerdas la contraseña, comunicate con algún administrador.</small>
         <br>
-        <button type="submit" class="btn btn-primary btn-lg">INICIAR SESIÓN</button>
+        <button type="submit" class="btn btn-primary">INICIAR SESIÓN</button>
       </form>
     </div>
   </div>

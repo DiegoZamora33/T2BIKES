@@ -4,8 +4,8 @@
 <table>
   <thead>
     <tr>
-      <th scope="col">Usuario</th>
       <th scope="col">Nombre</th>
+      <th scope="col">Correo</th>
       <th scope="col">Tipo</th>
       <th scope="col">Fecha de Registro</th>
     </tr>

@@ -22,6 +22,7 @@ $(document).ready(function ()
     // Funcion para el menu
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
+	$('#lateral').toggleClass('active');
     });
 
     // Funcion para Mostar Lista de Competidores
@@ -29,7 +30,7 @@ $(document).ready(function ()
     { 
 
       miOff();
-      this.className = "active";
+      this.className = "active active mt-2 mb-1";
         $.ajax({
               type: "get",
               url: url+"/home/competidores",
@@ -47,7 +48,7 @@ $(document).ready(function ()
     $("#entrenadores").click(function()
     {
       miOff();
-      this.className = "active";
+      this.className = "active active mt-2 mb-1";
       $.ajax({
               type: "get",
               url: url+"/home/entrenadores",
@@ -65,7 +66,7 @@ $(document).ready(function ()
     $("#competencias").click(function()
     {
       miOff();
-      this.className = "active";
+      this.className = "active active mt-2 mb-1";
       $.ajax({
               type: "get",
               url: url+"/home/competencias",
@@ -84,7 +85,7 @@ $(document).ready(function ()
     $('#sistema').click(function () { 
 
         miOff();
-        this.className = "active";
+        this.className = "active active mt-2 mb-1";
 
         
         $.ajax({
@@ -105,7 +106,7 @@ $(document).ready(function ()
     $("#registrar-entrenador").click(function()
     {
       miOff();
-      this.className = "active";
+      this.className = "active active mt-2 mb-1";
         $.ajax({
           url: "forms/registrar-entrenador.html" ,
           success: function(data){
@@ -416,7 +417,7 @@ function competencias()
 
 function usuarios(){
 
-        this.className = "active";
+        this.className = "active active mt-2 mb-1";
         $.ajax({
             type: "get",
             url: url+"/home/usuarios",
@@ -653,7 +654,7 @@ function getCarreraR()
 
 // <------------------ Funcion para mostrar FORM de Nuevo Competidor ------------------->
 function newComp(){
-  this.className = 'active';
+  this.className = 'active active mt-2 mb-1';
   
  $.ajax({
         type: "get",

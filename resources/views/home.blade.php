@@ -4,92 +4,93 @@
 <input type="hidden" name="_tokenG" value="{{ csrf_token() }}" id="tokenG">
 <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar" class="">
-            <div class="sidebar-header text-center">
-              <img src="{{ asset('t2bikes/img/logo.png') }}" width="100" alt="logo_principal">
-            </div>
+        <div id="lateral">
+            <nav id="sidebar">
+                <div class="sidebar-header text-center">
+                <img src="{{ asset('t2bikes/img/logo.png') }}" width="100" alt="logo_principal">
+                </div>
 
-            <ul class="list-unstyled components">
-                <li class="active mt-2" id="home">
-                    <a href="home">
-                        <i class="fas fa-home"></i>
-                        <span class="CTAs">Home</span>
-                    </a>
-                </li>
+                <ul class="list-unstyled components">
+                    <li class="active mt-2" id="home">
+                        <a href="home">
+                            <i class="fas fa-home"></i>
+                            <span class="CTAs">Inicio</span>
+                        </a>
+                    </li>
 
-                <li class="mt-1 text-center" id="competidores">
-                    <a href="#">
-                        <i class="demo-icon icon-bicycle"></i>
-                        <span class="CTAs">Competidores</span>
-                    </a>
-                </li>
+                    <li class="mt-1 text-center" id="competidores">
+                        <a href="#">
+                            <i class="demo-icon icon-bicycle"></i>
+                            <span class="CTAs">Competidores</span>
+                        </a>
+                    </li>
 
-                <li class="mt-1" id="entrenadores">
-                    <a href="#">
-                        <i class="fas fa-stopwatch"></i>
-                        <span class="CTAs">Entrenadores</span>
-                    </a>
+                    <li class="mt-1" id="entrenadores">
+                        <a href="#">
+                            <i class="fas fa-stopwatch"></i>
+                            <span class="CTAs">Entrenadores</span>
+                        </a>
 
-                </li>
+                    </li>
 
-                <li class="mt-1" id="competencias">
-                    <a href="#pageCompetencias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="demo-icon icon-calendar-check-o"></i>
-                        <span class="CTAs">Competencias</span>
-                    </a>
-                    <ul class="collapse list-unstyled" id="pageCompetencias">
+                    <li class="mt-1" id="competencias">
+                        <a href="#pageCompetencias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="demo-icon icon-calendar-check-o"></i>
+                            <span class="CTAs">Competencias</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="pageCompetencias">
 
-                    @foreach($competencias as $miCompetList)
-                        <li>
-                            <a id="{{ $miCompetList->idCompetencia }}" href="#">{{ $miCompetList->nombreCompetencia }}</a>
-                        </li>
-                    @endforeach
+                        @foreach($competencias as $miCompetList)
+                            <li>
+                                <a id="{{ $miCompetList->idCompetencia }}" href="#">{{ $miCompetList->nombreCompetencia }}</a>
+                            </li>
+                        @endforeach
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
 
-                <li class="mt-1" id="sistema">
-                     <a href="#">
-                        <i class="fas fa-users"></i>
-                        <span class="CTAs">Control de Usuarios</span>
-                    </a>
-                </li>
-            </ul>
+                    <li class="mt-1" id="sistema">
+                        <a href="#">
+                            <i class="fas fa-users"></i>
+                            <span class="CTAs">Control de Usuarios</span>
+                        </a>
+                    </li>
+                </ul>
 
-            <div class="d-lg-block d-md-block d-sm-none">
-              <ul class="list-unstyled CTAs ">
-                  <li>
-                    <a class="btn btn-danger pl-5" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                 document.getElementById('logout-form-1').submit();">
-                        <i class="fas fa-sign-out-alt iconoSalir"></i>
-                         Cerrar sesión
-                    </a>
+                <div class="d-lg-block d-md-block d-sm-none">
+                <ul class="list-unstyled CTAs ">
+                    <li>
+                        <a class="btn btn-danger pl-5" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                    document.getElementById('logout-form-1').submit();">
+                            <i class="fas fa-sign-out-alt iconoSalir"></i>
+                            Cerrar sesión
+                        </a>
 
-                    <form id="logout-form-1" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-                </li>
-              </ul>
-            </div>
+                        <form id="logout-form-1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                </ul>
+                </div>
 
 
-            <ul class="d-lg-none d-md-none d-sm-block">
-                <li>
-                    <a class="btn-sm btn-danger pl-1" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt iconoSalir"></i>
-                        <label class="cerrarSesionR">Cerrar sesión</label>
-                    </a>
+                <ul class="d-lg-none d-md-none d-sm-block">
+                    <li>
+                        <a class="btn-sm btn-danger pl-1" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt iconoSalir"></i>
+                            <label class="cerrarSesionR">Cerrar sesión</label>
+                        </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-                </li>
-            </ul>
-        </nav>
-
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
         <!-- Page Content  -->
         <div id="content">
 
