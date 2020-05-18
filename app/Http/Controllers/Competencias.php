@@ -19,12 +19,11 @@ class Competencias extends Controller
         
        //Buscamos datos de las competencias
 
-        $query = " SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, 
-                    COUNT(*) AS carreras FROM competencias 
-                    INNER JOIN carreras INNER JOIN estatuses
-                    ON competencias.idCompetencia = carreras.idCompetencia 
-                        AND competencias.idEstatus = estatuses.idEstatus
-                    GROUP BY nombreCompetencia ORDER BY competencias.created_at DESC";
+        $query = " SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus
+                   FROM competencias 
+                    INNER JOIN estatuses
+                    ON  competencias.idEstatus = estatuses.idEstatus
+                     ORDER BY competencias.created_at DESC";
 
      
         $datos['competencias'] = bd_consulta($query);
