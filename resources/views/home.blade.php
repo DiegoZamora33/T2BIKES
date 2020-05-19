@@ -49,12 +49,18 @@
                         </ul>
                     </li>
 
-                    <li class="mt-1" id="sistema">
-                        <a href="#">
-                            <i class="fas fa-users"></i>
-                            <span class="CTAs">Control de Usuarios</span>
-                        </a>
-                    </li>
+
+
+                    @if(Auth::user()->idtipoUsuario == 1)
+                        <li class="mt-1" id="sistema">
+                            <a href="#">
+                                <i class="fas fa-users"></i>
+                                <span class="CTAs">Control de Usuarios</span>
+                            </a>
+                        </li>
+                    @endif
+
+
                 </ul>
 
                 <div class="d-lg-block d-md-block d-sm-none">
