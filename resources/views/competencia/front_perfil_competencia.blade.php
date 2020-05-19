@@ -188,11 +188,11 @@
 
                 @foreach($competencia as $miCompetencia)
                   <label for="nuevaCompetencia">Nombre de la competencia</label>
-                  <input required type="text" class="form-control" id="nuevaCompetencia" name="nuevaCompetencia" value="{{$miCompetencia->nombreCompetencia}}">
+                  <input required type="text" class="form-control" maxlength="50" id="nuevaCompetencia" name="nuevaCompetencia" value="{{$miCompetencia->nombreCompetencia}}">
 
                   <div class="form-group mt-4">
                     <label for="periodoCompetencia">Periodo</label>
-                    <input required type="text" class="form-control" id="periodoCompetencia" name="periodoCompetencia" value="{{$miCompetencia->periodo}}">
+                    <input required type="text" class="form-control" maxlength="50" id="periodoCompetencia" name="periodoCompetencia" value="{{$miCompetencia->periodo}}">
                   </div>
                 @endforeach
 

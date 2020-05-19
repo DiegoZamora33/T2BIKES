@@ -109,19 +109,35 @@ function updateEntrenador()
 
 function updateCompetencia()
 {
-    var idCompetencia = $('#idCompetencia').val();
-    var nombreCompetencia = $('#nuevaCompetencia').val();
-    var periodo = $('#periodoCompetencia').val();
-
-    alert("Editar: "+idCompetencia+" : "+nombreCompetencia+" : "+periodo);
-
-  $('#modalEditCompetencia').modal('hide');
-      setTimeout(
-        function() {
-          getTourR();
-        $('#modalEditCompetencia').modal('hide');
-        },300
-   );
+    $.ajax({
+        type: "PUT",
+        headers: {'X-CSRF-TOKEN':$('#token').val()},
+        url: url+'/home/competencias/'+$('#idCompetencia').val(),
+        data: {
+            nombreCompetencia:  $('#nuevaCompetencia').val(),
+            periodo: $('#periodoCompetencia').val()
+        },
+        dataType: "json",
+        success: function (response) {
+            switch (response['codigo']) {
+                case 'actualizado':
+                    getSuccess(response['mensaje']);
+                    $('#modalEditCompetencia').modal('hide');
+                    setTimeout(
+                        function() {
+                        getTourR();
+                        $('#modalEditCompetencia').modal('hide');
+                        },300
+                    );
+                break;
+                    
+                case 'repetido':
+                    getWarning(response['mensaje']);
+                break;
+            }
+        }
+    });
+  
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

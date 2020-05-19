@@ -117,11 +117,15 @@ class Competencias extends Controller
 
     public function update(Request $request, $id)
     {
-          $nuevosDatos=request()->except(['_token','_method','estado']);
-        //Actualizamos los campos de la bd con los nuevos datos
-        Competencia::where('idCompetencia', $id)->update($nuevosDatos);
-        //Nos redireccionamos al index
-        return redirect()->route('competencias.index');
+        //Verificamos que no se repita el nombre de la competencia o si se dejo el mismo
+        if (Competencia::where('nombreCompetencia',$request->nombreCompetencia)->first() == null || Competencia::where('idCompetencia', $id)->first()->nombreCompetencia == $request->nombreCompetencia) {
+            //Actualizamos los campos de la bd con los nuevos datos
+            Competencia::where('idCompetencia', $id)->update(['nombreCompetencia'=>$request->nombreCompetencia, 'periodo'=>$request->periodo]);
+            //Mensaje de Confirmacion
+            return response()->json(['codigo' => 'actualizado', 'mensaje' => 'La competencia '.$request->nombreCompetencia.' a sido editada satisfactoriamente']);
+        }
+        //Mensaje de advertencia
+        return response()->json(['codigo' => 'repetido', 'mensaje' => 'El nombre '.$request->nombreCompetencia.' ya esta ocupado por otra competencia']);
     }
 
 
