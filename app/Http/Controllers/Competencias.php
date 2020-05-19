@@ -36,7 +36,7 @@ class Competencias extends Controller
         if($data->ajax())
         {
             // Buscamos los datos de mi Competencia
-            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, competencias.created_at, estatuses.estatus 
+            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, competencias.created_at, competencias.idEstatus ,estatuses.estatus 
                     FROM competencias INNER JOIN estatuses ON competencias.idEstatus = estatuses.idEstatus
                     WHERE competencias.idCompetencia = ".$data['idCompetencia']." ");
 
@@ -130,5 +130,13 @@ class Competencias extends Controller
         //buscammos coincidencia de una competencia con el id y se elimina
         Competencia::where('idCompetencia', $id)->delete();
         return redirect()->route('competencias.index');
+    }
+
+    //Funcion para finalzar una competencia
+    public function finalizarCompetencia(Request $request)
+    {
+        $competencia = Competencia::where('idCompetencia',$request->idCompetencia)->first();
+        Competencia::where('idCompetencia', $request->idCompetencia)->update(['idEstatus'=>'1']);
+        return response()->json(['codigo' => 'finalizada', 'mensaje' => 'La competencia '.$competencia->nombreCompetencia.' a sido finalizada exitosamente']);
     }
 }

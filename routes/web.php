@@ -93,7 +93,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 		// Para buscar
 		Route::match(['get', 'post'], '/home/busqueda/buscar', 'Busqueda@buscar')->name('buscar');
 
-
+////////////////////////////////// RUTA PARA Finalizar una competencia  ////////////////////////////////////
+	Route::post('/home/competencias/finalizarCompetencia' , 'Competencias@finalizarCompetencia')->name('finalizarCompetencia');
+	
 //Ruta para los controladores resource
 Route::resources([
     '/home/competidores'=>'Competidores', //Controlador de Competidores
