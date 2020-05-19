@@ -36,7 +36,7 @@ class Competencias extends Controller
         if($data->ajax())
         {
             // Buscamos los datos de mi Competencia
-            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, competencias.created_at, estatuses.estatus 
+            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, competencias.created_at, competencias.idEstatus ,estatuses.estatus 
                     FROM competencias INNER JOIN estatuses ON competencias.idEstatus = estatuses.idEstatus
                     WHERE competencias.idCompetencia = ".$data['idCompetencia']." ");
 
@@ -117,11 +117,15 @@ class Competencias extends Controller
 
     public function update(Request $request, $id)
     {
-          $nuevosDatos=request()->except(['_token','_method','estado']);
-        //Actualizamos los campos de la bd con los nuevos datos
-        Competencia::where('idCompetencia', $id)->update($nuevosDatos);
-        //Nos redireccionamos al index
-        return redirect()->route('competencias.index');
+        //Verificamos que no se repita el nombre de la competencia o si se dejo el mismo
+        if (Competencia::where('nombreCompetencia',$request->nombreCompetencia)->first() == null || Competencia::where('idCompetencia', $id)->first()->nombreCompetencia == $request->nombreCompetencia) {
+            //Actualizamos los campos de la bd con los nuevos datos
+            Competencia::where('idCompetencia', $id)->update(['nombreCompetencia'=>$request->nombreCompetencia, 'periodo'=>$request->periodo]);
+            //Mensaje de Confirmacion
+            return response()->json(['codigo' => 'actualizado', 'mensaje' => 'La competencia '.$request->nombreCompetencia.' a sido editada satisfactoriamente']);
+        }
+        //Mensaje de advertencia
+        return response()->json(['codigo' => 'repetido', 'mensaje' => 'El nombre '.$request->nombreCompetencia.' ya esta ocupado por otra competencia']);
     }
 
 
@@ -130,5 +134,13 @@ class Competencias extends Controller
         //buscammos coincidencia de una competencia con el id y se elimina
         Competencia::where('idCompetencia', $id)->delete();
         return redirect()->route('competencias.index');
+    }
+
+    //Funcion para finalzar una competencia
+    public function finalizarCompetencia(Request $request)
+    {
+        $competencia = Competencia::where('idCompetencia',$request->idCompetencia)->first();
+        Competencia::where('idCompetencia', $request->idCompetencia)->update(['idEstatus'=>'1']);
+        return response()->json(['codigo' => 'finalizada', 'mensaje' => 'La competencia '.$competencia->nombreCompetencia.' a sido finalizada exitosamente']);
     }
 }

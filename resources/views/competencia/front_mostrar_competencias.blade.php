@@ -20,7 +20,7 @@
           <h5 class="card-title"> Participantes: {{ $miQuery->inscritos }} </h5>
          @endforeach
           <h6 class="card-text text-muted">Periodo: {{ $miCompetencia['periodo'] }}</h6>
-          <h6 class="card-text text-muted">Status: {{ $miCompetencia['estatus'] }}</h6>
+          <h6 class="card-text text-muted">Estatus: {{ $miCompetencia['estatus'] }}</h6>
           <a id="{{ $miCompetencia['idCompetencia'] }}" onclick="getTour(this);" class="btn btn-primary text-white">Ver más</a>
         </div>
       </div>

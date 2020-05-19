@@ -170,18 +170,23 @@ function deleteEntrenador()
 
 function finalizarCompetencia()
 {
-  var idCompetencia = $('#idCompetencia').val();
-
-
-  alert("Finalizar: "+idCompetencia);
-
-  $('#modalFin').modal('hide');
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/competencias/finalizarCompetencia',
+    data: {idCompetencia : $('#idCompetencia').val()},
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      $('#modalFin').modal('hide');
       setTimeout(
         function() {
           getTourR();
         $('#modalFin').modal('hide');
         },300
-   );
+      ); 
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------->

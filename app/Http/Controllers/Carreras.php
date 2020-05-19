@@ -92,10 +92,14 @@ class Carreras extends Controller
 
     public function store(Request $request)
     {
-        //Creamos un nuevo registro en la base de datos
-        Carrera::create($request->all());
-        //Nos redireccionamos al index
-        return redirect()->route('carreras.index');
+        //Verificamos que haya elegido un tipo
+        if ($request->idTipoCarrera != 0) {
+            //Creamos un nuevo registro en la base de datos
+            Carrera::create($request->all());
+            return response()->json(['codigo' => 'Registrado', 'mensaje' => 'La carrera '.$request->nombreCarrera.' a sido registrada con exito']);
+        }
+        //Mensaje de advertencia
+        return response()->json(['codigo' => 'SinTipo', 'mensaje' => 'Eliga un tipo de carrera']);
     }
 
 

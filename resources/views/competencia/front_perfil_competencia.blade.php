@@ -13,7 +13,7 @@
   <h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">{{$miCompetencia->nombreCompetencia}}</h3>
 </div>
 
-<h6>Status: {{$miCompetencia->estatus}}</h6>
+<h6>Estatus: {{$miCompetencia->estatus}}</h6>
 <h6>Periodo: {{$miCompetencia->periodo}}</h6>
 
 <h6>Fecha de Registro: {{ substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),0,4) }}</h6>
@@ -29,7 +29,10 @@
 
 
 <a href="reporte.pdf" download="reporte" class="btn btn-warning mt-3">Descargar reporte</a>
-<a type="button" class="btn btn-danger text-white mt-3" data-toggle="modal" data-target="#modalFin">Finalizar competencia</a>
+@if ($miCompetencia->idEstatus == 2)
+  <a type="button" class="btn btn-danger text-white mt-3" data-toggle="modal" data-target="#modalFin">Finalizar competencia</a>
+@endif
+
 <br><br>
 <h4>Puntajes Globales de la Competecia</h4>
 <p>Deslice para ver más o menos participantes</p>
@@ -133,13 +136,15 @@
 <br>
 <h4 class="mt-3">Carreras</h4>
 
-<div class="text-center mt-2">
-  <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalNewCarrera">
-    <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
-    <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Nueva carrera</label>
-  </a>
-</div>
-<br>
+@if ($miCompetencia->idEstatus == 2)
+  <div class="text-center mt-2">
+    <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalNewCarrera">
+      <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
+      <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Nueva carrera</label>
+    </a>
+  </div>
+  <br>
+@endif
 
   @foreach($carreras as $miCarrera)
     <div class="card text-center mt-5" style="color:white;">
@@ -160,7 +165,9 @@
 <br><br><br>
 <ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
   <li id="registrar-carrera" class="p-2">
-    <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEditCompetencia">Editar Competencia</a>
+    @if ($miCompetencia->idEstatus == 2)
+      <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEditCompetencia">Editar Competencia</a>
+    @endif
     <a type="button" class="btn btn-danger" data-toggle="modal" style="color:white;" data-target="#modalDeleteCompetencia">Eliminar Competencia</a>
   </li>
 </ul>
@@ -181,11 +188,11 @@
 
                 @foreach($competencia as $miCompetencia)
                   <label for="nuevaCompetencia">Nombre de la competencia</label>
-                  <input required type="text" class="form-control" id="nuevaCompetencia" name="nuevaCompetencia" value="{{$miCompetencia->nombreCompetencia}}">
+                  <input required type="text" class="form-control" maxlength="50" id="nuevaCompetencia" name="nuevaCompetencia" value="{{$miCompetencia->nombreCompetencia}}">
 
                   <div class="form-group mt-4">
                     <label for="periodoCompetencia">Periodo</label>
-                    <input required type="text" class="form-control" id="periodoCompetencia" name="periodoCompetencia" value="{{$miCompetencia->periodo}}">
+                    <input required type="text" class="form-control" maxlength="50" id="periodoCompetencia" name="periodoCompetencia" value="{{$miCompetencia->periodo}}">
                   </div>
                 @endforeach
 
@@ -216,7 +223,7 @@
           <div class="modal-body">
 
               <label for="nombreCarrera">Nombre de la carrera</label>
-              <input type="text" class="form-control" id="nombreCarrera" name="nombreCarrera" placeholder="Ej. Carrera 1" autofocus required>
+              <input type="text" class="form-control" id="nombreCarrera" name="nombreCarrera"  maxlength="50" placeholder="Ej. Carrera 1" autofocus required>
               <div class="form-group mt-2">
                 <label for="tipoCarrera">Tipo de Carrera</label>
 
@@ -277,7 +284,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>El estátus cambiará a finalizado y ya no se podrán modificar los datos. Esta acción no se puede deshacer.</p>
+        <p>El estátus cambiará a finalizado, ya no se podrán modificar los datos ni agregar nuevas carreras. Esta acción no se puede deshacer.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
