@@ -533,7 +533,7 @@ function getEntreR()
 function getTour(miCompetencia)
 {
   var idCompetencia = miCompetencia.id;
-  var token = $('#token').val();
+  var token = $('#tokenG').val();
 
   $.ajax({
       url: url+'/home/competencias/perfilCompetencia',

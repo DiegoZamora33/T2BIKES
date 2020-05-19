@@ -33,16 +33,16 @@
 
                     </li>
 
-                    <li class="mt-1" id="competencias">
+                    <li class="mt-1">
                         <a href="#pageCompetencias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="demo-icon icon-calendar-check-o"></i>
-                            <span class="CTAs">Competencias</span>
+                            <span id="competencias" class="CTAs">Competencias</span>
                         </a>
                         <ul class="collapse list-unstyled" id="pageCompetencias">
 
                         @foreach($competencias as $miCompetList)
                             <li>
-                                <a id="{{ $miCompetList->idCompetencia }}" href="#">{{ $miCompetList->nombreCompetencia }}</a>
+                                <a style="cursor: pointer;" id="{{ $miCompetList->idCompetencia }}" onclick="getTour(this);">{{ $miCompetList->nombreCompetencia }}</a>
                             </li>
                         @endforeach
 
