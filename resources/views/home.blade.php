@@ -34,9 +34,9 @@
                     </li>
 
                     <li class="mt-1" id="portaCompetencias">
-                        <a href="#pageCompetencias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <a id="competencias" href="#pageCompetencias" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="demo-icon icon-calendar-check-o"></i>
-                            <span id="competencias" class="CTAs">Competencias</span>
+                            <span class="CTAs">Competencias</span>
                         </a>
                         <ul class="collapse list-unstyled" id="pageCompetencias">
 

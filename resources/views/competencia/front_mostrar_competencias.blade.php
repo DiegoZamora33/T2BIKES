@@ -1,4 +1,4 @@
-<h3>Competencias Registradas</h3>
+<h3>Competencias Registradas</h2> </h3>
 <br>
     
     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
