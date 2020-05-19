@@ -223,7 +223,7 @@
           <div class="modal-body">
 
               <label for="nombreCarrera">Nombre de la carrera</label>
-              <input type="text" class="form-control" id="nombreCarrera" name="nombreCarrera" placeholder="Ej. Carrera 1" autofocus required>
+              <input type="text" class="form-control" id="nombreCarrera" name="nombreCarrera"  maxlength="50" placeholder="Ej. Carrera 1" autofocus required>
               <div class="form-group mt-2">
                 <label for="tipoCarrera">Tipo de Carrera</label>
                 <select id="tipoCarrera" name="tipoCarrera" class="form-control">

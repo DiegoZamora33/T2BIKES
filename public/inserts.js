@@ -357,7 +357,6 @@ function enviarCompetencia()
           
         case 'repetido':
             getWarning(response['mensaje']);
-            $('#modalCompet').modal('hide');
           break;
       }
     }
@@ -370,24 +369,36 @@ function enviarCompetencia()
 
 function enviarCarrera()
 {
-  var idCompetencia = $('#idCompetencia').val();
-  var nombreCarrera = $('#nombreCarrera').val();
-  var tipoCarrera = $('#tipoCarrera').val();
-  var descripcion = $('#descripcionCarrera').val();
-
-
-  //Guardamos
-  alert("Guarda: "+idCompetencia+" : "+nombreCarrera+" : "+tipoCarrera+" : "+descripcion);
-
-
-
-  $('#modalNewCarrera').modal('hide');
-  setTimeout(
-    function() {
-      getTourR();
-     $('#modalNewCarrera').modal('hide');
-    },300
-  );
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/carreras',
+    data: {
+      nombreCarrera : $('#nombreCarrera').val(),
+      descripcion : $('#descripcionCarrera').val(),
+      idCompetencia : $('#idCompetencia').val(),
+      idTipoCarrera :  $('#tipoCarrera').val()
+    },
+    dataType: "json",
+    success: function (response) {
+      switch (response['codigo']) {
+        case 'Registrado':
+            getSuccess(response['mensaje']);
+            $('#modalNewCarrera').modal('hide');
+            setTimeout(
+              function() {
+                getTourR();
+              $('#modalNewCarrera').modal('hide');
+              },300
+            );
+          break;
+        
+        case 'SinTipo':
+            getWarning(response['mensaje']);
+          break;
+      }
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
