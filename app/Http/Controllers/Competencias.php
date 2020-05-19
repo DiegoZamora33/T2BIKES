@@ -19,14 +19,12 @@ class Competencias extends Controller
         
        //Buscamos datos de las competencias
 
-        $query = " SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, 
-                    COUNT(*) AS carreras FROM competencias 
-                    INNER JOIN carreras INNER JOIN estatuses
-                    ON competencias.idCompetencia = carreras.idCompetencia 
-                        AND competencias.idEstatus = estatuses.idEstatus
-                    GROUP BY nombreCompetencia ORDER BY competencias.created_at DESC";
+       $query = " SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus
+       FROM competencias 
+        INNER JOIN estatuses
+        ON  competencias.idEstatus = estatuses.idEstatus
+        ORDER BY competencias.created_at DESC";
 
-     
         $datos['competencias'] = bd_consulta($query);
 
         return view('competencia.front_mostrar_competencias', $datos);
@@ -83,11 +81,19 @@ class Competencias extends Controller
 
     public function store(Request $request)
     {
-        //
-        //Creamos un nuevo registro en la base de datos
-        Competencia::create($request->all());
-        //Nos redireccionamos al index
-        return redirect()->route('competencias.index');
+        //Verificamos que no se repita el nombre de la competencia
+        if (Competencia::where('nombreCompetencia',$request->nombreCompetencia)->first() == null) {
+            //Creamos un nuevo registro en la base de datos
+            $nuevaCompetencia = new Competencia();
+            $nuevaCompetencia->nombreCompetencia = $request->nombreCompetencia;
+            $nuevaCompetencia->periodo = $request->periodo;
+            $nuevaCompetencia->idEstatus = 2;
+            $nuevaCompetencia->save();
+            //Mensaje de confirmacion
+            return response()->json(['codigo' => 'registrado', 'mensaje' => 'La competencia '.$request->nombreCompetencia.' a sido registrada satisfactoriamente']);
+        }
+        //Mensaje de advertencia
+        return response()->json(['codigo' => 'repetido', 'mensaje' => 'La competencia '.$request->nombreCompetencia.' ya se registro anteriormente']);
     }
 
 

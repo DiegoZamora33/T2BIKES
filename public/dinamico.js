@@ -406,7 +406,7 @@ function competencias()
         type: "get",
         url: url+"/home/competencias",
         data: {},
-        dataType: "html",
+        dataType: "text",
         success: function (response) {
             $('#mostrador').html(response);
           effectFadeOut();

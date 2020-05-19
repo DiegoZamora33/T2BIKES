@@ -333,21 +333,35 @@ function enviarEntrenador()
 
 function enviarCompetencia()
 {
-  var nuevaCompetencia = $('#nuevaCompetencia').val();
-  var periodoCompetencia = $('#periodoCompetencia').val();
-
-  //Guardamos
-  alert("Guarda: "+nuevaCompetencia+" : "+periodoCompetencia);
-
-
-
-  $('#modalCompet').modal('hide');
-  setTimeout(
-    function() {
-      competencias();
-     $('#modalCompet').modal('hide');
-    },300
-  );
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/competencias',
+    data: {
+      nombreCompetencia:  $('#nuevaCompetencia').val(),
+      periodo: $('#periodoCompetencia').val()
+    },
+    dataType: "json",
+    success: function (response) {
+      switch (response['codigo']) {
+        case 'registrado':
+            getSuccess(response['mensaje']);
+            $('#modalCompet').modal('hide');
+            setTimeout(
+              function() {
+                competencias();
+              $('#modalCompet').modal('hide');
+              },300
+            );
+          break;
+          
+        case 'repetido':
+            getWarning(response['mensaje']);
+            $('#modalCompet').modal('hide');
+          break;
+      }
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

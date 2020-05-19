@@ -48,11 +48,11 @@
               <div class="modal-body">
 
                   <label for="nuevaCompetencia">Nombre de la competencia</label>
-                  <input required autofocus type="text" class="form-control" id="nuevaCompetencia" name="nuevaCompetencia" placeholder="">
+                  <input required autofocus type="text" class="form-control" id="nuevaCompetencia" maxlength='50' name="nuevaCompetencia" placeholder="">
 
                   <div class="form-group mt-4">
                     <label for="periodoCompetencia">Periodo</label>
-                    <input required type="text" class="form-control" id="periodoCompetencia" name="periodoCompetencia" placeholder="Ej: Enero - Junio 2020">
+                    <input required type="text" class="form-control" id="periodoCompetencia"  maxlength='50' name="periodoCompetencia" placeholder="Ej: Enero - Junio 2020">
                   </div>
 
               </div>
