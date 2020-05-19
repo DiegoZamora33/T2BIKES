@@ -96,6 +96,21 @@ class Carreras extends Controller
         if ($request->idTipoCarrera != 0) {
             //Creamos un nuevo registro en la base de datos
             Carrera::create($request->all());
+            $idCarrera = Carrera::where('nombreCarrera', $request->nombreCarrera)->first()->idCarrera;
+
+            //Creamos las relaciones con los competidores ya registrados
+            $competidores = DB::select("SELECT puntaje__competidor__competencias.numeroCompetidor FROM puntaje__competidor__competencias 
+                                        WHERE puntaje__competidor__competencias.idCompetencia = '".$request->idCompetencia."'");
+            foreach ($competidores as &$competidor){
+                $nuevaPuntajeCarrera = new Puntaje_Competidor_Carrera();
+                $nuevaPuntajeCarrera->numeroCompetidor = $competidor->numeroCompetidor;
+                $nuevaPuntajeCarrera->idCarrera = $idCarrera;
+                $nuevaPuntajeCarrera->lugarLlegada = 0;
+                $nuevaPuntajeCarrera->puntaje = 0;
+                $nuevaPuntajeCarrera->idEstatus = 5;
+                $nuevaPuntajeCarrera->save();
+            }
+            
             return response()->json(['codigo' => 'Registrado', 'mensaje' => 'La carrera '.$request->nombreCarrera.' a sido registrada con exito']);
         }
         //Mensaje de advertencia

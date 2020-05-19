@@ -407,17 +407,28 @@ function enviarCarrera()
 
 function enviarTipoCarrera()
 {
-  var newTipoCarrera = $('#newTipoCarrera').val();
-
-
-  //Guardamos
-  alert("Guarda: "+newTipoCarrera+" y refresca la lista de tipo carrera");
-
-  //Refrescamos lista con datos json que responda el servidor (ocupamos idTipoCarrera del nuevo registro)
-  $('#tipoCarrera').html('<option value'+5+'>'+newTipoCarrera+'</option>')
-
-
-
+  $.ajax({
+    type: "POST",
+    url: url+'/home/tiposcarrera',
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    data: {
+      tipoCarrera: $('#newTipoCarrera').val()
+    },
+    dataType: "json",
+    success: function (response) {
+      switch (response['codigo']) {
+        case 'registrado':
+            getSuccess(response['mensaje']);
+            //Refrescamos lista con datos json que responda el servidor (ocupamos idTipoCarrera del nuevo registro)
+            $('#tipoCarrera').html($('#tipoCarrera').html()+'<option value="'+response['id']+'">'+response['nombre']+'</option>');
+            
+          break;
+        case 'repetido':
+            getWarning(response['mensaje']);
+          break;
+      }
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

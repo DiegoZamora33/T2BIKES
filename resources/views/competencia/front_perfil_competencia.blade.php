@@ -250,7 +250,7 @@
                     <div class="container d-flex justify-content-center mt-2">
                       <div class="d-flex mx-auto ml-5">
                         <label for="newTipoCarrera">Nuevo Tipo de Carrera</label>
-                        <input type="text" class="form-control ml-3" id="newTipoCarrera" name="newTipoCarrera" placeholder="Se agregará a la lista de Tipos de Carreras">
+                        <input type="text"  maxlength="50" class="form-control ml-3" id="newTipoCarrera" name="newTipoCarrera" placeholder="Se agregará a la lista de Tipos de Carreras">
                         <button onclick="enviarTipoCarrera()" type="button" class="mt-2 align-middle text-primary fas fa-plus-circle ml-2" style="font-size: 17px;"></button>
                 
                       </div>

@@ -147,15 +147,20 @@ function updateCompetencia()
 
 function updateCarrera()
 {
-  var idCompetencia = $('#idCompetencia').val();
-  var nombreCarrera = $('#nombreCarrera').val();
-  var tipoCarrera = $('#tipoCarrera').val();
-  var descripcion = $('#descripcionCarrera').val();
-
-
-  //Guardamos
-  alert("Update: "+idCompetencia+" : "+nombreCarrera+" : "+tipoCarrera+" : "+descripcion);
-
+    $.ajax({
+        type: "PUT",
+        url: url+'/home/carreras/'+$('#idCarrera').val(),
+        headers: {'X-CSRF-TOKEN':$('#token').val()},
+        data: {
+            nombreCarrera : $('#nombreCarrera').val(),
+            idTipoCarrera: $('#tipoCarrera').val(),
+            descripcion: $('#descripcionCarrera').val()
+        },
+        dataType: "json",
+        success: function (response) {
+            
+        }
+    });
 
 
   $('#modalEditCarrera').modal('hide');
