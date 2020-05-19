@@ -66,7 +66,7 @@ $(document).ready(function ()
     $("#competencias").click(function()
     {
       miOff();
-      this.className = "active active mt-2 mb-1";
+      $('#portaCompetencias').className = "active active mt-2 mb-1";
       $.ajax({
               type: "get",
               url: url+"/home/competencias",
@@ -78,6 +78,14 @@ $(document).ready(function ()
                 effectFadeIn();
               }
         });
+    });
+
+        // Para Mostrar lista de Competencias
+    $("#portaCompetencias").click(function()
+    {
+      miOff();
+      $('#portaCompetencias').className = "active active mt-2 mb-1";
+     
     });
 
 
@@ -126,7 +134,7 @@ function miOff()
   document.getElementById('home').className = " ";
   document.getElementById('competidores').className = " ";
   document.getElementById('entrenadores').className = " ";
-  document.getElementById('competencias').className = " ";
+  document.getElementById('portaCompetencias').className = " ";
   document.getElementById('sistema').className = " ";
 }
 
