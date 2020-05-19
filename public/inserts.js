@@ -391,3 +391,22 @@ function enviarCarrera()
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+// <--------------------------------------- ENVIAR TIPO CARRERA ------------------------------------------------------------------------------------->
+
+function enviarTipoCarrera()
+{
+  var newTipoCarrera = $('#newTipoCarrera').val();
+
+
+  //Guardamos
+  alert("Guarda: "+newTipoCarrera+" y refresca la lista de tipo carrera");
+
+  //Refrescamos lista con datos json que responda el servidor (ocupamos idTipoCarrera del nuevo registro)
+  $('#tipoCarrera').html('<option value'+5+'>'+newTipoCarrera+'</option>')
+
+
+
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->

@@ -65,7 +65,7 @@ class Competencias extends Controller
                         AND competencias.idEstatus = estatuses.idEstatus
                     WHERE carreras.idCompetencia = ".$data['idCompetencia']." ORDER BY carreras.created_at ASC");
 
-            $datos['tiposCarreras'] = TipoCarrera::all();
+            $datos['tiposCarreras'] = DB::select("SELECT * FROM tipo_carreras ORDER BY created_at DESC");
 
             return view('competencia.front_perfil_competencia', $datos);
         }

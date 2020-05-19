@@ -219,16 +219,39 @@
               <input type="text" class="form-control" id="nombreCarrera" name="nombreCarrera" placeholder="Ej. Carrera 1" autofocus required>
               <div class="form-group mt-2">
                 <label for="tipoCarrera">Tipo de Carrera</label>
+
+
                 <select id="tipoCarrera" name="tipoCarrera" class="form-control">
-                    <option value="0">Sin Asignar</option>
 
                     @foreach($tiposCarreras as $miTipoCarrera)
                         <option value="{{$miTipoCarrera->idTipoCarrera}}" >{{$miTipoCarrera->tipoCarrera}}</option>
                     @endforeach
 
                 </select>
+
+
+                
               </div>
-              <label class="mt-2" for="descripcionCarrera">Descripción de la carrera</label>
+
+              <div class="form-group mt-4">
+                  <a class="nav-link dropdown-toggle w-75 mx-auto" data-toggle="collapse" href="#newTipeCarrera" role="button" aria-expanded="false" aria-controls="newTipeCarrera">
+                    Agregar un Nuevo Tipo de Carrera
+                  </a>
+
+                  <div class="collapse" id="newTipeCarrera">
+                    <small id="emailHelp" class="form-text text-muted"> Si desea Agregar un Nuevo Tipo de Carrera, Esbribalo en la siguiente cuadro de texto y despues haga click en el boton con el simbolo</small>
+                    <div class="container d-flex justify-content-center mt-2">
+                      <div class="d-flex mx-auto ml-5">
+                        <label for="newTipoCarrera">Nuevo Tipo de Carrera</label>
+                        <input type="text" class="form-control ml-3" id="newTipoCarrera" name="newTipoCarrera" placeholder="Se agregará a la lista de Tipos de Carreras">
+                        <button onclick="enviarTipoCarrera()" type="button" class="mt-2 align-middle text-primary fas fa-plus-circle ml-2" style="font-size: 17px;"></button>
+                
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <label class="mt-1" for="descripcionCarrera">Descripción de la carrera</label>
               <textarea type="text" rows="3" class="form-control" id="descripcionCarrera" name="descripcionCarrera"></textarea>
 
           </div>
@@ -242,6 +265,7 @@
     </div>
   </div>
 </div>
+
 
 <div class="modal fade" id="modalFin" tabindex="-1" role="dialog" aria-labelledby="modalFin" aria-hidden="true">
   <div class="modal-dialog" role="document">
