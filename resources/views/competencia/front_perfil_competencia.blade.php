@@ -35,11 +35,12 @@
 
 <br><br>
 <h4>Puntajes Globales de la Competecia</h4>
-<p>Deslice para ver más o menos participantes</p>
+
 @endforeach
 
-
-
+<input type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="danger">
+<br><br>
+<p>Deslice para ver más o menos participantes</p>
 <div class="inputDiv">
   <div class="etiqueta"></div>
   <input type="range" min="0" max="50" autocomplete="off" id="input3">
