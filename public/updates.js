@@ -158,18 +158,15 @@ function updateCarrera()
         },
         dataType: "json",
         success: function (response) {
-            
+            getSuccess(response['mensaje']);
+            $('#modalEditCarrera').modal('hide');
+            setTimeout(
+                function() {
+                getCarreraR();
+                $('#modalEditCarrera').modal('hide');
+                },300
+            );
         }
     });
-
-
-  $('#modalEditCarrera').modal('hide');
-  setTimeout(
-    function() {
-      getCarreraR();
-     $('#modalEditCarrera').modal('hide');
-    },300
-  );
 }
-
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

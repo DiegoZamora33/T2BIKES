@@ -216,19 +216,23 @@ function deleteCompetencia()
 
 function deleteCarrera()
 {
-  var idCompetencia = $('#idCompetencia').val();
-  var idCarrera = $('#idCarrera').val();
-
-
-  alert("Delete: "+idCompetencia+" : "+idCarrera);
-
-  $('#modalDelCarrera').modal('hide');
+  $.ajax({
+    type: "DELETE",
+    url: url+'/home/carreras/'+$('#idCarrera').val(),
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    data: {},
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      $('#modalDelCarrera').modal('hide');
       setTimeout(
         function() {
           getTourR();
         $('#modalDelCarrera').modal('hide');
         },300
-   );
+      );
+    }
+  });
 }
 
 // <--------------------------------------------------------------------------------------------------->
