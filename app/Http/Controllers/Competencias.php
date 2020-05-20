@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Competencia;
 use App\Estatus;
 use App\TipoCarrera;
+use App\Entrenador_Competidor_Competencia;
+use App\Puntaje_Competidor_Competencia;
+use App\Puntaje_Competidor_Carrera;
+use App\Carrera;
 use Illuminate\Support\Facades\DB;
 include('miDB.php');
 
@@ -131,9 +135,23 @@ class Competencias extends Controller
 
     public function destroy($id)
     {
-        //buscammos coincidencia de una competencia con el id y se elimina
+        //Buscamos el nombre de la competencia
+        $nombreCompetencia = Competencia::where('idCompetencia', $id)->first()->nombreCompetencia;
+        
+        //Eliminamos las carreras relacionadas con la competencia
+        $carreras = DB::select("SELECT idCarrera FROM carreras WHERE idCompetencia = '".$id."'");
+        foreach ($carreras as $carrera) {
+            Puntaje_Competidor_Carrera::where('idCarrera', $carrera->idCarrera)->delete();
+            Carrera::where('idCarrera', $carrera->idCarrera)->delete();
+        }
+
+        //Eliminamos la competencia de la base de datos
+        Entrenador_Competidor_Competencia::where('idCompetencia', $id)->delete();
+        Puntaje_Competidor_Competencia::where('idCompetencia', $id)->delete();
         Competencia::where('idCompetencia', $id)->delete();
-        return redirect()->route('competencias.index');
+
+        //Mensaje de confirmacion
+        return response()->json(['codigo' => 'eliminada', 'mensaje' => 'La competencia '.$nombreCompetencia.' a sido eliminada exitosamente']);
     }
 
     //Funcion para finalzar una competencia

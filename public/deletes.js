@@ -196,18 +196,23 @@ function finalizarCompetencia()
 
 function deleteCompetencia()
 {
-  var idCompetencia = $('#idCompetencia').val();
-
-
-  alert("Delete: "+idCompetencia);
-
-  $('#modalDeleteCompetencia').modal('hide');
+  $.ajax({
+    type: "DELETE",
+    url: url+'/home/competencias/'+$('#idCompetencia').val(),
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    data: {},
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      $('#modalDeleteCompetencia').modal('hide');
       setTimeout(
         function() {
           competencias();
         $('#modalDeleteCompetencia').modal('hide');
         },300
-   );
+      );
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------->
