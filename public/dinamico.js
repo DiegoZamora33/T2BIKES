@@ -1087,7 +1087,8 @@ function buscar()
 {
   var busqueda = $('#busqueda').val();
   var token = $('#tokenG').val();
-
+  
+ 
   $.ajax({
       url: url+'/home/busqueda/buscar' ,
       headers: {'X-CSRF-TOKEN':token},
@@ -1102,6 +1103,9 @@ function buscar()
       }
     
   });
+  
+
+
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

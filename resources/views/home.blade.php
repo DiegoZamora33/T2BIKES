@@ -109,7 +109,7 @@
                             <li class="nav-item active">
                               <form>
                                 <div class="form-group mt-lg-auto mt-md-3 mt-sm-4 mt-4">
-                                  <input type="text" class="form-control" onchange="buscar()" id="busqueda" aria-describedby="Buscar" placeholder="Buscar">
+                                  <input type="text" class="form-control" onkeyup="buscar()" id="busqueda" aria-describedby="Buscar" placeholder="Buscar">
                                 </div>
                               </form>
                             </li>

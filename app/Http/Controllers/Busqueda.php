@@ -12,7 +12,26 @@ class Busqueda extends Controller
 	{
 		if($data->ajax())
 		{
-			return "Aqui van los Resultados";
+			
+
+			if($data['busqueda']){
+
+				$datos['competidores'] = Competidor::where("nombre","like",$data['busqueda']."%")->take(10)->get();
+				$dato['entrenadores']= Entrenador::where("nombre","like",$data['busqueda']."%")->take(10)->get();
+				$data['competencia'] = Competencia::where("nombreCompetencia","like",$data['busqueda']."%")->take(10)->get();
+
+				if(sizeof($datos['competidores']) > 0 ){
+					return view('competidores.front_mostrar_competidor',$datos);
+
+				}
+				
+				
+				
+				
+				if (sizeof($data['competencia']) > 0 ) {
+					return view('competencia.front_mostrar_competencias', $data);
+				}
+			}
 		}
 	}
 }
