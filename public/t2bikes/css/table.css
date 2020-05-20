@@ -12,13 +12,12 @@ table {
 }
 
 table thead{
-  background: #007bff;
+  background: #0061C8;
   color: white;
 }
 
 table caption {
   font-size: 1.5em;
-  margin: .5em 0 .75em;
 }
 
 table tr {
@@ -32,13 +31,9 @@ table td {
   text-align: center;
 }
 
-table th {
-  font-size: .9em;
-}
-
 table tbody tr:hover{
   color: white;
-  background: rgba(238, 6, 6, 0.75);
+  background: #B80F0F;
 }
 
 

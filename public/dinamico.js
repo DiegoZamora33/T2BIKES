@@ -22,6 +22,7 @@ $(document).ready(function ()
     // Funcion para el menu
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
+	$('#lateral').toggleClass('active');
     });
 
     // Funcion para Mostar Lista de Competidores
@@ -29,7 +30,7 @@ $(document).ready(function ()
     { 
 
       miOff();
-      this.className = "active";
+      this.className = "active active mt-2 mb-1";
         $.ajax({
               type: "get",
               url: url+"/home/competidores",
@@ -47,7 +48,7 @@ $(document).ready(function ()
     $("#entrenadores").click(function()
     {
       miOff();
-      this.className = "active";
+      this.className = "active active mt-2 mb-1";
       $.ajax({
               type: "get",
               url: url+"/home/entrenadores",
@@ -65,7 +66,7 @@ $(document).ready(function ()
     $("#competencias").click(function()
     {
       miOff();
-      this.className = "active";
+      $('#portaCompetencias').className = "active active mt-2 mb-1";
       $.ajax({
               type: "get",
               url: url+"/home/competencias",
@@ -79,12 +80,20 @@ $(document).ready(function ()
         });
     });
 
+        // Para Mostrar lista de Competencias
+    $("#portaCompetencias").click(function()
+    {
+      miOff();
+      $('#portaCompetencias').className = "active active mt-2 mb-1";
+     
+    });
+
 
     // Para mostrar lista de Usuarios
     $('#sistema').click(function () { 
 
         miOff();
-        this.className = "active";
+        this.className = "active active mt-2 mb-1";
 
         
         $.ajax({
@@ -105,7 +114,7 @@ $(document).ready(function ()
     $("#registrar-entrenador").click(function()
     {
       miOff();
-      this.className = "active";
+      this.className = "active active mt-2 mb-1";
         $.ajax({
           url: "forms/registrar-entrenador.html" ,
           success: function(data){
@@ -125,7 +134,7 @@ function miOff()
   document.getElementById('home').className = " ";
   document.getElementById('competidores').className = " ";
   document.getElementById('entrenadores').className = " ";
-  document.getElementById('competencias').className = " ";
+  document.getElementById('portaCompetencias').className = " ";
   document.getElementById('sistema').className = " ";
 }
 
@@ -405,7 +414,7 @@ function competencias()
         type: "get",
         url: url+"/home/competencias",
         data: {},
-        dataType: "html",
+        dataType: "text",
         success: function (response) {
             $('#mostrador').html(response);
           effectFadeOut();
@@ -416,7 +425,7 @@ function competencias()
 
 function usuarios(){
 
-        this.className = "active";
+        this.className = "active active mt-2 mb-1";
         $.ajax({
             type: "get",
             url: url+"/home/usuarios",
@@ -532,7 +541,7 @@ function getEntreR()
 function getTour(miCompetencia)
 {
   var idCompetencia = miCompetencia.id;
-  var token = $('#token').val();
+  var token = $('#tokenG').val();
 
   $.ajax({
       url: url+'/home/competencias/perfilCompetencia',
@@ -653,7 +662,7 @@ function getCarreraR()
 
 // <------------------ Funcion para mostrar FORM de Nuevo Competidor ------------------->
 function newComp(){
-  this.className = 'active';
+  this.className = 'active active mt-2 mb-1';
   
  $.ajax({
         type: "get",

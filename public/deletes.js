@@ -170,18 +170,23 @@ function deleteEntrenador()
 
 function finalizarCompetencia()
 {
-  var idCompetencia = $('#idCompetencia').val();
-
-
-  alert("Finalizar: "+idCompetencia);
-
-  $('#modalFin').modal('hide');
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/competencias/finalizarCompetencia',
+    data: {idCompetencia : $('#idCompetencia').val()},
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      $('#modalFin').modal('hide');
       setTimeout(
         function() {
           getTourR();
         $('#modalFin').modal('hide');
         },300
-   );
+      ); 
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------->
@@ -191,18 +196,23 @@ function finalizarCompetencia()
 
 function deleteCompetencia()
 {
-  var idCompetencia = $('#idCompetencia').val();
-
-
-  alert("Delete: "+idCompetencia);
-
-  $('#modalDeleteCompetencia').modal('hide');
+  $.ajax({
+    type: "DELETE",
+    url: url+'/home/competencias/'+$('#idCompetencia').val(),
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    data: {},
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      $('#modalDeleteCompetencia').modal('hide');
       setTimeout(
         function() {
           competencias();
         $('#modalDeleteCompetencia').modal('hide');
         },300
-   );
+      );
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------->
@@ -211,19 +221,23 @@ function deleteCompetencia()
 
 function deleteCarrera()
 {
-  var idCompetencia = $('#idCompetencia').val();
-  var idCarrera = $('#idCarrera').val();
-
-
-  alert("Delete: "+idCompetencia+" : "+idCarrera);
-
-  $('#modalDelCarrera').modal('hide');
+  $.ajax({
+    type: "DELETE",
+    url: url+'/home/carreras/'+$('#idCarrera').val(),
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    data: {},
+    dataType: "json",
+    success: function (response) {
+      getSuccess(response['mensaje']);
+      $('#modalDelCarrera').modal('hide');
       setTimeout(
         function() {
           getTourR();
         $('#modalDelCarrera').modal('hide');
         },300
-   );
+      );
+    }
+  });
 }
 
 // <--------------------------------------------------------------------------------------------------->

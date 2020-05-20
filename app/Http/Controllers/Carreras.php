@@ -7,6 +7,7 @@ use App\Carrera;
 use App\Competencia;
 use App\TipoCarrera;
 use App\Puntaje_Competidor_Carrera;
+use App\Puntaje_Competidor_Competencia;
 use Illuminate\Support\Facades\DB;
 
 class Carreras extends Controller
@@ -92,10 +93,29 @@ class Carreras extends Controller
 
     public function store(Request $request)
     {
-        //Creamos un nuevo registro en la base de datos
-        Carrera::create($request->all());
-        //Nos redireccionamos al index
-        return redirect()->route('carreras.index');
+        //Verificamos que haya elegido un tipo
+        if ($request->idTipoCarrera != 0) {
+            //Creamos un nuevo registro en la base de datos
+            Carrera::create($request->all());
+            $idCarrera = Carrera::where('nombreCarrera', $request->nombreCarrera)->first()->idCarrera;
+
+            //Creamos las relaciones con los competidores ya registrados
+            $competidores = DB::select("SELECT puntaje__competidor__competencias.numeroCompetidor FROM puntaje__competidor__competencias 
+                                        WHERE puntaje__competidor__competencias.idCompetencia = '".$request->idCompetencia."'");
+            foreach ($competidores as $competidor){
+                $nuevaPuntajeCarrera = new Puntaje_Competidor_Carrera();
+                $nuevaPuntajeCarrera->numeroCompetidor = $competidor->numeroCompetidor;
+                $nuevaPuntajeCarrera->idCarrera = $idCarrera;
+                $nuevaPuntajeCarrera->lugarLlegada = 0;
+                $nuevaPuntajeCarrera->puntaje = 0;
+                $nuevaPuntajeCarrera->idEstatus = 5;
+                $nuevaPuntajeCarrera->save();
+            }
+            
+            return response()->json(['codigo' => 'Registrado', 'mensaje' => 'La carrera '.$request->nombreCarrera.' a sido registrada con exito']);
+        }
+        //Mensaje de advertencia
+        return response()->json(['codigo' => 'SinTipo', 'mensaje' => 'Eliga un tipo de carrera']);
     }
 
 
@@ -132,22 +152,34 @@ class Carreras extends Controller
 
     public function update(Request $request, $id)
     {
-        //Quitamos los datos no deseados del request
-        $nuevosDatos=request()->except(['_token','_method']);
-
         //Actualizamos los campos de la bd con los nuevos datos
-        Carrera::where('idCarrera', $id)->update($nuevosDatos);
+        Carrera::where('idCarrera', $id)->update(request()->except(['_token','_method']));
 
-        //Nos redireccionamos al index
-        return redirect()->route('carreras.index');
+        //Mensaje de confirmacion
+        return response()->json(['codigo' => 'Actualizado', 'mensaje' => 'La competencia '.$request->nombreCarrera.' a sido editada satisfactoriamente']);
     }
 
 
     public function destroy($id)
     {
-        //Buscamos y eliminamos el registro de la bd con el id
+        //Extraemos el nombre de la carrera
+        $nombreCarrera = Carrera::where('idCarrera', $id)->first()->nombreCarrera;
+
+        //Extraemos los puntajes de las carreras y sus competidores
+        $competidores = DB::select("SELECT numeroCompetidor, puntaje  FROM puntaje__competidor__carreras 
+                                        WHERE idCarrera = '".$id."'");
+        //Restamos los puntaje de la carrera
+        foreach ($competidores as $competidor) {
+            $puntajeGlobal = Puntaje_Competidor_Competencia::where('numeroCompetidor', $competidor->numeroCompetidor)->first()->puntajeGlobal;
+            $nuevoPuntaje = floatval($puntajeGlobal) -  floatval($competidor->puntaje);
+            Puntaje_Competidor_Competencia::where('numeroCompetidor', $competidor->numeroCompetidor)->update(['puntajeGlobal'=>$nuevoPuntaje]);
+        }
+
+        //Eliminamos la carrera de la base de datos
+        Puntaje_Competidor_Carrera::where('idCarrera', $id)->delete();
         Carrera::where('idCarrera', $id)->delete();
-        //Regresamos al indice
-        return redirect()->route('carreras.index');
+
+        //Mensaje de confirmcion
+        return response()->json(['codigo' => 'Actualizado', 'mensaje' => 'La carrera '.$nombreCarrera.' a sido eliminado exitosamente']);
     }
 }

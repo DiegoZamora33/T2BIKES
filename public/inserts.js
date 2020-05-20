@@ -333,21 +333,34 @@ function enviarEntrenador()
 
 function enviarCompetencia()
 {
-  var nuevaCompetencia = $('#nuevaCompetencia').val();
-  var periodoCompetencia = $('#periodoCompetencia').val();
-
-  //Guardamos
-  alert("Guarda: "+nuevaCompetencia+" : "+periodoCompetencia);
-
-
-
-  $('#modalCompet').modal('hide');
-  setTimeout(
-    function() {
-      competencias();
-     $('#modalCompet').modal('hide');
-    },300
-  );
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/competencias',
+    data: {
+      nombreCompetencia:  $('#nuevaCompetencia').val(),
+      periodo: $('#periodoCompetencia').val()
+    },
+    dataType: "json",
+    success: function (response) {
+      switch (response['codigo']) {
+        case 'registrado':
+            getSuccess(response['mensaje']);
+            $('#modalCompet').modal('hide');
+            setTimeout(
+              function() {
+                competencias();
+              $('#modalCompet').modal('hide');
+              },300
+            );
+          break;
+          
+        case 'repetido':
+            getWarning(response['mensaje']);
+          break;
+      }
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
@@ -356,24 +369,66 @@ function enviarCompetencia()
 
 function enviarCarrera()
 {
-  var idCompetencia = $('#idCompetencia').val();
-  var nombreCarrera = $('#nombreCarrera').val();
-  var tipoCarrera = $('#tipoCarrera').val();
-  var descripcion = $('#descripcionCarrera').val();
+  $.ajax({
+    type: "POST",
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    url: url+'/home/carreras',
+    data: {
+      nombreCarrera : $('#nombreCarrera').val(),
+      descripcion : $('#descripcionCarrera').val(),
+      idCompetencia : $('#idCompetencia').val(),
+      idTipoCarrera :  $('#tipoCarrera').val()
+    },
+    dataType: "json",
+    success: function (response) {
+      switch (response['codigo']) {
+        case 'Registrado':
+            getSuccess(response['mensaje']);
+            $('#modalNewCarrera').modal('hide');
+            setTimeout(
+              function() {
+                getTourR();
+              $('#modalNewCarrera').modal('hide');
+              },300
+            );
+          break;
+        
+        case 'SinTipo':
+            getWarning(response['mensaje']);
+          break;
+      }
+    }
+  });
+}
 
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
 
-  //Guardamos
-  alert("Guarda: "+idCompetencia+" : "+nombreCarrera+" : "+tipoCarrera+" : "+descripcion);
+// <--------------------------------------- ENVIAR TIPO CARRERA ------------------------------------------------------------------------------------->
 
-
-
-  $('#modalNewCarrera').modal('hide');
-  setTimeout(
-    function() {
-      getTourR();
-     $('#modalNewCarrera').modal('hide');
-    },300
-  );
+function enviarTipoCarrera()
+{
+  $.ajax({
+    type: "POST",
+    url: url+'/home/tiposcarrera',
+    headers: {'X-CSRF-TOKEN':$('#token').val()},
+    data: {
+      tipoCarrera: $('#newTipoCarrera').val()
+    },
+    dataType: "json",
+    success: function (response) {
+      switch (response['codigo']) {
+        case 'registrado':
+            getSuccess(response['mensaje']);
+            //Refrescamos lista con datos json que responda el servidor (ocupamos idTipoCarrera del nuevo registro)
+            $('#tipoCarrera').html($('#tipoCarrera').html()+'<option value="'+response['id']+'">'+response['nombre']+'</option>');
+            
+          break;
+        case 'repetido':
+            getWarning(response['mensaje']);
+          break;
+      }
+    }
+  });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->

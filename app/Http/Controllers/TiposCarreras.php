@@ -39,10 +39,18 @@ class TiposCarreras extends Controller
      */
     public function store(Request $request)
     {
-        //Creamos un nuvo registro en la base de datos
-        TipoCarrera::create($request->all());
-        //Nos redireccionamos al index
-        return redirect()->route('tiposcarrera.index');
+        //Confimrmamos si no se repitio el nombre
+        if (TipoCarrera::where('tipoCarrera', $request->tipoCarrera)->first() == null) {
+            //Creamos un nuvo registro en la base de datos
+            TipoCarrera::create($request->all());
+            return response()->json([   "codigo" => "registrado",
+                                        "mensaje" => 'El tipo '.$request->tipoCarrera.' se registro satisfactoriamente', 
+                                        "id" => TipoCarrera::where('tipoCarrera', $request->tipoCarrera)->first()->idTipoCarrera,
+                                        "nombre" => $request->tipoCarrera]);
+        }
+        //Mensaje de advertencia
+        return response()->json(["codigo" => "repetido", "mensaje" => 'El tipo '.$request->tipoCarrera.' ya esta registrado']);
+        
     }
 
     /**

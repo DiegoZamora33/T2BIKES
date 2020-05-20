@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Competencia;
 use App\Estatus;
 use App\TipoCarrera;
+use App\Entrenador_Competidor_Competencia;
+use App\Puntaje_Competidor_Competencia;
+use App\Puntaje_Competidor_Carrera;
+use App\Carrera;
 use Illuminate\Support\Facades\DB;
 include('miDB.php');
 
@@ -19,14 +23,12 @@ class Competencias extends Controller
         
        //Buscamos datos de las competencias
 
-        $query = " SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus, 
-                    COUNT(*) AS carreras FROM competencias 
-                    INNER JOIN carreras INNER JOIN estatuses
-                    ON competencias.idCompetencia = carreras.idCompetencia 
-                        AND competencias.idEstatus = estatuses.idEstatus
-                    GROUP BY nombreCompetencia ORDER BY competencias.created_at DESC";
+       $query = " SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, estatuses.estatus
+       FROM competencias 
+        INNER JOIN estatuses
+        ON  competencias.idEstatus = estatuses.idEstatus
+        ORDER BY competencias.created_at DESC";
 
-     
         $datos['competencias'] = bd_consulta($query);
 
         return view('competencia.front_mostrar_competencias', $datos);
@@ -38,7 +40,7 @@ class Competencias extends Controller
         if($data->ajax())
         {
             // Buscamos los datos de mi Competencia
-            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, competencias.created_at, estatuses.estatus 
+            $datos['competencia'] = DB::select(" SELECT competencias.idCompetencia, competencias.nombreCompetencia, competencias.periodo, competencias.created_at, competencias.idEstatus ,estatuses.estatus 
                     FROM competencias INNER JOIN estatuses ON competencias.idEstatus = estatuses.idEstatus
                     WHERE competencias.idCompetencia = ".$data['idCompetencia']." ");
 
@@ -67,7 +69,7 @@ class Competencias extends Controller
                         AND competencias.idEstatus = estatuses.idEstatus
                     WHERE carreras.idCompetencia = ".$data['idCompetencia']." ORDER BY carreras.created_at ASC");
 
-            $datos['tiposCarreras'] = TipoCarrera::all();
+            $datos['tiposCarreras'] = DB::select("SELECT * FROM tipo_carreras ORDER BY created_at DESC");
 
             return view('competencia.front_perfil_competencia', $datos);
         }
@@ -83,11 +85,19 @@ class Competencias extends Controller
 
     public function store(Request $request)
     {
-        //
-        //Creamos un nuevo registro en la base de datos
-        Competencia::create($request->all());
-        //Nos redireccionamos al index
-        return redirect()->route('competencias.index');
+        //Verificamos que no se repita el nombre de la competencia
+        if (Competencia::where('nombreCompetencia',$request->nombreCompetencia)->first() == null) {
+            //Creamos un nuevo registro en la base de datos
+            $nuevaCompetencia = new Competencia();
+            $nuevaCompetencia->nombreCompetencia = $request->nombreCompetencia;
+            $nuevaCompetencia->periodo = $request->periodo;
+            $nuevaCompetencia->idEstatus = 2;
+            $nuevaCompetencia->save();
+            //Mensaje de confirmacion
+            return response()->json(['codigo' => 'registrado', 'mensaje' => 'La competencia '.$request->nombreCompetencia.' a sido registrada satisfactoriamente']);
+        }
+        //Mensaje de advertencia
+        return response()->json(['codigo' => 'repetido', 'mensaje' => 'La competencia '.$request->nombreCompetencia.' ya se registro anteriormente']);
     }
 
 
@@ -111,18 +121,44 @@ class Competencias extends Controller
 
     public function update(Request $request, $id)
     {
-          $nuevosDatos=request()->except(['_token','_method','estado']);
-        //Actualizamos los campos de la bd con los nuevos datos
-        Competencia::where('idCompetencia', $id)->update($nuevosDatos);
-        //Nos redireccionamos al index
-        return redirect()->route('competencias.index');
+        //Verificamos que no se repita el nombre de la competencia o si se dejo el mismo
+        if (Competencia::where('nombreCompetencia',$request->nombreCompetencia)->first() == null || Competencia::where('idCompetencia', $id)->first()->nombreCompetencia == $request->nombreCompetencia) {
+            //Actualizamos los campos de la bd con los nuevos datos
+            Competencia::where('idCompetencia', $id)->update(['nombreCompetencia'=>$request->nombreCompetencia, 'periodo'=>$request->periodo]);
+            //Mensaje de Confirmacion
+            return response()->json(['codigo' => 'actualizado', 'mensaje' => 'La competencia '.$request->nombreCompetencia.' a sido editada satisfactoriamente']);
+        }
+        //Mensaje de advertencia
+        return response()->json(['codigo' => 'repetido', 'mensaje' => 'El nombre '.$request->nombreCompetencia.' ya esta ocupado por otra competencia']);
     }
 
 
     public function destroy($id)
     {
-        //buscammos coincidencia de una competencia con el id y se elimina
+        //Buscamos el nombre de la competencia
+        $nombreCompetencia = Competencia::where('idCompetencia', $id)->first()->nombreCompetencia;
+        
+        //Eliminamos las carreras relacionadas con la competencia
+        $carreras = DB::select("SELECT idCarrera FROM carreras WHERE idCompetencia = '".$id."'");
+        foreach ($carreras as $carrera) {
+            Puntaje_Competidor_Carrera::where('idCarrera', $carrera->idCarrera)->delete();
+            Carrera::where('idCarrera', $carrera->idCarrera)->delete();
+        }
+
+        //Eliminamos la competencia de la base de datos
+        Entrenador_Competidor_Competencia::where('idCompetencia', $id)->delete();
+        Puntaje_Competidor_Competencia::where('idCompetencia', $id)->delete();
         Competencia::where('idCompetencia', $id)->delete();
-        return redirect()->route('competencias.index');
+
+        //Mensaje de confirmacion
+        return response()->json(['codigo' => 'eliminada', 'mensaje' => 'La competencia '.$nombreCompetencia.' a sido eliminada exitosamente']);
+    }
+
+    //Funcion para finalzar una competencia
+    public function finalizarCompetencia(Request $request)
+    {
+        $competencia = Competencia::where('idCompetencia',$request->idCompetencia)->first();
+        Competencia::where('idCompetencia', $request->idCompetencia)->update(['idEstatus'=>'1']);
+        return response()->json(['codigo' => 'finalizada', 'mensaje' => 'La competencia '.$competencia->nombreCompetencia.' a sido finalizada exitosamente']);
     }
 }

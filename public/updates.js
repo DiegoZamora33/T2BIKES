@@ -109,19 +109,35 @@ function updateEntrenador()
 
 function updateCompetencia()
 {
-    var idCompetencia = $('#idCompetencia').val();
-    var nombreCompetencia = $('#nuevaCompetencia').val();
-    var periodo = $('#periodoCompetencia').val();
-
-    alert("Editar: "+idCompetencia+" : "+nombreCompetencia+" : "+periodo);
-
-  $('#modalEditCompetencia').modal('hide');
-      setTimeout(
-        function() {
-          getTourR();
-        $('#modalEditCompetencia').modal('hide');
-        },300
-   );
+    $.ajax({
+        type: "PUT",
+        headers: {'X-CSRF-TOKEN':$('#token').val()},
+        url: url+'/home/competencias/'+$('#idCompetencia').val(),
+        data: {
+            nombreCompetencia:  $('#nuevaCompetencia').val(),
+            periodo: $('#periodoCompetencia').val()
+        },
+        dataType: "json",
+        success: function (response) {
+            switch (response['codigo']) {
+                case 'actualizado':
+                    getSuccess(response['mensaje']);
+                    $('#modalEditCompetencia').modal('hide');
+                    setTimeout(
+                        function() {
+                        getTourR();
+                        $('#modalEditCompetencia').modal('hide');
+                        },300
+                    );
+                break;
+                    
+                case 'repetido':
+                    getWarning(response['mensaje']);
+                break;
+            }
+        }
+    });
+  
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
@@ -131,24 +147,26 @@ function updateCompetencia()
 
 function updateCarrera()
 {
-  var idCompetencia = $('#idCompetencia').val();
-  var nombreCarrera = $('#nombreCarrera').val();
-  var tipoCarrera = $('#tipoCarrera').val();
-  var descripcion = $('#descripcionCarrera').val();
-
-
-  //Guardamos
-  alert("Update: "+idCompetencia+" : "+nombreCarrera+" : "+tipoCarrera+" : "+descripcion);
-
-
-
-  $('#modalEditCarrera').modal('hide');
-  setTimeout(
-    function() {
-      getCarreraR();
-     $('#modalEditCarrera').modal('hide');
-    },300
-  );
+    $.ajax({
+        type: "PUT",
+        url: url+'/home/carreras/'+$('#idCarrera').val(),
+        headers: {'X-CSRF-TOKEN':$('#token').val()},
+        data: {
+            nombreCarrera : $('#nombreCarrera').val(),
+            idTipoCarrera: $('#tipoCarrera').val(),
+            descripcion: $('#descripcionCarrera').val()
+        },
+        dataType: "json",
+        success: function (response) {
+            getSuccess(response['mensaje']);
+            $('#modalEditCarrera').modal('hide');
+            setTimeout(
+                function() {
+                getCarreraR();
+                $('#modalEditCarrera').modal('hide');
+                },300
+            );
+        }
+    });
 }
-
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
