@@ -17,7 +17,7 @@ class Entrenadores extends Controller
     public function index()
     {
         //Extraemos todos los datos de los entrenadores
-        $entrenadores = Entrenador::all();
+        $entrenadores = Entrenador::orderBy('created_at', 'DESC')->get();
         //Enviamos la informacion de los entrenadores y llamamos a la vista
         return view('entrenadores.front_mostrar_entrenadores', compact('entrenadores'));
     }

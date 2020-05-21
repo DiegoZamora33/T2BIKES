@@ -1,4 +1,6 @@
 @if(Auth::check())
+
+  @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
 		<div class="row">
 
 			<div class="text-left col-md-2">
@@ -47,6 +49,19 @@
 			  <button type="button" onclick="getCompR()" class="btn btn-danger">Cancelar</button>
 			  <button type="submit" class="btn btn-primary">Guardar</button>
 		</form>
+
+	 @else
+      <h4>No tienes permisos para realizar esto... </h4>
+      <h5>Serás Redirigido a la Pagina Principal</h5>
+      <script type="text/javascript">
+        setTimeout(
+          function()
+          { 
+            window.location = "{{ url('/home') }}";
+          }, 
+          2000);
+      </script>
+    @endif
 @else
   <h4>No tienes permisos para realizar esto... </h4>
       <h5>Serás Redirigido a la Pagina Principal</h5>

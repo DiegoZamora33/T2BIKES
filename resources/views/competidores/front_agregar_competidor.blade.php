@@ -84,9 +84,16 @@
       <button type="submit" class="btn btn-primary">Registrar</button>
     </form>
     @else
-
-      <h4>No tienes Permisos Para esta funcion...</h4>
-
+      <h4>No tienes permisos para realizar esto... </h4>
+      <h5>Serás Redirigido a la Pagina Principal</h5>
+      <script type="text/javascript">
+        setTimeout(
+          function()
+          { 
+            window.location = "{{ url('/home') }}";
+          }, 
+          2000);
+      </script>
     @endif
 @else
   <h4>No tienes permisos para realizar esto... </h4>
