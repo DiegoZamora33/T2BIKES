@@ -39,39 +39,46 @@
 <h4>Puntajes Globales de la Competecia</h4>
 
 @endforeach
-
-<input type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="info">
 <br><br>
+
+
 <p>Deslice para ver más o menos participantes</p>
 <div class="inputDiv">
   <div class="etiqueta"></div>
   <input type="range" min="0" max="50" autocomplete="off" id="input3">
+  <div class="mt-4">
+    <input onchange="toggle()" id="toggle-event" type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="info">
+  </div>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th scope="col">Nombre completo</th>
-      <th scope="col">Número de competidor</th>
-      <th scope="col">Posición</th>
-      <th scope="col">Puntaje global</th>
-    </tr>
-  </thead>
-  <tbody>
 
-    @foreach($puntajesGlobales as $puntajeCompetetidor)  
-      <tr>
-        <td data-label="Nombre">{{$puntajeCompetetidor->nombre}} {{$puntajeCompetetidor->apellidoPaterno}} {{$puntajeCompetetidor->apellidoMaterno}}</td>
-        <td data-label="Núm. de competidor">{{$puntajeCompetetidor->numeroCompetidor}}</td>
-        <td data-label="Posición">{{$loop->iteration}}</td>
-        <td data-label="Puntaje global">{{$puntajeCompetetidor->puntajeGlobal}}</td>
-      </tr>
-    @endforeach
+<div id="miTabla" class="d-block">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Nombre completo</th>
+          <th scope="col">Número de competidor</th>
+          <th scope="col">Posición</th>
+          <th scope="col">Puntaje global</th>
+        </tr>
+      </thead>
+      <tbody>
 
-  </tbody>
-</table>
+        @foreach($puntajesGlobales as $puntajeCompetetidor)  
+          <tr>
+            <td data-label="Nombre">{{$puntajeCompetetidor->nombre}} {{$puntajeCompetetidor->apellidoPaterno}} {{$puntajeCompetetidor->apellidoMaterno}}</td>
+            <td data-label="Núm. de competidor">{{$puntajeCompetetidor->numeroCompetidor}}</td>
+            <td data-label="Posición">{{$loop->iteration}}</td>
+            <td data-label="Puntaje global">{{$puntajeCompetetidor->puntajeGlobal}}</td>
+          </tr>
+        @endforeach
 
-<h4 class="mt-5">Grafica</h4>
+      </tbody>
+    </table>
+</div>
+
+<div id="miGrafica" class="d-none">
+      <h4 class="mt-5">Grafica</h4>
 
           <div id="contenedorGrafica-competencia">
             <canvas id="competencia-grafica-bar"></canvas>
@@ -124,15 +131,14 @@
               });
             </script>
           </div>
+
+        <div class="w-100">
+          <div class="justify-content-center mt-3 d-flex mx-auto">
+            <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competencia" onclick="grafCompetencia()">
+            Cambiar a Grafica de Pastel</button>
+          </div>
         </div>
-
-<div class="w-100">
-  <div class="justify-content-center mt-3 d-flex mx-auto">
-    <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competencia" onclick="grafCompetencia()">
-    Cambiar a Grafica de Pastel</button>
   </div>
-</div>
-
 
 
 
@@ -150,7 +156,7 @@
 @endif
 
   @foreach($carreras as $miCarrera)
-    <div class="card text-center mt-5" style="color:white;">
+    <div class="card text-center mt-1 mb-3" style="color:white;">
       <div class="card-header bg-dark">
         {{$miCarrera->nombreCarrera}}
       </div>

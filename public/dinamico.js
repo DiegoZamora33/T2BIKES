@@ -154,6 +154,25 @@ function effectFadeIn()
 }
 // <--------------------------------------------------------------------->
 
+
+// <------------------------------- FUNCION PARA EL SWITCH --------------------------------------------> 
+function toggle()
+{
+  if($('#toggle-event').prop('checked') == false)
+  {
+    document.getElementById('miGrafica').className = "d-block";
+    document.getElementById('miTabla').className = "d-none";
+  }
+  else
+  {
+    document.getElementById('miTabla').className = "d-block";
+    document.getElementById('miGrafica').className = "d-none";
+  }
+}
+// <--------------------------------------------------------------------------------------------------->
+
+
+
 // <--------------------------- Funciones ALERT --------------------------->
 function getSuccess(miMensaje)
 {
@@ -555,6 +574,7 @@ function getTour(miCompetencia)
         $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
+                $('#toggle-event').prop('checked', true).change();
       }
 
   });
@@ -578,6 +598,7 @@ function getTourR()
         $('#mostrador').html(response);
                 effectFadeOut();
                 effectFadeIn();
+                $('#toggle-event').prop('checked', true).change();
       }
 
   });
