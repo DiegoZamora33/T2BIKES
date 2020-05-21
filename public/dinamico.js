@@ -16,7 +16,7 @@ var estaCompetencia = 0;
 $(document).ready(function ()
 {
   // <-------------------------- PARA SIEMPRE RECORDAR LA URL Y FUNCIONE AJAX ------------------------------>
-    ip = document.getElementById('miIP').value;
+    //ip = document.getElementById('miIP').value;
     url = 'http://'+ip+'/T2BIKES/public';
 
     // Funcion para el menu
