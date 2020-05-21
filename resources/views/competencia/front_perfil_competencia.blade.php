@@ -1,3 +1,5 @@
+<script src="{{ asset('t2bikes/js/bootstrap4-toggle.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('t2bikes/css/bootstrap4-toggle.css') }}">
 
 @foreach($competencia as $miCompetencia)
 <div class="row">
@@ -38,7 +40,7 @@
 
 @endforeach
 
-<input type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="danger">
+<input type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="info">
 <br><br>
 <p>Deslice para ver más o menos participantes</p>
 <div class="inputDiv">
