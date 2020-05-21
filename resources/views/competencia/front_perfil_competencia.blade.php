@@ -51,6 +51,22 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  function toggle()
+{
+  if($('#toggle-event').prop('checked') == false)
+  {
+    document.getElementById('miGrafica').className = "d-block";
+    document.getElementById('miTabla').className = "d-none";
+  }
+  else
+  {
+    document.getElementById('miTabla').className = "d-block";
+    document.getElementById('miGrafica').className = "d-none";
+  }
+}
+</script>
+
 
 <div id="miTabla" class="d-block">
     <table>
@@ -255,13 +271,15 @@
                   </a>
 
                   <div class="collapse" id="newTipeCarrera">
-                    <small id="emailHelp" class="form-text text-muted"> Si desea Agregar un Nuevo Tipo de Carrera, Esbribalo en la siguiente cuadro de texto y despues haga click en el boton con el simbolo</small>
+                     <div class="alert alert-info mb-0 mt-4" id="miAlert">
+                             Si desea Agregar un Nuevo Tipo de Carrera, Esbribalo en la siguiente cuadro de texto y despues haga click en el boton con el simbolo
+                      </div>
                     <div class="container d-flex justify-content-center mt-2">
                       <div class="d-flex mx-auto ml-5">
                         <label for="newTipoCarrera">Nuevo Tipo de Carrera</label>
                         <input type="text"  maxlength="50" class="form-control ml-3" id="newTipoCarrera" name="newTipoCarrera" placeholder="Se agregará a la lista de Tipos de Carreras">
                         <button onclick="enviarTipoCarrera()" type="button" class="mt-2 align-middle text-primary fas fa-plus-circle ml-2" style="font-size: 17px;"></button>
-                
+                         
                       </div>
                     </div>
                   </div>
