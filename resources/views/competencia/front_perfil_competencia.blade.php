@@ -254,7 +254,7 @@
                   </a>
 
                   <div class="collapse" id="newTipeCarrera">
-                     <div class="alert alert-info mb-0 mt-4" id="miAlert">
+                     <div class="alert alert-info mt-1" id="miAlert">
                              Si desea Agregar un Nuevo Tipo de Carrera, Esbribalo en la siguiente cuadro de texto y despues haga click en el boton con el simbolo
                       </div>
                     <div class="container d-flex justify-content-center mt-2">

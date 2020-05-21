@@ -418,13 +418,21 @@ function enviarTipoCarrera()
     success: function (response) {
       switch (response['codigo']) {
         case 'registrado':
-            getSuccess(response['mensaje']);
+            document.getElementById('miAlert').className = "alert alert-success mt-1";
+            $('#miAlert').fadeOut();
+            $('#miAlert').html(response['mensaje']);
+            $('#miAlert').fadeIn(200);
+            
+
             //Refrescamos lista con datos json que responda el servidor (ocupamos idTipoCarrera del nuevo registro)
-            $('#tipoCarrera').html($('#tipoCarrera').html()+'<option value="'+response['id']+'">'+response['nombre']+'</option>');
+            $('#tipoCarrera').html('<option value="'+response['id']+'">'+response['nombre']+'</option>'+$('#tipoCarrera').html());
             
           break;
         case 'repetido':
-            getWarning(response['mensaje']);
+            document.getElementById('miAlert').className = "alert alert-danger mt-1";
+            $('#miAlert').fadeOut();
+            $('#miAlert').html(response['mensaje']);
+            $('#miAlert').fadeIn(200);
           break;
       }
     }
