@@ -59,6 +59,13 @@
 
 <h3 class="font-weight-bold">Competencias</h3>
 
+<div class="text-center mt-5">
+  <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalAsignarCompe">
+    <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
+    <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Asignar Competencia</label>
+  </a>
+</div>
+
 @foreach( $competencias as $miCompetencia )
 <div class="card text-center text-white mt-4">
   <div class="card-header bg-dark">
@@ -74,13 +81,6 @@
 </div>
 @endforeach
 
-
-<div class="text-center mt-5">
-  <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalAsignarCompe">
-    <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
-    <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Asignar Competencia</label>
-  </a>
-</div>
 
 <ul class="d-flex align-items-end flex-column fixed-bottom text-white">
   <li id="registrar-entrenador" class="p-2">
