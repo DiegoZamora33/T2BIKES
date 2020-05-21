@@ -1,5 +1,3 @@
-<script src="{{ asset('t2bikes/js/bootstrap4-toggle.js') }}"></script>
-<link rel="stylesheet" href="{{ asset('t2bikes/css/bootstrap4-toggle.css') }}">
 
 @foreach($competencia as $miCompetencia)
 <div class="row">
