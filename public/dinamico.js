@@ -154,6 +154,28 @@ function effectFadeIn()
 }
 // <--------------------------------------------------------------------->
 
+
+// <------------------------- FUNCION PARA TOGLGLE ESTADISTICA/CARRERA (COMPETENCIA) ----------------------------->
+
+function miToggle()
+{
+  if($('#toggle-trigger').prop('checked') == false)
+  {
+    document.getElementById('miEstadistica').style = "display: none;";
+    document.getElementById('listaCarreras').style = "display: none;";
+     $('#listaCarreras').fadeIn(800);
+  }
+  else
+  {
+    document.getElementById('listaCarreras').style = "display: none;";
+    document.getElementById('miEstadistica').style = "display: none;";
+    $('#miEstadistica').fadeIn(800);
+  }
+}
+
+// <-------------------------------------------------------------------------------------------------------------->
+
+
 // <--------------------------- Funciones ALERT --------------------------->
 function getSuccess(miMensaje)
 {

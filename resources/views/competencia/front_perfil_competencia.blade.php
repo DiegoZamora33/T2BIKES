@@ -33,38 +33,40 @@
   <a type="button" class="btn btn-danger text-white mt-3" data-toggle="modal" data-target="#modalFin">Finalizar competencia</a>
 @endif
 
-<br><br>
-<h4>Puntajes Globales de la Competecia</h4>
+<br>
 
 @endforeach
-<br><br>
+<br>
 
-<p>Ver Tabla/Gráfica</p>
-<input id="toggle-trigger" type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="info">
+<p>Ver Estadisticas/Carreras</p>
+<input id="toggle-trigger" type="checkbox" checked data-toggle="toggle" data-on="Estadisticas" data-off="Carreras" data-onstyle="success" data-offstyle="info" onchange="miToggle()">
 
-<br><br>
-<p>Ver más o menos participantes</p>
+<br><br><br>
 
-<div class="row">
-        <div class="col-sm-5"></div>
-        <div class="col-sm-2">
-            <div class="input-group">
-                <span class="input-group-btn">
-              <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
-                  <span class="demo-icon icon-minus"></span>
-                </button>
-                </span>
-                <input type="text" name="quant[1]" class="form-control input-number" value="5" min="1" max="10">
-                <span class="input-group-btn">
-              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
-                  <span class="demo-icon icon-plus"></span>
-                </button>
-                </span>
-            </div>
-        </div>
-        <div class="col-sm-5"></div>
-    </div>
-    <br>
+<div id="miEstadistica" style="display: block;">
+      <h4>Puntajes Globales de la Competecia</h4>
+      <p>Ver más o menos participantes</p>
+
+       <div class="row">
+              <div class="col-sm-5"></div>
+              <div class="col-sm-2">
+                  <div class="input-group">
+                      <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
+                        <span class="demo-icon icon-minus"></span>
+                      </button>
+                      </span>
+                      <input type="text" name="quant[1]" class="form-control input-number" value="5" min="1" max="10">
+                      <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                        <span class="demo-icon icon-plus"></span>
+                      </button>
+                      </span>
+                  </div>
+              </div>
+              <div class="col-sm-5"></div>
+          </div>
+        <br>
 
 
 
@@ -155,36 +157,36 @@
             Cambiar a Grafica de Pastel</button>
           </div>
         </div>
+</div>
 
 
 
+<div id="listaCarreras" style="display: none;">
+      <h4>Listado de Carreras</h4>
 
-<br>
-<h4 class="mt-3">Carreras</h4>
+      @if ($miCompetencia->idEstatus == 2)
+        <div class="text-center mt-2">
+          <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalNewCarrera">
+            <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
+            <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Nueva carrera</label>
+          </a>
+        </div>
+        <br>
+      @endif
 
-@if ($miCompetencia->idEstatus == 2)
-  <div class="text-center mt-2">
-    <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalNewCarrera">
-      <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
-      <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Nueva carrera</label>
-    </a>
-  </div>
-  <br>
-@endif
-
-  @foreach($carreras as $miCarrera)
-    <div class="card text-center mt-1 mb-3" style="color:white;">
-      <div class="card-header bg-dark">
-        {{$miCarrera->nombreCarrera}}
-      </div>
-      <div class="card-body"  style="color:black;">
-        <h6>{{$miCarrera->descripcion}}</h6>
-        <p class="card-text">Tipo de Carrera: {{$miCarrera->tipoCarrera}}</p>
-        <a id="{{$miCarrera->idCarrera}}"  style="color:white;" onclick="getCarrera(this);" class="btn btn-primary">Estadisticas</a>
-      </div>
-    </div>
-  @endforeach
-
+      @foreach($carreras as $miCarrera)
+        <div class="card text-center mt-1 mb-3" style="color:white;">
+          <div class="card-header bg-dark">
+            {{$miCarrera->nombreCarrera}}
+          </div>
+          <div class="card-body"  style="color:black;">
+            <h6>{{$miCarrera->descripcion}}</h6>
+            <p class="card-text">Tipo de Carrera: {{$miCarrera->tipoCarrera}}</p>
+            <a id="{{$miCarrera->idCarrera}}"  style="color:white;" onclick="getCarrera(this);" class="btn btn-primary">Estadisticas</a>
+          </div>
+        </div>
+      @endforeach
+</div>
 <br>
 
 
