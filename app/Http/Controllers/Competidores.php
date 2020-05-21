@@ -14,6 +14,7 @@ use Carbon\Carbon;
 
 class Competidores extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +22,9 @@ class Competidores extends Controller
      */
     public function index()
     {
-        $datos['competidores']=Competidor::all();
+        $datos['competidores']=Competidor::orderBy('created_at', 'DESC')->get();
         return view('competidores.front_mostrar_competidor',$datos);
+        
     }
 
 
