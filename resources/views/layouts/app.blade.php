@@ -17,16 +17,20 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="{{ asset('t2bikes/css/principal.css') }}">
     <link rel="stylesheet" href="{{ asset('t2bikes/css/fontello.css') }}">
+    <link rel="stylesheet" href="{{ asset('t2bikes/css/fontello2.css') }}">
     <link rel="stylesheet" href="{{ asset('t2bikes/css/animation.css') }}">
     <link rel="stylesheet" href="{{ asset('t2bikes/css/table.css') }}">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 
     <!-- Font Awesome JS -->
+    <script type="text/javascript" src="{{ asset('t2bikes/js/jquery-3.4.1.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{ asset('t2bikes/js/fontawesome-solid.js') }}"></script>
     <script src="{{ asset('t2bikes/js/fontawesome-5.js') }}"></script>
 
     <script src="{{ asset('t2bikes/js/poper.js') }}"></script>
 
-    <script type="text/javascript" src="{{ asset('t2bikes/js/jquery-3.4.1.min.js') }}"></script>
+
     <script src="{{ asset('t2bikes/js/bootstrap.js') }}" charset="utf-8"></script>
 
     <script src="{{ asset('t2bikes/js/bootstrap.min.js') }}"></script>

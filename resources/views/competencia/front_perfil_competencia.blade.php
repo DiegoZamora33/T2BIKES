@@ -39,12 +39,32 @@
 @endforeach
 <br><br>
 
+<p>Ver Tabla/Gráfica</p>
+<input id="toggle-trigger" type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="info">
 
-<p>Deslice para ver más o menos participantes</p>
-<div class="inputDiv">
-  <div class="etiqueta"></div>
-  <input type="range" min="0" max="50" autocomplete="off" id="input3">
-</div>
+<br><br>
+<p>Ver más o menos participantes</p>
+
+<div class="row">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-2">
+            <div class="input-group">
+                <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
+                  <span class="demo-icon icon-minus"></span>
+                </button>
+                </span>
+                <input type="text" name="quant[1]" class="form-control input-number" value="5" min="1" max="10">
+                <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                  <span class="demo-icon icon-plus"></span>
+                </button>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-5"></div>
+    </div>
+    <br>
 
 
 
@@ -61,7 +81,7 @@
       </thead>
       <tbody>
 
-        @foreach($puntajesGlobales as $puntajeCompetetidor)  
+        @foreach($puntajesGlobales as $puntajeCompetetidor)
           <tr>
             <td data-label="Nombre">{{$puntajeCompetetidor->nombre}} {{$puntajeCompetetidor->apellidoPaterno}} {{$puntajeCompetetidor->apellidoMaterno}}</td>
             <td data-label="Núm. de competidor">{{$puntajeCompetetidor->numeroCompetidor}}</td>
@@ -84,7 +104,7 @@
               var myChart = new Chart(ctx, {
                 type: "bar",
                 data: {
-                  labels: 
+                  labels:
                   <?php
 
                     $out = "";
@@ -135,7 +155,7 @@
             Cambiar a Grafica de Pastel</button>
           </div>
         </div>
- 
+
 
 
 
@@ -243,7 +263,7 @@
                 </select>
 
 
-                
+
               </div>
 
               <div class="form-group mt-4">
@@ -260,7 +280,7 @@
                         <label for="newTipoCarrera">Nuevo Tipo de Carrera</label>
                         <input type="text"  maxlength="50" class="form-control ml-3" id="newTipoCarrera" name="newTipoCarrera" placeholder="Se agregará a la lista de Tipos de Carreras">
                         <button onclick="enviarTipoCarrera()" type="button" class="mt-2 align-middle text-primary fas fa-plus-circle ml-2" style="font-size: 17px;"></button>
-                         
+
                       </div>
                     </div>
                   </div>
@@ -322,30 +342,76 @@
   </div>
 </div>
 
-<script>
-  var elInput = document.querySelector('#input');
-  var elInput3 = document.querySelector('#input3');
-if (elInput3) {
-  var w = parseInt(window.getComputedStyle(elInput3, null).getPropertyValue('width'));
+<script type="text/javascript">
+  $('.btn-number').click(function(e){
+    e.preventDefault();
 
-  // LA ETIQUETA 
-  var etq = document.querySelector('.etiqueta');
-  if (etq) {
-    // el valor de la etiqueta
-    etq.innerHTML = elInput3.value;
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal)) {
+        if(type == 'minus') {
 
-    // calcula la posición inicial de la etiqueta
-    var pxls = w / 50;
+            if(currentVal > input.attr('min')) {
+                input.val(currentVal - 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('min')) {
+                $(this).attr('disabled', true);
+            }
 
-    etq.style.left = ((elInput3.value * pxls) - 15) + 'px';
+        } else if(type == 'plus') {
 
-    elInput3.addEventListener('input', function() {
-      // cambia el valor de la etiqueta
-      etq.innerHTML = elInput3.value;
-      // cambia la posición de la etiqueta 
-      etq.style.left = ((elInput3.value * pxls) - 15) + 'px';
+            if(currentVal < input.attr('max')) {
+                input.val(currentVal + 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('max')) {
+                $(this).attr('disabled', true);
+            }
 
-    }, false);
-  }
-}
+        }
+    } else {
+        input.val(0);
+    }
+});
+$('.input-number').focusin(function(){
+   $(this).data('oldValue', $(this).val());
+});
+$('.input-number').change(function() {
+
+    minValue =  parseInt($(this).attr('min'));
+    maxValue =  parseInt($(this).attr('max'));
+    valueCurrent = parseInt($(this).val());
+
+    name = $(this).attr('name');
+    if(valueCurrent >= minValue) {
+        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the minimum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent <= maxValue) {
+        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('No puedes poner números negativos');
+        $(this).val($(this).data('oldValue'));
+    }
+
+
+});
+$(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 </script>

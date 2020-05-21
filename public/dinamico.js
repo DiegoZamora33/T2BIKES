@@ -1,5 +1,5 @@
 
-// # EN ESTE ARCHIVO JS VAN TODAS LAS FUNCIONES AJAX PARA MOSTRAR CONTENIDO DE FORMA DINAMICA SIN RECARGAR LA PAGINA 
+// # EN ESTE ARCHIVO JS VAN TODAS LAS FUNCIONES AJAX PARA MOSTRAR CONTENIDO DE FORMA DINAMICA SIN RECARGAR LA PAGINA
   // ADEMAS DE CONTENER FUNCIONES PARA MANEJO DE ALERTS, GRAFICAS, Y DEMAS COSAS VISUALES.
 
 // Variables Globales
@@ -27,7 +27,7 @@ $(document).ready(function ()
 
     // Funcion para Mostar Lista de Competidores
     $('#competidores').click(function ()
-    { 
+    {
 
       miOff();
       this.className = "active active mt-2 mb-1";
@@ -85,23 +85,23 @@ $(document).ready(function ()
     {
       miOff();
       $('#portaCompetencias').className = "active active mt-2 mb-1";
-     
+
     });
 
 
     // Para mostrar lista de Usuarios
-    $('#sistema').click(function () { 
+    $('#sistema').click(function () {
 
         miOff();
         this.className = "active active mt-2 mb-1";
 
-        
+
         $.ajax({
             type: "get",
             url: url+"/home/usuarios",
             data: {},
             dataType: "html",
-            success: function (response) 
+            success: function (response)
             {
                 $('#mostrador').html(response);
                 effectFadeOut();
@@ -255,7 +255,7 @@ function miFocus(miBoton)
   miBoton.style = "transform: scale(1.15);";
   miBoton.classList.add('active');
 
-  for (var i = 0; i < misBotones.length; i++) 
+  for (var i = 0; i < misBotones.length; i++)
   {
     if(misBotones[i].id != miBoton.id)
     {
@@ -263,7 +263,7 @@ function miFocus(miBoton)
       misBotones[i].classList.remove('active');
     }
   }
-  
+
 }
 
 
@@ -553,9 +553,9 @@ function getTour(miCompetencia)
       success:function(response)
       {
         $('#mostrador').html(response);
+        $('#toggle-trigger').bootstrapToggle('on');
                 effectFadeOut();
                 effectFadeIn();
-                $('#toggle-event').prop('checked', true).change();
       }
 
   });
@@ -577,9 +577,10 @@ function getTourR()
       success:function(response)
       {
         $('#mostrador').html(response);
+        $('#toggle-trigger').bootstrapToggle('on');
                 effectFadeOut();
                 effectFadeIn();
-                $('#toggle-event').prop('checked', true).change();
+
       }
 
   });
@@ -665,7 +666,7 @@ function getCarreraR()
 // <------------------ Funcion para mostrar FORM de Nuevo Competidor ------------------->
 function newComp(){
   this.className = 'active active mt-2 mb-1';
-  
+
  $.ajax({
         type: "get",
         url: url+"/home/competidores/create",
@@ -692,7 +693,7 @@ function editComp()
         dataType: "html",
 
     success: function(data)
-    { 
+    {
       $('#mostrador').html(data);
               effectFadeOut();
               effectFadeIn();
@@ -704,7 +705,7 @@ function editComp()
 
 // <------------------ FUNCION PARA MOSTRAR FORM EDITAR ENTRENADOR -------------------->
 function editEntre(){
-  
+
   var idEntrenador = $('#idEntrenador').val();
 
   $.ajax({
@@ -713,7 +714,7 @@ function editEntre(){
         dataType: "html",
 
     success: function(data)
-    { 
+    {
       $('#mostrador').html(data);
               effectFadeOut();
               effectFadeIn();
@@ -746,7 +747,7 @@ function newTrain()
 function newUser()
 {
     this.className = "active";
-    
+
     $.ajax({
         type: "get",
         url: url+"/home/usuarios/create",
@@ -996,7 +997,7 @@ function enviarCompetidor()
     headers: {'X-CSRF-TOKEN':token},
     type: 'POST',
     dataType: 'json',
-    data:{nombre: nombre, apellidoPaterno: apellidoPaterno, apellidoMaterno: apellidoMaterno, 
+    data:{nombre: nombre, apellidoPaterno: apellidoPaterno, apellidoMaterno: apellidoMaterno,
           numeroCompetidor: numeroCompetidor, competencia: competencia, entrenador:entrenador, tiempoEntrenamiento, tiempoEntrenamiento},
 
     success:function(response)
@@ -1051,14 +1052,14 @@ function asignarCompetencia()
   var mesesEntrenamiento = $('#mesesEntrenamiento').val();
 
   var token = $('#tokenAsignar').val();
-  
+
    $.ajax({
     url: url+'/home/competidores/asignarCompetencia',
     headers: {'X-CSRF-TOKEN':token},
     type: 'POST',
     dataType: 'json',
     data:{competencia: competencia, entrenador: entrenador, mesesEntrenamiento: mesesEntrenamiento},
-    
+
     success:function(response)
     {
       switch(response['codigo'])
@@ -1098,8 +1099,8 @@ function buscar()
 {
   var busqueda = $('#busqueda').val();
   var token = $('#tokenG').val();
-  
- 
+
+
   $.ajax({
       url: url+'/home/busqueda/buscar' ,
       headers: {'X-CSRF-TOKEN':token},
@@ -1112,13 +1113,11 @@ function buscar()
                 effectFadeOut();
                 effectFadeIn();
       }
-    
+
   });
-  
+
 
 
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
-
-
