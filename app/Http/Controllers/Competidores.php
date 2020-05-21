@@ -14,6 +14,7 @@ use Carbon\Carbon;
 
 class Competidores extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +24,7 @@ class Competidores extends Controller
     {
         $datos['competidores']=Competidor::all();
         return view('competidores.front_mostrar_competidor',$datos);
+        
     }
 
 

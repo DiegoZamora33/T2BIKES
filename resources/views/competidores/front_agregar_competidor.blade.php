@@ -1,3 +1,4 @@
+@if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsusario == 2)
 <div class="row">
 
 <div class="text-left col-md-2">
@@ -80,3 +81,8 @@
 
   <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
+@else
+
+  <h4>No tienes Permisos Para esta funcion...</h4>
+
+@endif

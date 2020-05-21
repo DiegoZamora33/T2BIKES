@@ -26,8 +26,10 @@
   </tbody>
 </table>
 
-<ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
-  <li id="registrar-entrenador" class="p-2">
-    <a type="button" onclick="newComp();" class="btn btn-primary">Registrar Nuevo</a>
-  </li>
-</ul>
+ @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
+  <ul class="d-flex align-items-end flex-column fixed-bottom" style="color: white;">
+    <li id="registrar-entrenador" class="p-2">
+      <a type="button" onclick="newComp();" class="btn btn-primary">Registrar Nuevo</a>
+    </li>
+  </ul>
+@endif

@@ -59,12 +59,14 @@
 
 <h3 class="font-weight-bold">Competencias</h3>
 
-<div class="text-center mt-5">
-  <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalAsignarCompe">
-    <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
-    <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Asignar Competencia</label>
-  </a>
-</div>
+@if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsusario == 2)
+  <div class="text-center mt-5">
+    <a type="button" href="#" class="border border-primary rounded p-1 superBoton text-center text-success" data-toggle="modal" data-target="#modalAsignarCompe">
+      <i class="align-middle fas fa-plus-circle" style="font-size: 20px;"></i>
+      <label class="align-middle mt-2 text-muted" style="cursor: pointer;">Asignar Competencia</label>
+    </a>
+  </div>
+@endif
 
 @foreach( $competencias as $miCompetencia )
 <div class="card text-center text-white mt-4">
@@ -76,18 +78,23 @@
     <h6 class="card-text mt-1 text-muted">"Periodo: {{ $miCompetencia->periodo }}"</h6>
     <h6 class="card-text mt-1 text-muted">"{{ $miCompetencia->estatus }}"</h6>
     <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" onclick="getStat(this);" class="btn btn-primary mt-2">Ver estadísticas</a>
-    <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" class="btn btn-danger mt-2" data-toggle="modal" data-target="#modalQuitarCompetencia" onclick="quitaEstaCompe(this);" >Quitar Competencia</a>
+
+    @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsusario == 2)
+       <a id="{{ $miCompetencia->idCompetencia }}" style="color:white;" class="btn btn-danger mt-2" data-toggle="modal" data-target="#modalQuitarCompetencia" onclick="quitaEstaCompe(this);" >Quitar Competencia</a>
+    @endif
   </div>
 </div>
 @endforeach
 
+@if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
+  <ul class="d-flex align-items-end flex-column fixed-bottom text-white">
+    <li id="registrar-entrenador" class="p-2">
+      <a type="button" class="btn btn-warning" onclick="editComp();">Editar datos</a>
+      <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteCompetidor">Eliminar competidor</a>
+    </li>
+  </ul>
 
-<ul class="d-flex align-items-end flex-column fixed-bottom text-white">
-  <li id="registrar-entrenador" class="p-2">
-    <a type="button" class="btn btn-warning" onclick="editComp();">Editar datos</a>
-    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteCompetidor">Eliminar competidor</a>
-  </li>
-</ul>
+
 <br><br><br>
 
 
@@ -198,3 +205,4 @@
     </div>
   </div>
 </div>
+@endif

@@ -139,6 +139,7 @@
 
 
                 <p>Recuerda siempre cerrar tu sesión</p>
+                <p> {{ session('status') }}</p>
 
             </div>
         </div>

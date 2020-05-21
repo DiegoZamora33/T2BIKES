@@ -28,7 +28,6 @@ $(document).ready(function ()
     // Funcion para Mostar Lista de Competidores
     $('#competidores').click(function ()
     {
-
       miOff();
       this.className = "active active mt-2 mb-1";
         $.ajax({
@@ -131,11 +130,31 @@ $(document).ready(function ()
 
 function miOff()
 {
-  document.getElementById('home').className = " ";
-  document.getElementById('competidores').className = " ";
-  document.getElementById('entrenadores').className = " ";
-  document.getElementById('portaCompetencias').className = " ";
-  document.getElementById('sistema').className = " ";
+  if(document.getElementById('home'))
+  {
+    document.getElementById('home').className = " ";
+  }
+
+  if(document.getElementById('competidores'))
+  {
+    document.getElementById('competidores').className = " ";
+  }
+
+  if(document.getElementById('entrenadores'))
+  {
+    document.getElementById('entrenadores').className = " ";
+  }
+
+  if(document.getElementById('portaCompetencias'))
+  {
+    document.getElementById('portaCompetencias').className = " ";
+  }
+
+  if(document.getElementById('sistema'))
+  {
+    document.getElementById('sistema').className = " ";
+  }
+
 }
 
 

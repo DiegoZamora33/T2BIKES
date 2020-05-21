@@ -26,7 +26,11 @@
     <h5 id="miEntrenador" class="mt-3">Entrenador: {{ $miEntrenador->nombre }} {{ $miEntrenador->apellidoPaterno }} {{ $miEntrenador->apellidoMaterno }}</h5>
     <h5 id="miMesesEntrenamiento">Tiempo de Entrenamiento: {{ $miEntrenador->mesesEntrenamiento }}</h5>
     <h5 id="miFechaEntrenamiento" class="text-muted"> De {{ $miEntrenador->fechaInicio }} a {{ $miEntrenador->fechaFin }}</h5>
-    <button class="btn btn-danger btn-sm mt-0" data-toggle="modal" data-target="#modalQuitarEntrenador">Quitar Entrenador</button>
+   
+   @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsusario == 2)
+       <button class="btn btn-danger btn-sm mt-0" data-toggle="modal" data-target="#modalQuitarEntrenador">Quitar Entrenador</button>
+    @endif
+
   @endforeach
 @else
 
@@ -64,12 +68,17 @@
                   <tbody>
 
                     @foreach($carreras as $miCarrera)
-                    <tr onclick="dataCarrera('{{ $miCarrera->idCarrera }}')" data-toggle="modal" data-target="#modalCarrera" style="cursor: pointer;">
-                      <td data-label="Nombre de la Carrera">{{ $miCarrera->nombreCarrera }}</td>
-                      <td data-label="Lugar de llegada">{{ $miCarrera->lugarLlegada }}</td>
-                      <td data-label="Puntaje">{{ $miCarrera->puntaje }}</td>
-                      <td data-label="Status">{{ $miCarrera->estatus }}</td>
-                    </tr>
+
+                     @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsusario == 2)
+                      <tr onclick="dataCarrera('{{ $miCarrera->idCarrera }}')" data-toggle="modal" data-target="#modalCarrera" style="cursor: pointer;">
+                     @else
+                      <tr style="cursor: pointer;">
+                     @endif
+                        <td data-label="Nombre de la Carrera">{{ $miCarrera->nombreCarrera }}</td>
+                        <td data-label="Lugar de llegada">{{ $miCarrera->lugarLlegada }}</td>
+                        <td data-label="Puntaje">{{ $miCarrera->puntaje }}</td>
+                        <td data-label="Status">{{ $miCarrera->estatus }}</td>
+                      </tr>
                     @endforeach
 
                   </tbody>
@@ -139,6 +148,7 @@
         </div>
       </div>
 
+    @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsusario == 2)
       <div class="modal fade" id="modalQuitarEntrenador" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -236,3 +246,4 @@
                   </div>
                 </div>
               </div>
+        @endif
