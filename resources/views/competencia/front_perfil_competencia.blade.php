@@ -46,29 +46,12 @@
 <div class="inputDiv">
   <div class="etiqueta"></div>
   <input type="range" min="0" max="50" autocomplete="off" id="input3">
-  <div class="mt-4">
-    <input onchange="toggle()" id="toggle-event" type="checkbox" checked data-toggle="toggle" data-on="Tabla" data-off="Gráfica" data-onstyle="success" data-offstyle="info">
-  </div>
 </div>
 
-<script type="text/javascript">
-  function toggle()
-{
-  if($('#toggle-event').prop('checked') == false)
-  {
-    document.getElementById('miGrafica').className = "d-block";
-    document.getElementById('miTabla').className = "d-none";
-  }
-  else
-  {
-    document.getElementById('miTabla').className = "d-block";
-    document.getElementById('miGrafica').className = "d-none";
-  }
-}
-</script>
 
 
-<div id="miTabla" class="d-block">
+
+
     <table>
       <thead>
         <tr>
@@ -91,9 +74,9 @@
 
       </tbody>
     </table>
-</div>
 
-<div id="miGrafica" class="d-none">
+
+
       <h4 class="mt-5">Grafica</h4>
 
           <div id="contenedorGrafica-competencia">
@@ -154,7 +137,7 @@
             Cambiar a Grafica de Pastel</button>
           </div>
         </div>
-  </div>
+ 
 
 
 
