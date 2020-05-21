@@ -12,26 +12,35 @@ class Busqueda extends Controller
 	{
 		if($data->ajax())
 		{
-			
+			$data['busqueda'] = str_replace(' ', '', $data['busqueda']);
+
+
 
 			if($data['busqueda']){
+				$datos = DB::select("SELECT * 
+												FROM entrenadors 
+												WHERE concat(nombre, apellidoPaterno, apellidoMaterno)
+												LIKE '%".$data['busqueda']."%' ");
 
-				$datos['competidores'] = Competidor::where("nombre","like",$data['busqueda']."%")->take(10)->get();
-				$dato['entrenadores']= Entrenador::where("nombre","like",$data['busqueda']."%")->take(10)->get();
-				$data['competencia'] = Competencia::where("nombreCompetencia","like",$data['busqueda']."%")->take(10)->get();
+				$dato = DB::select("SELECT *
+												FROM competidors 
+												WHERE concat(nombre, apellidoPaterno, apellidoMaterno) LIKE '%".$data['busqueda']."%' OR numeroCompetidor LIKE '%".$data['busqueda']."%' ");
 
-				if(sizeof($datos['competidores']) > 0 ){
-					return view('competidores.front_mostrar_competidor',$datos);
+				$dat = DB::select("SELECT *
+												FROM competencias
+												WHERE nombreCompetencia LIKE '%".$data['busqueda']."%' ");
 
-				}
+
+				$final=$dato+$datos+$dat;
 				
-				
-				
-				
-				if (sizeof($data['competencia']) > 0 ) {
-					return view('competencia.front_mostrar_competencias', $data);
-				}
+				return view('busqueda.front_mostrar_busqueda', [
+																'entrenadores' => $datos,
+																'competidores' => $dato,
+																'competencias' => $dat, ]);
+												
 			}
+
+			
 		}
 	}
 }
