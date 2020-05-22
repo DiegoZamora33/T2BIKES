@@ -17,26 +17,23 @@ class Busqueda extends Controller
 
 
 			if($data['busqueda']){
-				$datos = DB::select("SELECT * 
+				$datos['entrenadores'] = DB::select("SELECT * 
 												FROM entrenadors 
 												WHERE concat(nombre, apellidoPaterno, apellidoMaterno)
 												LIKE '%".$data['busqueda']."%' ");
 
-				$dato = DB::select("SELECT *
+				$dato['competidores'] = DB::select("SELECT *
 												FROM competidors 
 												WHERE concat(nombre, apellidoPaterno, apellidoMaterno) LIKE '%".$data['busqueda']."%' OR numeroCompetidor LIKE '%".$data['busqueda']."%' ");
 
-				$dat = DB::select("SELECT *
+				$dat['competencias'] = DB::select("SELECT *
 												FROM competencias
 												WHERE nombreCompetencia LIKE '%".$data['busqueda']."%' ");
 
 
 				$final=$dato+$datos+$dat;
 				
-				return view('busqueda.front_mostrar_busqueda', [
-																'entrenadores' => $datos,
-																'competidores' => $dato,
-																'competencias' => $dat, ]);
+				return $final;
 												
 			}
 
