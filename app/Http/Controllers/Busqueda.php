@@ -26,8 +26,8 @@ class Busqueda extends Controller
 												WHERE nombreCompetencia LIKE '%".$data['busqueda']."%' ");
 
 
-			
-				
+
+
 				 return view('busqueda.front_mostrar_busqueda',$datos);
 		}
 	}
