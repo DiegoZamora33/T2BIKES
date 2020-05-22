@@ -12,19 +12,14 @@ class Busqueda extends Controller
 	{
 		if($data->ajax())
 		{
-			$data['busqueda'] = str_replace(' ', '', $data['busqueda']);
-
-
-
-			if($data['busqueda']){
 				$datos['entrenadores'] = DB::select("SELECT * 
 												FROM entrenadors 
-												WHERE concat(nombre, apellidoPaterno)
+												WHERE concat(nombre, ' ', apellidoPaterno)
 												LIKE '%".$data['busqueda']."%' ");
 
 				$datos['competidores'] = DB::select("SELECT *
 												FROM competidors 
-												WHERE concat(nombre, apellidoPaterno) LIKE '%".$data['busqueda']."%' OR numeroCompetidor LIKE '%".$data['busqueda']."%' ");
+												WHERE concat(nombre, ' ', apellidoPaterno) LIKE '%".$data['busqueda']."%' OR numeroCompetidor LIKE '%".$data['busqueda']."%' ");
 
 				$datos['competencias'] = DB::select("SELECT *
 												FROM competencias
@@ -34,10 +29,6 @@ class Busqueda extends Controller
 			
 				
 				 return view('busqueda.front_mostrar_busqueda',$datos);
-												
-			}
-
-			
 		}
 	}
 }
