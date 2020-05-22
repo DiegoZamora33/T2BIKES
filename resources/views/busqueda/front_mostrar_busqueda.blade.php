@@ -42,7 +42,6 @@
 
     @foreach ($entrenadores as $entrenador)
         <tr onclick="getEntre(this);" id="{{ $entrenador->idEntrenador }}" style="cursor: pointer;">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token_{{ $entrenador->numeroCompetidor }}">
           <td data-label="Nombre">{{$entrenador->nombre}}</td>
           <td data-label="Paterno">{{$entrenador->apellidoPaterno}}</td>
           <td data-label="Materno">{{$entrenador->apellidoMaterno}}</td>
@@ -62,7 +61,7 @@
     @foreach($competencias as $miCompetencia)
       <div class="card text-center mt-2 " style="color:white;">
         <div class="card-header bg-dark">
-          {{ $miCompetencia['nombreCompetencia'] }}
+          {{ $miCompetencia->nombreCompetencia }}
         </div>
         <div class="card-body"  style="color:black;">
 
@@ -70,14 +69,13 @@
            $query= DB::select("SELECT COUNT(*) inscritos FROM competencias
                    INNER JOIN puntaje__competidor__competencias
                     ON competencias.idCompetencia = puntaje__competidor__competencias.idCompetencia
-                    WHERE puntaje__competidor__competencias.idCompetencia = ".$miCompetencia['idCompetencia']."");      
+                    WHERE puntaje__competidor__competencias.idCompetencia = ".$miCompetencia->idCompetencia."");      
           ?>
          @foreach($query as $miQuery)
           <h5 class="card-title"> Participantes: {{ $miQuery->inscritos }} </h5>
          @endforeach
-          <h6 class="card-text text-muted">Periodo: {{ $miCompetencia['periodo'] }}</h6>
-          <h6 class="card-text text-muted">Estatus: {{ $miCompetencia['estatus'] }}</h6>
-          <a id="{{ $miCompetencia['idCompetencia'] }}" onclick="getTour(this);" class="btn btn-primary text-white">Ver más</a>
+          <h6 class="card-text text-muted">Periodo: {{ $miCompetencia->periodo }}</h6>
+          <a id="{{ $miCompetencia->idCompetencia }}" onclick="getTour(this);" class="btn btn-primary text-white">Ver más</a>
         </div>
       </div>
       <br>
