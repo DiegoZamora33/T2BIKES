@@ -259,3 +259,109 @@ function compAllPDF(miCompetencia, miPuntajeGlobal, miPeriodo, miEstatus, miEntr
 }
 
 // <--------------------------------------------------------------------------------------------------->
+
+
+
+// <--------------------------------------------------------------------------------------------------->
+function entreAllPDF(miNombre, miCompetencia, miMeses, miPeriodo, miTotal)
+{
+    // Buscamos toda mi info
+    var miEntrenador = $('#miEntrenador').text();
+    var miPatrocinio = $('#miPatrocinio').text();
+    var miFechaRegistro =$('#miFechaRegistro').text();
+
+    var namePDF = "Perfil-"+miEntrenador.replace('Nombre:', ' ').trim();
+
+    //Crear lienzo PDF
+    var doc = new jsPDF('portrait');
+
+
+     //Añadiendo elementos al PDF
+        doc.setFontSize(20);
+        doc.setFontStyle("bold");
+        doc.text("Perfil del Entrenador", 70, 20);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Nombre:', 22, 30);
+
+        doc.setFontSize(15);
+        doc.setFontStyle("normal");
+        doc.text(miEntrenador.replace('Nombre:', ' '), 42, 30);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Patrocinadores:', 22, 36);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(miPatrocinio, 25, 42);
+
+        // Titulo de a Quienes Entrena
+        doc.setFontSize(20);
+        doc.setFontStyle("bold");
+        doc.text("Entrena a "+miTotal+" Competidores", 62, 54);
+
+        if(miNombre.length > 0)
+        {
+            // Comenzamosa pintar mis competencias
+            var y=56;
+
+            for (var i = 0; i < miNombre.length; i++) 
+            {
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Competidor:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal")
+                doc.text(miNombre[i], 52, y);
+
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('En la Competencia:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal");
+                doc.text(miCompetencia[i], 70, y);
+
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Durante:', 22, y);
+
+                doc.setFontSize(15);
+                doc.setFontStyle("normal")
+                doc.text(miMeses[i]+" meses", 45, y);
+
+                y += 6;
+                doc.setFontSize(14);
+                doc.setFontStyle("bold");
+                doc.text('Periodo:', 22, y);
+
+                doc.setFontSize(12);
+                doc.setFontStyle("normal")
+                doc.text(miPeriodo[i], 45, y);
+
+                y += 4;
+            }
+        }
+        else
+        {
+          // No tiene Competencias
+           doc.setFontSize(14);
+            doc.setFontStyle("bold");
+            doc.text('** Este Entrenador no entrena a ningun Competidor**', 22, 56);
+        }
+
+
+
+
+
+
+     //Guardar
+    doc.save(namePDF);
+}
+// <--------------------------------------------------------------------------------------------------->

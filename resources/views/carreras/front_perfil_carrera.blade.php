@@ -14,104 +14,149 @@
     </div>
 
 
-
     @foreach($carrera as $miCarrera)
       <input type="hidden" name="_idCarrera" id="idCarrera" value="{{$miCarrera->idCarrera}}">
       <h4>{{$miCarrera->nombreCarrera}}</h4>
       <h6>{{$miCarrera->descripcion}}</h6>
       <h6>Fecha de Registro: {{ substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),0,4) }}</h6>
     @endforeach
+    @foreach($numParticipantes as $totalParticipantes)
+      <h6>Competidores Inscritos: {{$totalParticipantes->inscritos}}</h6>
+    @endforeach
 
+
+    <button type="button" class="btn btn-warning ml-2">Descargar Reporte</button>
 
     <br>
-    <h4>Competidores</h4>
+    <h4 class="mt-4">Competidores</h4>
+
+
+
+             <p>Ver más o menos participantes</p>
+
+             <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-number" data-type="minus" onclick="less()">
+                              <span class="demo-icon icon-minus"></span>
+                            </button>
+                            </span>
+
+
+                            @if($totalParticipantes->inscritos > 0)
+                              @if($totalParticipantes->inscritos < 4)
+                                <input type="text" id="g" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="1" max="{{$totalParticipantes->inscritos}}">
+                              @else
+                                <input type="text" id="g" onchange="actualizaLista(this)" class="form-control input-number"   value="4"  min="1" max="{{$totalParticipantes->inscritos}}">
+                              @endif
+
+                            @else
+                              <input type="text" id="g" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="0" max="{{$totalParticipantes->inscritos}}">
+
+                            @endif
+
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-number" data-type="plus" onclick="plus()">
+                              <span class="demo-icon icon-plus"></span>
+                            </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5"></div>
+                </div>
+              <br>
+
+
     <p>Selecciona uno para asignarle o restarle puntos</p>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Nombre completo</th>
-          <th scope="col">Número de competidor</th>
-          <th scope="col">Posición</th>
-          <th scope="col">Puntaje</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        @foreach($participantes as $miParticipante)
-          @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
-              <tr data-toggle="modal" onclick="dataCarreraCompetencia('{{$miParticipante->numeroCompetidor}} ')" data-target="#modalCarreraCompetidor" style="cursor: pointer;">
-          @else
-              <tr style="cursor: pointer;">
-          @endif
-                <td data-label="Nombre">{{$miParticipante->nombre}} {{$miParticipante->apellidoPaterno}} {{$miParticipante->apellidoMaterno}}</td>
-                <td data-label="Núm. de competidor">{{$miParticipante->numeroCompetidor}}</td>
-                <td data-label="Posición">{{$miParticipante->lugarLlegada}}</td>
-                <td data-label="Puntaje">{{$miParticipante->puntaje}}</td>
+    <div id="contenedorEstadistica">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Nombre completo</th>
+                <th scope="col">Número de competidor</th>
+                <th scope="col">Posición</th>
+                <th scope="col">Puntaje</th>
               </tr>
-        @endforeach
+            </thead>
+            <tbody>
 
-      </tbody>
-    </table><br>
+              @foreach($participantes as $miParticipante)
+                @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
+                    <tr data-toggle="modal" onclick="dataCarreraCompetencia('{{$miParticipante->numeroCompetidor}} ')" data-target="#modalCarreraCompetidor" style="cursor: pointer;">
+                @else
+                    <tr style="cursor: pointer;">
+                @endif
+                      <td data-label="Nombre">{{$miParticipante->nombre}} {{$miParticipante->apellidoPaterno}} {{$miParticipante->apellidoMaterno}}</td>
+                      <td data-label="Núm. de competidor">{{$miParticipante->numeroCompetidor}}</td>
+                      <td data-label="Posición">{{$miParticipante->lugarLlegada}}</td>
+                      <td data-label="Puntaje">{{$miParticipante->puntaje}}</td>
+                    </tr>
+              @endforeach
+
+            </tbody>
+          </table><br>
 
 
-    <h4 class="mt-5">Grafica</h4>
-    <div id="contenedorGrafica-carrera">
-      <canvas id="carrera-grafica-bar"></canvas>
-      <script>
-        var ctx = document.getElementById("carrera-grafica-bar").getContext("2d");
-        var myChart = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: 
-            <?php
+          <h4 class="mt-5">Grafica</h4>
+          <div id="contenedorGrafica-carrera">
+            <canvas id="carrera-grafica-bar"></canvas>
+            <script>
+              var ctx = document.getElementById("carrera-grafica-bar").getContext("2d");
+              var myChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                  labels: 
+                  <?php
 
-              $out = "";
-              foreach ($participantes as &$miParticipanteG) {
-                  $out = $out."'".$miParticipanteG->nombre." ".$miParticipanteG->apellidoPaterno." ".$miParticipanteG->apellidoMaterno."',";
-              }
+                    $out = "";
+                    foreach ($participantes as &$miParticipanteG) {
+                        $out = $out."'".$miParticipanteG->nombre." ".$miParticipanteG->apellidoPaterno." ".$miParticipanteG->apellidoMaterno."',";
+                    }
 
-              echo "[".$out."]";
+                    echo "[".$out."]";
 
-            ?>,
-            datasets: [{
-              label: 'Puntaje',
-              data: 
-              <?php
+                  ?>,
+                  datasets: [{
+                    label: 'Puntaje',
+                    data: 
+                    <?php
 
-                $out = "";
-                foreach ($participantes as &$miParticipanteG) {
-                    $out = $out.$miParticipanteG->puntaje.",";
-                }
+                      $out = "";
+                      foreach ($participantes as &$miParticipanteG) {
+                          $out = $out.$miParticipanteG->puntaje.",";
+                      }
 
-                echo "[".$out."]";
+                      echo "[".$out."]";
 
-              ?>,
-              backgroundColor: [
-                'rgb(66, 134, 244)',
-                'rgb(100, 8, 75)',
-                'rgb(200, 134, 244)',
-                'rgb(247, 218, 19)'
-              ]
-            }]
-          },
-          options: {
-            scales: {
-              yAxes: [{
-                  ticks: {
-                    beginAtZero: true
+                    ?>,
+                    backgroundColor: [
+                      'rgb(66, 134, 244)',
+                      'rgb(100, 8, 75)',
+                      'rgb(200, 134, 244)',
+                      'rgb(247, 218, 19)'
+                    ]
+                  }]
+                },
+                options: {
+                  scales: {
+                    yAxes: [{
+                        ticks: {
+                          beginAtZero: true
+                        }
+                    }]
                   }
-              }]
-            }
-          }
-        });
-      </script>
+                }
+              });
+            </script>
+          </div>
     </div>
     </div>
 
     <div class="w-100">
     <div class="justify-content-center mt-3 d-flex mx-auto">
       <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-carrera" onclick="grafCarrera()">Cambiar a Grafica de Pastel</button>
-      <button type="button" class="btn btn-warning ml-2">Descargar Reporte</button>
     </div>
     </div><br><br>
 

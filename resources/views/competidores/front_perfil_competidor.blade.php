@@ -7,8 +7,6 @@
           $arrEstatus = array();
           $arrEntrenador = array();
 
-          $select = DB::select("select * from competencias where idCompetencia = 78");
-
           foreach ($competencias as &$aux) 
           {
             $arrNombres[] = $aux->nombreCompetencia;

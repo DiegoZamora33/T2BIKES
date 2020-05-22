@@ -192,6 +192,30 @@ function miToggle()
   }
 }
 
+function plus()
+{
+  if($('#g').val() != 0)
+  {
+    if(parseInt($('#g').val()) + parseInt(1) <=  document.getElementById('g').max)
+       document.getElementById('g').value = parseInt($('#g').val()) + parseInt(1);
+
+    actualizaLista(document.getElementById('g'));
+  }
+}
+
+function less()
+{
+
+  if($('#g').val() != 0)
+  {
+    if(parseInt($('#g').val()) - parseInt(1) >=  document.getElementById('g').min)
+       document.getElementById('g').value = parseInt($('#g').val()) - parseInt(1);
+
+
+    actualizaLista(document.getElementById('g'));
+  }
+}
+
 // <-------------------------------------------------------------------------------------------------------------->
 
 
@@ -1159,6 +1183,35 @@ function buscar()
 
 
 
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+// <------------------------------------- PARA CAMBIAR EL NUMERO DE COMPETIDORES A MOSTAR (COMPETENCIA) -------------------------------------------------------------->
+
+function actualizaLista(miNumero)
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var token = $('#token').val();
+
+  $.ajax({
+      url: url+'/home/competencias/statDinamic' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia, numero: miNumero.value},
+      success: function(data){
+        setTimeout(function(){
+          $('#contenedorEstadistica').html(data);
+          document.getElementById('contenedorEstadistica').style = "display: none;";
+           $('#contenedorEstadistica').fadeIn(800);
+
+        }
+      );
+    }
+    });
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
