@@ -54,13 +54,26 @@
                     <div class="col-sm-2">
                         <div class="input-group">
                             <span class="input-group-btn">
-                          <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
+                            <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
                               <span class="demo-icon icon-minus"></span>
                             </button>
                             </span>
-                            <input type="text" name="quant[1]" class="form-control input-number" value="5" min="1" max="10">
+
+
+                            @if($totalParticipantes->inscritos > 0)
+                              @if($totalParticipantes->inscritos < 4)
+                                <input type="text" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="1" max="{{$totalParticipantes->inscritos}}">
+                              @else
+                                <input type="text" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="4"  min="1" max="{{$totalParticipantes->inscritos}}">
+                              @endif
+
+                            @else
+                              <input type="text" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="0" max="{{$totalParticipantes->inscritos}}">
+
+                            @endif
+
                             <span class="input-group-btn">
-                          <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                            <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
                               <span class="demo-icon icon-plus"></span>
                             </button>
                             </span>
@@ -73,7 +86,7 @@
 
 
 
-
+      <div id="contenedorEstadistica">
           <table>
             <thead>
               <tr>
@@ -152,7 +165,7 @@
                     });
                   </script>
                 </div>
-
+          </div>
               <div class="w-100">
                 <div class="justify-content-center mt-3 d-flex mx-auto">
                   <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competencia" onclick="grafCompetencia()">

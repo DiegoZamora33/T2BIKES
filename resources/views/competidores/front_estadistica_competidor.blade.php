@@ -41,6 +41,9 @@
 
       @endif
 
+      <div class="text-center mt-4">
+        <button type="button" onclick="compStatPDF()" class="btn btn-warning">Descargar Reporte</button>
+      </div>
             	<div class="text-center mt-5 mb-5">
                      @foreach($competencia as $miCompetencia)
 
@@ -145,9 +148,6 @@
               <div class="justify-content-center mt-3 d-flex mx-auto">
                 <button class="btn btn-primary btn-md" id="btn-cambiarGrafica-competidor" onclick="grafCompetidor()">
                 Cambiar a Grafica de Pastel</button>
-
-                 <button type="button" onclick="compStatPDF()" class="btn btn-warning ml-3">Descargar Reporte</button>
-       
               </div>
             </div>
 

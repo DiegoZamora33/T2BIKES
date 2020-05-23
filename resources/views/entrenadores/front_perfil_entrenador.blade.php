@@ -1,5 +1,28 @@
 
 @if(Auth::check())
+      <?php  //Generar mi Array de Los que Entrena
+          $arrNombres = array();
+          $arrCompetencia = array();
+          $arrMeses = array();
+          $arrPeriodo = array();
+          $totalComp = 0;
+
+          foreach ($entrenamientos as &$aux) 
+          {
+            $arrNombres[] = $aux->nombre.' '.$aux->apellidoPaterno.' '.$aux->apellidoMaterno;
+            $arrCompetencia[] = $aux->nombreCompetencia;
+            $arrMeses[] = $aux->mesesEntrenamiento;
+            $arrPeriodo[] = 'Del '.substr($aux->fechaInicio,8,2)."/".substr($aux->fechaInicio,5,2)."/".substr($aux->fechaInicio,0,4).' al '.substr($aux->fechaFin,8,2)."/".substr($aux->fechaFin,5,2)."/".substr($aux->fechaFin,0,4);
+          }
+
+          foreach ($total as &$auxT) 
+          {
+              $totalComp = $auxT->total;
+          }
+      ?>
+
+
+
     <div class="row">
 
     <div class="text-left col-md-2">
@@ -17,13 +40,13 @@
 
     </div>
 
-    <h5>Nombre: {{ $entrenador->nombre }} {{ $entrenador->apellidoPaterno }} {{ $entrenador->apellidoMaterno }}</h5>
-    <h5>Fecha de Registro: {{ substr(str_limit($entrenador->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($entrenador->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($entrenador->created_at, $limit = 10, $end = " "),0,4) }}</h5>
+    <h5 id="miEntrenador">Nombre: {{ $entrenador->nombre }} {{ $entrenador->apellidoPaterno }} {{ $entrenador->apellidoMaterno }}</h5>
+    <h5 id="miFechaRegistro">Fecha de Registro: {{ substr(str_limit($entrenador->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($entrenador->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($entrenador->created_at, $limit = 10, $end = " "),0,4) }}</h5>
     <h5>Patrocinadores:</h5>
-    <h6 class="card-text mt-1 text-muted"> {{ $entrenador->patrocinio }}</h6>
+    <h6 id="miPatrocinio" class="card-text mt-1 text-muted"> {{ $entrenador->patrocinio }}</h6>
 
     <div class="text-center mt-3">
-      <button type="button" class="btn btn-warning">Descargar Reporte</button>
+      <button type="button" class="btn btn-warning" onclick='<?php echo "entreAllPDF(".json_encode($arrNombres).",".json_encode($arrCompetencia).",".json_encode($arrMeses).",".json_encode($arrPeriodo).",".$totalComp.")" ?>'>Descargar Reporte</button>
     </div><br><br>
 
     <br>

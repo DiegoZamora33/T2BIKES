@@ -82,6 +82,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 		// Para mostrar el perfil de una Competencia
 		Route::match(['get', 'post'], '/home/competencias/perfilCompetencia', 'Competencias@perfilCompetencia')->name('perfilCompetencia');
 
+		// Para Mostrar el numero de competuidores por tabla en la estadistica de una Competencia
+		Route::match(['get', 'post'], '/home/competencias/statDinamic', 'Competencias@statDinamic')->name('statDinamic');
+
 		// Para Mostrar una Carrera de una Competencia
 		Route::match(['get', 'post'], '/home/carreras/perfilCarrera', 'Carreras@perfilCarrera')->name('perfilCarrera');
 

@@ -71,6 +71,18 @@ body {
   border: solid 0px #000;
 }
 
+
+.resultado
+{
+  cursor: pointer;
+}
+
+.resultado:hover
+{
+  transform: scale(1.05);
+}
+
+
 .escalar
 {
   transform: scale(1.15);

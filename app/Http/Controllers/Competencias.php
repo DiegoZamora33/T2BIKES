@@ -35,6 +35,21 @@ class Competencias extends Controller
     }
 
 
+    public function statDinamic(Request $data)
+    {
+        if($data->ajax())
+        {
+            $datos['puntajesGlobales'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno, puntaje__competidor__competencias.puntajeGlobal
+                    FROM competencias INNER JOIN puntaje__competidor__competencias INNER JOIN competidors
+                    ON puntaje__competidor__competencias.idCompetencia = competencias.idCompetencia
+                        AND competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC LIMIT ".$data['numero']." ");
+
+            return view('competencia.front_estadistica_competencia', $datos);
+        }
+    }
+
+
     public function perfilCompetencia(Request $data)
     {
         if($data->ajax())
@@ -49,7 +64,7 @@ class Competencias extends Controller
                     FROM competencias INNER JOIN puntaje__competidor__competencias INNER JOIN competidors
                     ON puntaje__competidor__competencias.idCompetencia = competencias.idCompetencia
                         AND competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor
-                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC ");
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC LIMIT 4");
 
             $datos['numParticipantes'] = DB::select("SELECT COUNT(*) inscritos FROM competencias
                    INNER JOIN puntaje__competidor__competencias

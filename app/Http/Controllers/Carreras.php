@@ -73,6 +73,12 @@ class Carreras extends Controller
                 WHERE carreras.idCarrera = ".$data['idCarrera']."
                     AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC ");
 
+            $datos['numParticipantes'] = DB::select("SELECT COUNT(*) inscritos FROM competencias
+                   INNER JOIN puntaje__competidor__competencias
+                    ON competencias.idCompetencia = puntaje__competidor__competencias.idCompetencia
+                    WHERE puntaje__competidor__competencias.idCompetencia = ".$data['idCompetencia']."");
+
+
             $datos['tiposCarreras'] = TipoCarrera::all();
 
 
