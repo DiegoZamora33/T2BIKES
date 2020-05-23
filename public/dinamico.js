@@ -62,10 +62,10 @@ $(document).ready(function ()
    });
 
     // Para Mostrar lista de Competencias
-    $("#competencias").click(function()
+    $("#portaCompetencias").click(function()
     {
       miOff();
-      $('#portaCompetencias').className = "active active mt-2 mb-1";
+      this.className = "active  mt-2 mb-1";
       $.ajax({
               type: "get",
               url: url+"/home/competencias",
@@ -80,12 +80,7 @@ $(document).ready(function ()
     });
 
         // Para Mostrar lista de Competencias
-    $("#portaCompetencias").click(function()
-    {
-      miOff();
-      $('#portaCompetencias').className = "active active mt-2 mb-1";
 
-    });
 
 
     // Para mostrar lista de Usuarios

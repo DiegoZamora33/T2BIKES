@@ -164,10 +164,12 @@ span {
     margin-right: 10px;
 }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
+#sidebar ul li.active>a{
     color: #ac0808;
     background: #fff;
+}
+a[aria-expanded="true"]{
+  background: #d7505c;
 }
 
 a[data-toggle="collapse"] {
@@ -214,22 +216,22 @@ a.article:hover {
     margin: 45px auto 20px auto;
     position: relative;
   }
-  
+
   input[type='range'] {
     display: block;
     width: 250px;
   }
-  
+
   input[type='range']:focus {
     outline: none;
   }
-  
+
   input[type='range'],
   input[type='range']::-webkit-slider-runnable-track,
   input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
   }
-  
+
   input[type=range]::-webkit-slider-thumb {
     background-color: #777;
     width: 20px;
@@ -238,7 +240,7 @@ a.article:hover {
     border-radius: 50%;
     margin-top: -9px;
   }
-  
+
   input[type=range]::-moz-range-thumb {
     background-color: #777;
     width: 15px;
@@ -246,7 +248,7 @@ a.article:hover {
     border: 3px solid #333;
     border-radius: 50%;
   }
-  
+
   input[type=range]::-ms-thumb {
     background-color: #777;
     width: 20px;
@@ -254,33 +256,33 @@ a.article:hover {
     border: 3px solid #333;
     border-radius: 50%;
   }
-  
+
   input[type=range]::-webkit-slider-runnable-track {
     background-color: #777;
     height: 3px;
   }
-  
+
   input[type=range]:focus::-webkit-slider-runnable-track {
     outline: none;
   }
-  
+
   input[type=range]::-moz-range-track {
     background-color: #777;
     height: 3px;
   }
-  
+
   input[type=range]::-ms-track {
     background-color: #777;
     height: 3px;
   }
-  
+
   input[type=range]::-ms-fill-lower {
     background-color: HotPink
   }
-  
+
   input[type=range]::-ms-fill-upper {
     background-color: black;
-  } 
+  }
 
   .etiqueta {
     width: 30px;
@@ -294,7 +296,7 @@ a.article:hover {
     padding-top: 2px;
     top: -45px;
   }
-  
+
   .etiqueta:after {
     content: '';
     display: block;
@@ -394,5 +396,5 @@ a.article:hover {
     {
       display: block;
     }
-    
+
 }
