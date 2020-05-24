@@ -1210,3 +1210,75 @@ function actualizaLista(miNumero)
 }
 
 // <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <------------------------------------------- FUNCION PARA MOSTRA MODULO QUITAR AGREGAR ---------------------------------------------------------->
+
+function agregarQuitarCompe()
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var token = $('#token').val();
+
+   $.ajax({
+      url: url+'/home/competencias/agregarQuitar' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia},
+      success: function(data){
+        setTimeout(function(){
+          $('#mostrador').html(data);
+          effectFadeOut();
+          effectFadeIn();
+        }
+      );
+    }
+    });
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <--------------------------------------------- FUNCION MODULO PARA QUE VAMOAS A QUITAR --------------------------------------------------------->
+
+function quienQuitar()
+{
+
+  var idCompetencia = $('#idCompetencia').val();
+  var numeroCompetidor = $('#numeroCompetidorDel').val();
+
+  var token = $('#token').val();
+
+
+  $.ajax({
+    url: url+'/home/competencias/quitarCompetidor',
+    headers: {'X-CSRF-TOKEN':token},
+    type: 'POST',
+    dataType: 'json',
+    data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia},
+    
+    success:function(response)
+    {
+      switch(response['codigo'])
+      {
+        case "confirm": 
+            document.getElementById('miAlert').className = "alert alert-warning mt-1";
+            $('#miAlert').fadeOut();
+            $('#miAlert').html(response['mensaje']);
+            $('#miAlert').fadeIn(200);
+        break;
+
+        default:
+            document.getElementById('miAlert').className = "alert alert-danger mt-1";
+            $('#miAlert').fadeOut();
+            $('#miAlert').html(response['mensaje']);
+            $('#miAlert').fadeIn(200);
+        break;
+      }
+    }
+
+    });
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+

@@ -41,10 +41,13 @@
       <br>
 
       @endforeach
-      <br>
 
       <p>Ver Estadisticas/Carreras</p>
       <input id="toggle-trigger" type="checkbox" checked data-toggle="toggle" data-on="Estadisticas" data-off="Carreras" data-onstyle="success" data-offstyle="info" onchange="miToggle()">
+
+      <br>
+
+          <button type="button" class="btn btn-info btn-sm mt-3" onclick='agregarQuitarCompe()' >Agregar/Quitar Competidores</button>
 
       <br><br><br>
 
@@ -442,7 +445,7 @@
                   e.preventDefault();
               }
           });
-      </script>
+      </script> 
 @else
   <h4>No tienes permisos para realizar esto... </h4>
       <h5>Serás Redirigido a la Pagina Principal</h5>
