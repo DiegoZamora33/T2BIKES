@@ -61,7 +61,9 @@
 
                       @endforeach
                       <br><br>
-                      <h4 class="text-danger">Haga click en una fila para sumar/restar puntos</h4><br>
+                      @if (Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
+                        <h4 class="text-danger">Haga click en una fila para sumar/restar puntos</h4><br>
+                      @endif
                       <table id="carrers"  class="mx-auto">
                         <thead>
                           <tr>
