@@ -206,6 +206,10 @@ a.article:hover {
     color: #fff !important;
 }
 
+.closeSesion{
+  display: none;
+}
+
 /* ---------------------------------------------------
     INPUT SCROLL
 ----------------------------------------------------- */
@@ -395,4 +399,10 @@ a.article:hover {
       display: block;
     }
 
+}
+
+@media (max-width: 769px) {
+  .closeSesion{
+    display: block;
+  }
 }
