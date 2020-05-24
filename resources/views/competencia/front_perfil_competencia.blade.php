@@ -47,7 +47,9 @@
 
       <br>
 
+        @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
           <button type="button" class="btn btn-info btn-sm mt-3" onclick='agregarQuitarCompe()' >Agregar/Quitar Competidores</button>
+        @endif
 
       <br><br><br>
 
