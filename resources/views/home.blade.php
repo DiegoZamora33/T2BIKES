@@ -81,7 +81,7 @@
                 </div>
 
 
-                <ul class="d-lg-none d-md-none d-sm-block">
+                <ul class="closeSesion">
                     <li>
                         <a class="btn-sm btn-danger pl-1" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
