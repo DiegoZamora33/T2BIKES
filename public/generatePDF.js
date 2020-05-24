@@ -365,3 +365,169 @@ function entreAllPDF(miNombre, miCompetencia, miMeses, miPeriodo, miTotal)
     doc.save(namePDF);
 }
 // <--------------------------------------------------------------------------------------------------->
+
+// <---------------------------------- FUNCION PARA PDF DE COMPETENCIA PERFIL ----------------------------------------------------------------->
+function competenciaALLPDF()
+{
+     // Buscamos toda mi info
+    var miCompetencia = $('#nombreCompetencia').text();
+    var estatus = $('#estatus').text();
+    var miPeriodo =$('#periodo').text();
+    var miFechaRegistro =$('#fechaRegistro').text();
+    var inscritos =$('#inscritos').text();
+    var totalCarreras =$('#totalCarreras').text();
+
+    var namePDF = miCompetencia+" ";
+
+    //Crear lienzo PDF
+    var doc = new jsPDF('portrait');
+
+
+    //Añadiendo elementos al PDF
+        doc.setFontSize(20);
+        doc.setFontStyle("bold");
+        doc.text(miCompetencia, 70, 20);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Estatus:', 22, 30);
+
+        doc.setFontSize(15);
+        doc.setFontStyle("normal");
+        doc.text(estatus.replace('Estatus:', ' '), 42, 30);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Periodo:', 22, 36);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(miPeriodo.replace('Periodo:', ' '), 45, 36);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Fecha de Registro:', 22, 42);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(miFechaRegistro.replace('Fecha de Registro:', ' '), 68, 42);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Competidores Inscritos:', 22, 48);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(inscritos.replace('Competidores Inscritos:', ' '), 83, 48);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Carreras de la Competencia:', 22, 54);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(totalCarreras.replace('Carreras de la Competencia:', ' '), 95, 54);
+
+
+        // Vemos cual grafica enta en Pantalla
+        if ( document.getElementById( "competencia-grafica-bar" )) 
+        {
+           var newCanvas = document.querySelector('#competencia-grafica-bar');
+        }
+        else
+        {
+           var newCanvas = document.querySelector('#competencia-grafica-pie');
+        }
+
+        //Imagen desde la etiqueta canvas
+        var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
+
+
+        // Metemos la Grafica
+        doc.addImage(newCanvasImg, 'PNG', 30, 56, 150, 75 );
+
+        // Metemos la Tabla
+        doc.autoTable({ html: '#carrers', margin: {top: 135} });
+
+
+        //Guardar
+         doc.save(namePDF);
+}
+// <--------------------------------------------------------------------------------------------------------------------------------------------->
+
+// <---------------------------------- FUNCION PARA PDF DE COMPETENCIA PERFIL ----------------------------------------------------------------->
+function carreraALLPDF()
+{
+     // Buscamos toda mi info
+    var miCompetencia = $('#nombreCompetencia').text();
+    var miCarrera = $('#nombreCarrera').text();
+    var miFechaRegistro =$('#fechaRegistro').text();
+    var inscritos =$('#inscritos').text();
+    var descripcion =$('#descripcion').text();
+
+    var namePDF = miCompetencia+"_"+miCarrera;
+
+    //Crear lienzo PDF
+    var doc = new jsPDF('portrait');
+
+
+    //Añadiendo elementos al PDF
+        doc.setFontSize(20);
+        doc.setFontStyle("bold");
+        doc.text(miCompetencia, 70, 20);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text(miCarrera, 22, 30);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Descripción:', 22, 36);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(descripcion, 58, 36);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Fecha de Registro:', 22, 42);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(miFechaRegistro.replace('Fecha de Registro:', ' '), 68, 42);
+
+        doc.setFontSize(14);
+        doc.setFontStyle("bold");
+        doc.text('Competidores Inscritos:', 22, 48);
+
+        doc.setFontSize(12);
+        doc.setFontStyle("normal")
+        doc.text(inscritos.replace('Competidores Inscritos:', ' '), 83, 48);
+
+
+        // Vemos cual grafica enta en Pantalla
+        if ( document.getElementById( "carrera-grafica-bar" )) 
+        {
+           var newCanvas = document.querySelector('#carrera-grafica-bar');
+        }
+        else
+        {
+           var newCanvas = document.querySelector('#carrera-grafica-pie');
+        }
+
+        //Imagen desde la etiqueta canvas
+        var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
+
+
+        // Metemos la Grafica
+        doc.addImage(newCanvasImg, 'PNG', 30, 50, 150, 75 );
+
+        // Metemos la Tabla
+        doc.autoTable({ html: '#carrers', margin: {top: 129} });
+
+
+        //Guardar
+         doc.save(namePDF);
+}
+// <--------------------------------------------------------------------------------------------------------------------------------------------->
+
