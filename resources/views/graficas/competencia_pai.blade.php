@@ -9,7 +9,7 @@
 
                     $out = "";
                     foreach ($puntajesGlobales as &$miCompePuntaje) {
-                        $out = $out."'".$miCompePuntaje->nombre." ".$miCompePuntaje->apellidoPaterno." ".$miCompePuntaje->apellidoMaterno."',";
+                       $out = $out."'".$miCompePuntaje->numeroCompetidor."',";
                     }
 
                     echo "[".$out."]";

@@ -85,6 +85,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 		// Para Mostrar el numero de competuidores por tabla en la estadistica de una Competencia
 		Route::match(['get', 'post'], '/home/competencias/statDinamic', 'Competencias@statDinamic')->name('statDinamic');
 
+		// Para Mostrar modulo de agregar quitar
+		Route::match(['get', 'post'], '/home/competencias/agregarQuitar', 'Competencias@agregarQuitar')->name('agregarQuitar');
+
+		// Para Mostrar a quien vamos a quitar de la competencia
+		Route::match(['get', 'post'], '/home/competencias/quitarCompetidor', 'Competencias@quitarCompetidor')->name('quitarCompetidor');
+
 		// Para Mostrar una Carrera de una Competencia
 		Route::match(['get', 'post'], '/home/carreras/perfilCarrera', 'Carreras@perfilCarrera')->name('perfilCarrera');
 

@@ -10,22 +10,22 @@
 
       <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
       <input type="hidden" name="_idCompetencia" id="idCompetencia" value="{{$competencia->idCompetencia}}">
-      <h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">{{$competencia->nombreCompetencia}}</h3>
+      <h3 id="nombreCompetencia" class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">{{$competencia->nombreCompetencia}}</h3>
     </div>
 
 
     @foreach($carrera as $miCarrera)
       <input type="hidden" name="_idCarrera" id="idCarrera" value="{{$miCarrera->idCarrera}}">
-      <h4>{{$miCarrera->nombreCarrera}}</h4>
-      <h6>{{$miCarrera->descripcion}}</h6>
-      <h6>Fecha de Registro: {{ substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),0,4) }}</h6>
+      <h4 id="nombreCarrera">{{$miCarrera->nombreCarrera}}</h4>
+      <h6 id="descripcion">{{$miCarrera->descripcion}}</h6>
+      <h6 id="fechaRegistro">Fecha de Registro: {{ substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($miCarrera->created_at, $limit = 10, $end = " "),0,4) }}</h6>
     @endforeach
     @foreach($numParticipantes as $totalParticipantes)
-      <h6>Competidores Inscritos: {{$totalParticipantes->inscritos}}</h6>
+      <h6 id="inscritos">Competidores Inscritos: {{$totalParticipantes->inscritos}}</h6>
     @endforeach
 
 
-    <button type="button" class="btn btn-warning ml-2">Descargar Reporte</button>
+    <button type="button" onclick="carreraALLPDF()" class="btn btn-warning ml-2">Descargar Reporte</button>
 
     <br>
     <h4 class="mt-4">Competidores</h4>
@@ -74,7 +74,7 @@
     @endif
 
     <div id="contenedorEstadistica">
-          <table>
+          <table id="carrers">
             <thead>
               <tr>
                 <th scope="col">Nombre completo</th>
@@ -115,7 +115,7 @@
 
                     $out = "";
                     foreach ($participantes as &$miParticipanteG) {
-                        $out = $out."'".$miParticipanteG->nombre." ".$miParticipanteG->apellidoPaterno." ".$miParticipanteG->apellidoMaterno."',";
+                        $out = $out."'".$miParticipanteG->numeroCompetidor."',";
                     }
 
                     echo "[".$out."]";

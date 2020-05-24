@@ -10,6 +10,7 @@ use App\Entrenador_Competidor_Competencia;
 use App\Puntaje_Competidor_Competencia;
 use App\Puntaje_Competidor_Carrera;
 use App\Carrera;
+use App\Entrenador;
 use Illuminate\Support\Facades\DB;
 include('miDB.php');
 
@@ -32,6 +33,62 @@ class Competencias extends Controller
         $datos['competencias'] = bd_consulta($query);
 
         return view('competencia.front_mostrar_competencias', $datos);
+    }
+
+    public function quitarCompetidor(Request $data)
+    {
+        if($data->ajax())
+        {
+            // Buscamos haber si existe
+            $queryCheck = DB::select(" SELECT * FROM competidors WHERE numeroCompetidor = ".$data['numeroCompetidor']." ");
+            if($queryCheck != null)
+            {
+                $queryCheck2 = DB::select(" SELECT * FROM puntaje__competidor__competencias WHERE
+                                        numeroCompetidor = ".$data['numeroCompetidor']." AND 
+                                        idCompetencia = ".$data['idCompetencia']." ");
+                if($queryCheck2 != null)
+                {
+                    $competidor = DB::select(" SELECT * FROM competidors WHERE numeroCompetidor = ".$data['numeroCompetidor']." ");
+                    $competencia = DB::select(" SELECT * FROM competencias WHERE idCompetencia = ".$data['idCompetencia']." ");
+                    $out = "Estas apunto de quitar a ";
+                     foreach ($competidor as &$miCompetidor) 
+                     {
+                        $out = $out."'".$miCompetidor->nombre." ".$miCompetidor->apellidoPaterno." ".$miCompetidor->apellidoMaterno."' (".$data['numeroCompetidor'].") de la competencia ";
+                     }
+
+                     foreach ($competencia as &$miCompetencia) 
+                     {
+                        $out = $out.$miCompetencia->nombreCompetencia;
+                     }
+
+                    // Esto vas a quitar
+                     return response()->json(['codigo' => 'confirm', 'mensaje' => $out]);
+                }
+                else
+                {
+                    // No Existe
+                 return response()->json(['codigo' => 'nadaSeleccionado', 'mensaje' => "El Numero de Competidor (".$data['numeroCompetidor'].") no esta en esta Competencia"]);
+                }
+            }
+            else
+            {
+                // No Existe
+                 return response()->json(['codigo' => 'nadaSeleccionado', 'mensaje' => "El Numero de Competidor (".$data['numeroCompetidor'].") no existe"]);
+            }
+        }
+    }
+
+    public function agregarQuitar(Request $data)
+    {
+        if ($data->ajax()) 
+        {
+            // Buscamos mi Competencia
+            $datos['competencia'] = Competencia::where('idCompetencia', '=', $data['idCompetencia'])->first();
+            $datos['entrenadores'] = Entrenador::all();
+
+
+            return view('competencia.front_agregar_quitar_competidores', $datos);
+        }
     }
 
 

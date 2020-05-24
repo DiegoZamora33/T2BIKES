@@ -241,3 +241,50 @@ function deleteCarrera()
 }
 
 // <--------------------------------------------------------------------------------------------------->
+
+// <-------------------------------------- Quitar Competidor ----------------------------------------------->
+
+function quitarCompetidor()
+{
+
+  var idCompetencia = $('#idCompetencia').val();
+  var numeroCompetidor = $('#numeroCompetidorDel').val();
+  var token = $('#token').val();
+
+   $.ajax({
+      url: url+'/home/competidores/quitarCompetencia',
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'json',
+      data:{numeroCompetidor: numeroCompetidor, idCompetencia: idCompetencia},
+
+      success:function(response)
+      {
+       
+        switch (response['codigo']) 
+        {
+            case 'quitado':
+                 getSuccess(response['mensaje']);
+                  $('#modalQuitarCompetidor').modal('hide');
+                  setTimeout(
+                    function() {
+                      agregarQuitarCompe();
+                     $('#modalQuitarCompetidor').modal('hide');
+                    },300
+                  );
+            break;
+
+
+            default:
+                document.getElementById('miAlert').className = "alert alert-danger mt-1";
+                $('#miAlert').fadeOut();
+                $('#miAlert').html(response['mensaje']);
+                $('#miAlert').fadeIn(200);
+            break;
+        }
+      }
+
+  });
+}
+
+// <-------------------------------------------------------------------------------------------------------->

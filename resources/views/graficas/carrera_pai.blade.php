@@ -9,7 +9,7 @@
 
           $out = "";
           foreach ($participantes as &$miParticipanteG) {
-              $out = $out."'".$miParticipanteG->nombre." ".$miParticipanteG->apellidoPaterno." ".$miParticipanteG->apellidoMaterno."',";
+               $out = $out."'".$miParticipanteG->numeroCompetidor."',";
           }
 
           echo "[".$out."]";

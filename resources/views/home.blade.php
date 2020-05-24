@@ -41,8 +41,8 @@
                         <ul class="collapse list-unstyled" id="pageCompetencias">
 
                         @foreach($competencias as $miCompetList)
-                            <li>
-                                <a style="cursor: pointer;" id="{{ $miCompetList->idCompetencia }}" onclick="getTour(this);">{{ $miCompetList->nombreCompetencia }}</a>
+                            <li style="cursor: pointer;" id="{{ $miCompetList->idCompetencia }}" onclick="getTour(this);" >
+                                <a>{{ $miCompetList->nombreCompetencia }}</a>
                             </li>
                         @endforeach
 

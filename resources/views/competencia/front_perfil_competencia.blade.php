@@ -10,25 +10,28 @@
 
         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
         <input type="hidden" name="_idCompetencia" id="idCompetencia" value="{{$miCompetencia->idCompetencia}}">
-        <h3 class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">{{$miCompetencia->nombreCompetencia}}</h3>
+        <h3 id="nombreCompetencia" class="col-md-8 mt-lg-auto mt-md-3 mt-sm-4 mt-4">{{$miCompetencia->nombreCompetencia}}</h3>
       </div>
 
-      <h6>Estatus: {{$miCompetencia->estatus}}</h6>
-      <h6>Periodo: {{$miCompetencia->periodo}}</h6>
+      <h6 id="estatus">Estatus: {{$miCompetencia->estatus}}</h6>
+      <h6 id="periodo">Periodo: {{$miCompetencia->periodo}}</h6>
 
-      <h6>Fecha de Registro: {{ substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),0,4) }}</h6>
+      <h6 id="fechaRegistro">Fecha de Registro: {{ substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),8,2)."/".substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),5,2)."/".substr(str_limit($miCompetencia->created_at, $limit = 10, $end = " "),0,4) }}</h6>
 
 
         @foreach($numParticipantes as $totalParticipantes)
-          <h6>Competidores Inscritos: {{$totalParticipantes->inscritos}}</h6>
+          <h6 id="inscritos">Competidores Inscritos: {{$totalParticipantes->inscritos}}</h6>
         @endforeach
 
         @foreach($numCarreras as $totalCarreras)
-          <h6>Carreras de la Competencia: {{$totalCarreras->carreras}}</h6>
+          <h6 id="totalCarreras">Carreras de la Competencia: {{$totalCarreras->carreras}}</h6>
         @endforeach
 
 
-      <a href="reporte.pdf" download="reporte" class="btn btn-warning mt-3">Descargar reporte</a>
+      <div class="text-center mt-3">
+        <button type="button" class="btn btn-warning" onclick='competenciaALLPDF()' >Descargar Reporte</button>
+      </div>
+
       @if ($miCompetencia->idEstatus == 2)
         @if(Auth::user()->idtipoUsuario == 1)
           <a type="button" class="btn btn-danger text-white mt-3" data-toggle="modal" data-target="#modalFin">Finalizar competencia</a>
@@ -38,10 +41,15 @@
       <br>
 
       @endforeach
-      <br>
 
       <p>Ver Estadisticas/Carreras</p>
       <input id="toggle-trigger" type="checkbox" checked data-toggle="toggle" data-on="Estadisticas" data-off="Carreras" data-onstyle="success" data-offstyle="info" onchange="miToggle()">
+
+      <br>
+
+        @if(Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
+          <button type="button" class="btn btn-info btn-sm mt-3" onclick='agregarQuitarCompe()' >Agregar/Quitar Competidores</button>
+        @endif
 
       <br><br><br>
 
@@ -87,7 +95,7 @@
 
 
       <div id="contenedorEstadistica">
-          <table>
+          <table id="carrers">
             <thead>
               <tr>
                 <th scope="col">Nombre completo</th>
@@ -126,7 +134,7 @@
 
                           $out = "";
                           foreach ($puntajesGlobales as &$miCompePuntaje) {
-                              $out = $out."'".$miCompePuntaje->nombre." ".$miCompePuntaje->apellidoPaterno." ".$miCompePuntaje->apellidoMaterno."',";
+                              $out = $out."'".$miCompePuntaje->numeroCompetidor."',";
                           }
 
                           echo "[".$out."]";
@@ -439,7 +447,7 @@
                   e.preventDefault();
               }
           });
-      </script>
+      </script> 
 @else
   <h4>No tienes permisos para realizar esto... </h4>
       <h5>Serás Redirigido a la Pagina Principal</h5>
