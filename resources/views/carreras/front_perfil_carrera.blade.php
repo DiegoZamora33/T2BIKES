@@ -69,7 +69,10 @@
               <br>
 
 
-    <p>Selecciona uno para asignarle o restarle puntos</p>
+    @if (Auth::user()->idtipoUsuario == 1 || Auth::user()->idtipoUsuario == 2)
+      <p>Selecciona uno para asignarle o restarle puntos</p>
+    @endif
+
     <div id="contenedorEstadistica">
           <table>
             <thead>
