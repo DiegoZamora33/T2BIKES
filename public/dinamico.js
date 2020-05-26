@@ -194,7 +194,7 @@ function plus()
     if(parseInt($('#g').val()) + parseInt(1) <=  document.getElementById('g').max)
        document.getElementById('g').value = parseInt($('#g').val()) + parseInt(1);
 
-    actualizaLista(document.getElementById('g'));
+    actualizaListaCarrera(document.getElementById('g'));
   }
 }
 
@@ -207,7 +207,7 @@ function less()
        document.getElementById('g').value = parseInt($('#g').val()) - parseInt(1);
 
 
-    actualizaLista(document.getElementById('g'));
+    actualizaListaCarrera(document.getElementById('g'));
   }
 }
 
@@ -898,6 +898,8 @@ function grafCompetencia()
 {
 
   var idCompetencia = $('#idCompetencia').val();
+  var totalMostrar = $('#miQuant').val();
+
   var token = $('#token').val();
 
   if(graficaCompetencia == "bar")
@@ -908,7 +910,7 @@ function grafCompetencia()
       headers: {'X-CSRF-TOKEN':token},
       type: 'POST',
       dataType: 'html',
-      data:{idCompetencia: idCompetencia},
+      data:{idCompetencia: idCompetencia, totalMostrar: totalMostrar},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-competencia').html(data);
@@ -926,7 +928,7 @@ function grafCompetencia()
       headers: {'X-CSRF-TOKEN':token},
       type: 'POST',
       dataType: 'html',
-      data:{idCompetencia: idCompetencia},
+      data:{idCompetencia: idCompetencia, totalMostrar: totalMostrar},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-competencia').html(data);
@@ -947,6 +949,8 @@ function grafCarrera()
 
   var idCarrera = $('#idCarrera').val();
   var idCompetencia = $('#idCompetencia').val();
+  var totalMostrar = $('#g').val();
+
   var token = $('#token').val();
 
   if(graficaCarrera == "bar")
@@ -957,7 +961,7 @@ function grafCarrera()
       headers: {'X-CSRF-TOKEN':token},
       type: 'POST',
       dataType: 'html',
-      data:{idCompetencia: idCompetencia, idCarrera: idCarrera},
+      data:{idCompetencia: idCompetencia, idCarrera: idCarrera, totalMostrar: totalMostrar},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-carrera').html(data);
@@ -975,7 +979,7 @@ function grafCarrera()
       headers: {'X-CSRF-TOKEN':token},
       type: 'POST',
       dataType: 'html',
-      data:{idCompetencia: idCompetencia, idCarrera: idCarrera},
+      data:{idCompetencia: idCompetencia, idCarrera: idCarrera, totalMostrar: totalMostrar},
       success: function(data){
         setTimeout(function(){
           $('#contenedorGrafica-carrera').html(data);
@@ -1197,6 +1201,35 @@ function actualizaLista(miNumero)
       type: 'POST',
       dataType: 'html',
       data:{idCompetencia: idCompetencia, numero: miNumero.value},
+      success: function(data){
+        setTimeout(function(){
+          $('#contenedorEstadistica').html(data);
+          document.getElementById('contenedorEstadistica').style = "display: none;";
+           $('#contenedorEstadistica').fadeIn(800);
+
+        }
+      );
+    }
+    });
+}
+
+// <----------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+// <------------------------------------- PARA CAMBIAR EL NUMERO DE COMPETIDORES A MOSTAR (CARRERA) -------------------------------------------------------------->
+
+function actualizaListaCarrera(miNumero)
+{
+  var idCompetencia = $('#idCompetencia').val();
+  var idCarrera = $('#idCarrera').val();
+  var token = $('#token').val();
+
+  $.ajax({
+      url: url+'/home/carreras/statDinamic' ,
+      headers: {'X-CSRF-TOKEN':token},
+      type: 'POST',
+      dataType: 'html',
+      data:{idCompetencia: idCompetencia, idCarrera: idCarrera, numero: miNumero.value},
       success: function(data){
         setTimeout(function(){
           $('#contenedorEstadistica').html(data);

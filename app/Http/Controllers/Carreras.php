@@ -86,6 +86,27 @@ class Carreras extends Controller
         }
     }
 
+
+    public function statDinamic(Request $data)
+    {
+        if($data->ajax())
+        {
+             $datos['participantes'] = DB::select(" SELECT competidors.numeroCompetidor, competidors.nombre, competidors.apellidoPaterno, competidors.apellidoMaterno,
+                    puntaje__competidor__carreras.lugarLlegada, puntaje__competidor__carreras.puntaje, estatuses.estatus
+                FROM carreras INNER JOIN puntaje__competidor__carreras INNER JOIN competencias INNER JOIN competidors INNER JOIN estatuses
+                ON carreras.idCarrera = puntaje__competidor__carreras.idCarrera 
+                    AND carreras.idCompetencia = competencias.idCompetencia
+                    AND competidors.numeroCompetidor = puntaje__competidor__carreras.numeroCompetidor
+                    AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
+                WHERE carreras.idCarrera = ".$data['idCarrera']."
+                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC LIMIT ".$data['numero']." ");
+
+            return view('carreras.front_estadistica_carrera', $datos);
+        }
+    }
+
+
+
     public function create()
     {
         //Extraemos los datos de las competencias y tipos de carrera

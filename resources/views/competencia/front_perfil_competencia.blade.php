@@ -70,13 +70,13 @@
 
                             @if($totalParticipantes->inscritos > 0)
                               @if($totalParticipantes->inscritos < 4)
-                                <input type="text" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="1" max="{{$totalParticipantes->inscritos}}">
+                                <input type="text" id="miQuant" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="1" max="{{$totalParticipantes->inscritos}}">
                               @else
-                                <input type="text" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="4"  min="1" max="{{$totalParticipantes->inscritos}}">
+                                <input type="text" id="miQuant" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="4"  min="1" max="{{$totalParticipantes->inscritos}}">
                               @endif
 
                             @else
-                              <input type="text" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="0" max="{{$totalParticipantes->inscritos}}">
+                              <input type="text" id="miQuant" name="quant[1]" onchange="actualizaLista(this)" class="form-control input-number"   value="{{$totalParticipantes->inscritos}}"  min="0" max="{{$totalParticipantes->inscritos}}">
 
                             @endif
 

@@ -97,6 +97,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 		// Para Mostrar puntaje de un competidor en una Carrera de una Competencia
 		Route::match(['get', 'post'], '/home/carreras/datosPuntajeCarrera', 'Carreras@datosPuntajeCarrera')->name('datosPuntajeCarrera');
 
+		// Para Mostrar el numero de competuidores por tabla en la estadistica de una Carrera
+		Route::match(['get', 'post'], '/home/carreras/statDinamic', 'Carreras@statDinamic')->name('statDinamic');
+
 
 ////////////////////////////////// RUTA PARA FUNCIONE DE BUSCAR  ////////////////////////////////////
 		// Para buscar

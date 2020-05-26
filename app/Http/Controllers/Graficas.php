@@ -57,7 +57,7 @@ class Graficas extends Controller
                     FROM competencias INNER JOIN puntaje__competidor__competencias INNER JOIN competidors
                     ON puntaje__competidor__competencias.idCompetencia = competencias.idCompetencia
                         AND competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor
-                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC ");
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC LIMIT ".$data['totalMostrar']." ");
 
             return view('graficas.competencia_bar', $datos);
         }
@@ -72,7 +72,7 @@ class Graficas extends Controller
                     FROM competencias INNER JOIN puntaje__competidor__competencias INNER JOIN competidors
                     ON puntaje__competidor__competencias.idCompetencia = competencias.idCompetencia
                         AND competidors.numeroCompetidor = puntaje__competidor__competencias.numeroCompetidor
-                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC ");
+                    WHERE competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__competencias.puntajeGlobal DESC LIMIT ".$data['totalMostrar']." ");
 
             return view('graficas.competencia_pai', $datos);
         }
@@ -91,7 +91,7 @@ class Graficas extends Controller
                     AND competidors.numeroCompetidor = puntaje__competidor__carreras.numeroCompetidor
                     AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
                 WHERE carreras.idCarrera = ".$data['idCarrera']."
-                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC ");
+                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC LIMIT ".$data['totalMostrar']." ");
 
             return view('graficas.carrera_bar', $datos);
         }
@@ -110,7 +110,7 @@ class Graficas extends Controller
                     AND competidors.numeroCompetidor = puntaje__competidor__carreras.numeroCompetidor
                     AND estatuses.idEstatus = puntaje__competidor__carreras.idEstatus
                 WHERE carreras.idCarrera = ".$data['idCarrera']."
-                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC ");
+                    AND competencias.idCompetencia = ".$data['idCompetencia']." ORDER BY puntaje__competidor__carreras.lugarLlegada ASC LIMIT ".$data['totalMostrar']." ");
 
             return view('graficas.carrera_pai', $datos);
         }
